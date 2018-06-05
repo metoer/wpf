@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="Hytera.EEMS.Fingerprint.FingerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+               xmlns:local="clr-namespace:Hytera.EEMS.Fingerprint.Controls"
+           
+               xmlns:control="clr-namespace:Hytera.EEMS.Resources.Controls;assembly=Hytera.EEMS.Resources"
+             mc:Ignorable="d"  x:Name="my" Loaded="my_Loaded"
+             d:DesignHeight="300" d:DesignWidth="800">
+
+    <Grid  ClipToBounds="True" > 
+        <DockPanel>
+            <Grid Height="50" DockPanel.Dock="Top" Margin="-2,0,2,0">
+                <TextBlock Margin="15,0,0,0" Text="{DynamicResource FingerCollectMark}"  Style="{StaticResource syFingerTitle}" />
+                <StackPanel Margin="0,0,20,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <local:TreeComboBox x:Name="cmbOrg" Margin=" 0,0,15,0" Height="34" Width="150" />
+                    <control:HintTextBox  HintForeground="#415582" x:Name="txtName"  Margin="0,0,15,0" CaretBrush="#ffffff" Foreground="#ffffff" BorderBrush="#1a61d5" Background="#162743" Width="200" Height="34" BorderThickness="1" Hint="{DynamicResource FingerInputName}" FontSize="{StaticResource fontSize15}"/>
+                    <control:ImageButton  Click="btnSearch_Click" Name="btnSearch" Style="{DynamicResource sySearchBtn}" />
+                </StackPanel>
+                <Separator BorderBrush="#304d81" BorderThickness="0,1,0,0" VerticalAlignment="Bottom" />
+            </Grid>
+            <Grid>
+
+                <ListView Name="lvData"  ClipToBounds="True" Margin="12,0,0,0" >
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                        <local:PersonItem Margin="0,15,12,0" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel VerticalAlignment="Top"  HorizontalAlignment="Left"></WrapPanel>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <!--模板-->
+                    <ListView.Template>
+                        <ControlTemplate>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Style="{DynamicResource styleScrollViewer}">
+                                <DockPanel>
+                                    <Grid DockPanel.Dock="Bottom" Height="56" Visibility="{Binding MoreVisibility,ElementName=my}">
+                                        <Grid.ColumnDefinitions >
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Separator Grid.Column="0" BorderBrush="#0c4bc4" BorderThickness="0,1,0,0" VerticalAlignment="Center" Opacity="{Binding Opacity,ElementName=btnMore}" />
+                                        <Separator Grid.Column="2" BorderBrush="#0c4bc4" BorderThickness="0,1,0,0" VerticalAlignment="Center" Opacity="{Binding Opacity,ElementName=btnMore}" />
+                                        <Button Grid.Column="1" x:Name="btnMore" Content="{DynamicResource ShowMoreControlShowMoreText}" Style="{StaticResource syMoreBtn}" Click="btnMore_Click" />
+                                    </Grid>
+                                    <ItemsPresenter />
+                                </DockPanel>
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ListView.Template>
+                </ListView>
+                <StackPanel Name="spNodata" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+                    <Image Source="/Hytera.EEMS.Resources;Component/Images/Manage/SearchNoDate.png" Width="111" Height="111"></Image>
+                    <TextBlock Text="{DynamicResource SearchManagerSearchNoData}" FontSize="25" Foreground="#5f80bc"  Margin="0,5,0,0"></TextBlock>
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</UserControl>

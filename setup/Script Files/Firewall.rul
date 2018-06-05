@@ -1,0 +1,44 @@
+// Firewall.rul
+
+// add and delete firewall settings
+
+
+#include "ifx.h"
+
+#define ADDFIREWALLSETTING_BATFILE		    	"FirewallInstall.bat"
+#define DELETEFIREWALLSETTING_BATFILE		    "FirewallUninstall.bat"
+
+
+
+prototype AddFirewallSetting();
+prototype DeleteFirewallSetting();
+
+
+
+//function AddFirewallSetting() 
+//    STRING svResult;
+//    STRING szProgram, szParam;  
+//begin
+ //   szProgram = INSTALLDIR ^ @ID_STRING66 ^ ADDFIREWALLSETTING_BATFILE;
+ //   //szProgram = SRCDIR ^ ADDFIREWALLSETTING_BATFILE;  
+  //  szParam = "/q";
+ //   LongPathToQuote( szProgram, TRUE );
+ //   if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		//MessageBox (IDS_FAILTOSetupVcRedist, SEVERE); 
+  //  endif;
+//end;
+
+
+//function DeleteFirewallSetting() 
+//    STRING svResult;
+//    STRING szProgram, szParam;  
+//begin
+//    szProgram = INSTALLDIR ^ DELETEFIREWALLSETTING_BATFILE;
+    //szProgram = SRCDIR ^ DELETEFIREWALLSETTING_BATFILE;  
+ //   szParam = "/q";
+ //   LongPathToQuote( szProgram, TRUE );
+ //   if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		//MessageBox (IDS_FAILTOSetupVcRedist, SEVERE); 
+  //  endif;
+//end;
+

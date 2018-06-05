@@ -1,0 +1,43 @@
+﻿<controls:BaseWindow x:Class="Hytera.EEMS.Main.PortSetWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Closing="BaseWindow_Closing"
+          xmlns:controls="clr-namespace:Hytera.EEMS.Resources.Controls;assembly=Hytera.EEMS.Resources"
+                            Style="{StaticResource syWindow}" IsDragMove="True" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Loaded="BaseWindow_Loaded"
+        Title="{StaticResource appMainPortSet}" Height="715" Width="855">
+    <DockPanel>
+        <controls:WindowHead  Margin="2,2,0,0" WindowTitle="{StaticResource appMainPortSet}" HeadMaxVisibility="Collapsed" HeadMinVisibility="Collapsed" DockPanel.Dock="Top" />
+        <Grid DockPanel.Dock="Bottom" Margin="1,0,1,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="{DynamicResource appSure}" Grid.Column="0"  Style="{StaticResource syCommomBtn}"  Click="btnSure_Click" x:Name="btnSure" />
+            <Button Content="{DynamicResource appCancel}"  Grid.Column="1" Style="{StaticResource syCommomBtn}" Click="btnCanel_Click"  x:Name="btnCanel" />
+        </Grid>
+        <Grid Margin="50,0,50,10">
+            <Grid.RowDefinitions >
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{StaticResource appMainSetFirstPort}"   Style="{StaticResource syPortText}" />
+            <Image Margin="-25,0,0,0" Grid.Row="0" Style="{StaticResource syCircle}" />
+            <StackPanel Orientation="Horizontal" Margin="35,0,0,0" Grid.Row="1">
+                <TextBlock  Text="{StaticResource appMainFirstPort}"   Style="{StaticResource syPortText}" FontSize="16"/>
+                <ComboBox x:Name="cbFirst"  VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource syComboBox}" Margin="5,0,0,0"   Width="200" Height="30" SelectionChanged="cbFirst_SelectionChanged" />
+            </StackPanel>
+            <TextBlock Margin="350,0,0,0" Grid.Row="1" Text="{StaticResource appMainFirstPortMark}"  TextWrapping="Wrap"  Style="{StaticResource syMarkText}" FontSize="16" />
+
+            <TextBlock Grid.Row="2" Text="{StaticResource appMainPortPair}"   Style="{StaticResource syPortText}" />
+            <Image Margin="-25,0,0,0" Grid.Row="2" Style="{StaticResource syCircle}" />
+            <Button x:Name="btnReset" Grid.Row="2" Content="{StaticResource appMainRerest}" Style="{StaticResource syReset}" Click="btnReset_Click" />
+            <Grid Grid.Row="3" >
+                <ScrollViewer Margin="0,0,-15,-3" x:Name="sv" VerticalAlignment="Top"  Style="{StaticResource styleSV}"  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
+                    <Canvas x:Name="canvasMain" Margin="10"  >
+                    </Canvas>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</controls:BaseWindow>

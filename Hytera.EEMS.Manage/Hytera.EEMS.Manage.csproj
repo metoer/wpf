@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A6119CC9-AFED-4AB4-8648-F1C4C96EA6FE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hytera.EEMS.Manage</RootNamespace>
+    <AssemblyName>Hytera.EEMS.Manage</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\EEMS\Plugs\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\EEMS\Plugs\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\EEMS\Plugs\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\EEMS\Plugs\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BLL\SearchManager.cs" />
+    <Compile Include="Converter\EnableOmitTextConverter.cs" />
+    <Compile Include="Converter\LeafIndentConverter.cs" />
+    <Compile Include="EditFileWindow.xaml.cs">
+      <DependentUpon>EditFileWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Enums\ComBoxItem.cs" />
+    <Compile Include="Enums\FileType.cs" />
+    <Compile Include="Enums\QueryType.cs" />
+    <Compile Include="Lib\MediaUrl.cs" />
+    <Compile Include="PlayWindow.xaml.cs">
+      <DependentUpon>PlayWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchConditionWindows.xaml.cs">
+      <DependentUpon>SearchConditionWindows.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UCManageMain.xaml.cs">
+      <DependentUpon>UCManageMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlarmControl.xaml.cs">
+      <DependentUpon>AlarmControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlarmSearchControl.xaml.cs">
+      <DependentUpon>AlarmSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CollectLogsControl.xaml.cs">
+      <DependentUpon>CollectLogsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FileButtonGridControl.xaml.cs">
+      <DependentUpon>FileButtonGridControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\HintTextBox.xaml.cs">
+      <DependentUpon>HintTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PlayComboBoxControl.xaml.cs">
+      <DependentUpon>PlayComboBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AutoComboBoxControl.xaml.cs">
+      <DependentUpon>AutoComboBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BoardImageControl.xaml.cs">
+      <DependentUpon>BoardImageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BoardImageItem.cs" />
+    <Compile Include="UserControls\DatePickerControl.xaml.cs">
+      <DependentUpon>DatePickerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatePickerPopupControl.xaml.cs">
+      <DependentUpon>DatePickerPopupControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FileButtonControl.xaml.cs">
+      <DependentUpon>FileButtonControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FileControl.xaml.cs">
+      <DependentUpon>FileControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CameraLogsControl.xaml.cs">
+      <DependentUpon>CameraLogsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\LogsSearchControl.xaml.cs">
+      <DependentUpon>LogsSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MediaControl.xaml.cs">
+      <DependentUpon>MediaControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MediaSearchControl.xaml.cs">
+      <DependentUpon>MediaSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PlayHisListControl.xaml.cs">
+      <DependentUpon>PlayHisListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PlayPicControl.xaml.cs">
+      <DependentUpon>PlayPicControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PlayVideoControl.xaml.cs">
+      <DependentUpon>PlayVideoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PlayVoiceControl.xaml.cs">
+      <DependentUpon>PlayVoiceControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SearchBarControl.xaml.cs">
+      <DependentUpon>SearchBarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ShowMoreControl.xaml.cs">
+      <DependentUpon>ShowMoreControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TreeViewControl.xaml.cs">
+      <DependentUpon>TreeViewControl.xaml</DependentUpon>
+    </Compile>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Lib\AnalyzeMessage.cs" />
+    <Compile Include="Lib\ManageViewModel.cs" />
+    <Page Include="EditFileWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\DataGridStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\ManageStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlayWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchConditionWindows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UCManageMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AlarmControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AlarmSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CollectLogsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\FileButtonGridControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\HintTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\PlayComboBoxControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\AutoComboBoxControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\BoardImageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\DatePickerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DatePickerPopupControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\FileButtonControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\FileControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CameraLogsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\LogsSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MediaControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MediaSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PlayHisListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PlayPicControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PlayVideoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PlayVoiceControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SearchBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ShowMoreControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\TreeViewControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ModelResponsible.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hytera.EEMS.Common\Hytera.EEMS.Common.csproj">
+      <Project>{f91b27ce-c8f1-4cda-b580-53b4c3debcb4}</Project>
+      <Name>Hytera.EEMS.Common</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Hytera.EEMS.Dispatcher\Hytera.EEMS.Dispatcher.csproj">
+      <Project>{a9eb6121-d442-43cd-b237-d1ed95260aba}</Project>
+      <Name>Hytera.EEMS.Dispatcher</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Hytera.EEMS.Log\Hytera.EEMS.Log.csproj">
+      <Project>{8ccaec9b-309c-4e2c-b555-e76aac54159c}</Project>
+      <Name>Hytera.EEMS.Log</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Hytera.EEMS.Media\Hytera.EEMS.Media.csproj">
+      <Project>{559bcbe6-4859-40c2-83dd-fd17684b2918}</Project>
+      <Name>Hytera.EEMS.Media</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Hytera.EEMS.Model\Hytera.EEMS.AppLib.csproj">
+      <Project>{1dbf33bf-6dac-4be2-a8ad-5838a6342f9a}</Project>
+      <Name>Hytera.EEMS.AppLib</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Hytera.EEMS.Resources\Hytera.EEMS.Resources.csproj">
+      <Project>{73fc8214-31c1-4431-8a05-2267219e7ef4}</Project>
+      <Name>Hytera.EEMS.Resources</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

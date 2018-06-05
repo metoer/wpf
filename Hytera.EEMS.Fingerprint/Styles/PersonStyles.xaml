@@ -1,0 +1,92 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:local="clr-namespace:Hytera.EEMS.Fingerprint.Controls"
+               xmlns:controls="clr-namespace:Hytera.EEMS.Resources.Controls;assembly=Hytera.EEMS.Resources"
+                   xmlns:conver="clr-namespace:Hytera.EEMS.Fingerprint.Converter"
+                   >
+    <conver:EmptyTextConverter x:Key="emptyConvetr" />
+    <Style TargetType="local:PersonItem">
+        <Setter Property="Width" Value="300" />
+        <Setter Property="Height" Value="167" />
+        <Setter Property="Foreground"   Value="{StaticResource fontColor10}" />
+        <Setter Property="FontSize"   Value="13" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:PersonItem">
+                    <Border BorderThickness="1" x:Name="bg" Background="#1b2946" BorderBrush="#0068b7" >
+                        <DockPanel  >
+                            <!--按钮-->
+                            <StackPanel  Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,0,0,-2">
+                                <controls:ImageButton x:Name="btnCollect" Style="{StaticResource syFingerBtn}"   Content="{DynamicResource FingerCollect}" Tag="{Binding UserID}"  />
+                                <controls:ImageButton x:Name="btnEditor" Style="{StaticResource syFingerBtn}"  Margin="1,0,0,0" Content="{DynamicResource FingerEditor}" Tag="{Binding UserID}" />
+                            </StackPanel>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Separator  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" BorderThickness="0,1,0,0"  VerticalAlignment="Bottom" BorderBrush="{StaticResource fontColor11}" Margin="8,0,8,0" />
+                                <Separator  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" BorderThickness="0,1,0,0"  VerticalAlignment="Bottom" BorderBrush="{StaticResource fontColor11}" Margin="8,0,8,0" />
+                                <Separator  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" BorderThickness="0,1,0,0"  VerticalAlignment="Bottom" BorderBrush="{StaticResource fontColor11}" Margin="8,0,8,0" />
+                                <Separator  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" BorderThickness="0,1,0,0"  VerticalAlignment="Bottom" BorderBrush="{StaticResource fontColor11}" Margin="8,0,8,0" />
+
+                                <Image Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20" Source="/Hytera.EEMS.Resources;Component/Images/Collect/Devitem/pname.png" />
+                                <Image Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20" Source="/Hytera.EEMS.Resources;Component/Images/Collect/Devitem/code.png" />
+                                <Image Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20" Source="/Hytera.EEMS.Resources;Component/Images/Collect/Devitem/adress.png" />
+                                <Image Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20" Source="/Hytera.EEMS.Resources;Component/Images/Finger/useType.png" />
+                                <Image Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20" Source="/Hytera.EEMS.Resources;Component/Images/Finger/fingerNum.png" />
+
+                                <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <TextBlock  Text="{DynamicResource FingerPoliceName}" Margin="0,0,3,0" />
+                                    <TextBlock Text="{Binding UserName,Converter={StaticResource emptyConvetr}}" ToolTip="{Binding Text,ElementName=txtName}"  x:Name="txtName"  TextTrimming="CharacterEllipsis"  />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <TextBlock  Text="{DynamicResource FingerPoliceCode}" Margin="0,0,3,0" />
+                                    <TextBlock   Text="{Binding UserCode,Converter={StaticResource emptyConvetr}}" ToolTip="{Binding Text,ElementName=txtCode}" x:Name="txtCode"  TextTrimming="CharacterEllipsis"   />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <TextBlock  Text="{DynamicResource FingerPoliceOrgName}" Margin="0,0,3,0" />
+                                    <TextBlock   Text="{Binding OrgName,Converter={StaticResource emptyConvetr}}"  />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <TextBlock  Text="{DynamicResource FingerPoliceType}" Margin="0,0,3,0" />
+                                    <TextBlock  x:Name="txtType" Text="{Binding UserType}" />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <TextBlock  Text="{DynamicResource FingerNumber}" Margin="0,0,3,0" />
+                                    <TextBlock  Text="{Binding FingerNumber}"  />
+                                </StackPanel>
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding UserType}" Value="1">
+                            <Setter TargetName="txtType" Property="Text" Value="{DynamicResource FingerAdmin}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding UserType}" Value="2">
+                            <Setter TargetName="txtType" Property="Text" Value="{DynamicResource FingerNormal}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FingerNumber}" Value="0">
+                            <Setter TargetName="btnEditor" Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FingerNumber}" Value="2">
+                            <Setter TargetName="btnCollect" Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

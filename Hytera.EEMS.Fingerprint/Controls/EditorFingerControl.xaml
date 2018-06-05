@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="Hytera.EEMS.Fingerprint.Controls.EditorFingerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                xmlns:controls="clr-namespace:Hytera.EEMS.Resources.Controls;assembly=Hytera.EEMS.Resources" 
+    
+             mc:Ignorable="d"  x:Name="this"
+             d:DesignHeight="43" d:DesignWidth="300">
+    <StackPanel Orientation="Horizontal">
+        <Grid Width="200" Margin="0,0,25,0">
+            <Button x:Name="btnEditorName" Content="{Binding Text,ElementName=this}" Style="{StaticResource syFingerNameBtn}" Click="btnEditor_Click" />
+            <TextBox x:Name="txtName" Text="{Binding Text,ElementName=this}" Visibility="Collapsed" Style="{StaticResource syFingerNameTxt}" TextChanged="txtName_TextChanged" />
+        </Grid>
+        <controls:SelectButton x:Name="btnEditor" Margin="0,0,20,0" Style="{StaticResource syEditorBtn}" Click="btnEditor_Click" />
+        <Button x:Name="btnDel" Style="{StaticResource syFingerDelBtn}" Click="btnDel_Click" />       
+    </StackPanel>
+</UserControl>

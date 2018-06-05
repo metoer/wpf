@@ -1,0 +1,457 @@
+#define IDSREGKEY_Hytera                           	"Software\\Hytera"
+#define IDSREGKEY_Hytera_HyteraPUC                  "Software\\Hytera\\HyteraICCPID"
+#define IDSREGKEY_Hytera_HyteraPUC_PUC10			"Software\\Hytera\\HyteraICCPID\\ICCPID10"
+#define REGKEY_SW_MS_WIN_CUR_Uninstall				"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall"
+
+// 定义产品名称宏定义
+#define REGKEYNAME_ProductName                		"ProductName"
+// R1.0
+#define ProductName_PUCR10							"ICCPID 1.0"
+#define RegKeyName_PUC10               				"ICCPID10"
+
+// 在 "Software\\Hytera\\HyteraPUC\\PUC10" 下
+#define RegKeyName_Server                     "ClientServer"
+#define RegKeyName_Gateway                    "PIDServer"
+#define RegKeyName_DispatchClient             "PID"
+#define RegKeyName_Gateway_PDT         		  "PDT"
+#define RegKeyName_Gateway_DMR         		  "DMR"
+#define RegKeyName_Gateway_Tetra         	  "Tetra"  
+// 在 "Software\\Hytera\\HyteraPUC\\PUC10" 下
+
+#define RegKeyName_Configuration         	  "Configuration"  
+#define RegKeyName_NetManageServer         	  "NetManageServer"
+#define RegKeyName_LogViewer                  "LogViewer"
+
+
+
+// "Software\\Hytera\\HyteraPUC\\PUC10"是否存在指定注册子目录
+export prototype NUMBER IsExistRegKey_PUC_Dispatch(STRING);
+
+// 卸载旧产品
+export prototype STRING GetOldVerUninstallProductCode();
+
+// 恢复被删除了的产品信息
+export prototype RestoreRegKeyR10Ver_PUCProductName();
+
+// 得到下注册表子项文件夹的个数
+export prototype NUMBER GetLocalRegSubKeyCount(STRING, NUMBER);
+
+// 为R1.0版安装时创建注册表项
+export prototype CreateRegKeyR10Ver_Server();
+export prototype CreateRegKeyR10Ver_Configuration();
+export prototype CreateRegKeyR10Ver_LogViewer();
+export prototype CreateRegKeyR10Ver_Gateway();
+export prototype CreateRegKeyR10Ver_Client(); 
+export prototype CreateRegKeyR10Ver_NetManageServer();
+
+// 为R1.0卸载时删除注册表项
+export prototype DeleteRegKeyR10Ver_Server();
+export prototype DeleteRegKeyR10Ver_Configuration();
+export prototype DeleteRegKeyR10Ver_LogViewer();
+export prototype DeleteRegKeyR10Ver_Gateway();
+export prototype DeleteRegKeyR10Ver_Client();  
+export prototype DeleteRegKeyR10Ver_NetManageServer();
+
+// 在"Software\\Hytera\\HyteraPUC\\PUC10"下为指定子程序创建子目录
+export prototype CreateRegKey_PUC_Dispatch(STRING);
+export prototype DeleteRegKey_PUC_Dispatch(STRING);
+// 设置产品名称
+export prototype SetRegKey_PUC_ProductName(STRING, STRING);
+
+
+function NUMBER GetLocalRegSubKeyCount(szKey, nItem)
+    LIST   listSubKeys;
+    NUMBER nReturn, nType, nTemp;
+begin
+    nReturn = -1;
+    if( RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE) ) then
+        return nReturn;
+    endif;
+
+    nReturn = RegDBQueryKeyCount(szKey, nItem);
+    return nReturn;
+end;  
+
+// 创建 "Software\\Hytera", "Software\\Hytera\\HyteraPUC", "Software\\Hytera\\HyteraPUC\\PUC10"
+
+/*
+export prototype InitRegKey_Hytera_PUC_Dispatch();
+function InitRegKey_Hytera_PUC_Dispatch()
+begin
+    Disable(LOGGING);
+    RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+    // 判断注册表是否存在，如果不存在就创建
+    if (RegDBKeyExist( IDSREGKEY_Hytera ) < 0) then 
+        RegDBCreateKeyEx( IDSREGKEY_Hytera, " " ); 
+    endif;
+	
+    if (RegDBKeyExist( IDSREGKEY_Hytera_HyteraPUC ) < 0) then 
+        RegDBCreateKeyEx( IDSREGKEY_Hytera_HyteraPUC, " " ); 
+    endif;
+	
+    if (RegDBKeyExist( IDSREGKEY_Hytera_HyteraPUC_PUC10 ) < 0) then 
+        RegDBCreateKeyEx( IDSREGKEY_Hytera_HyteraPUC_PUC10, " " ); 
+    endif;
+
+    Enable(LOGGING);
+end;
+
+// 得到已安装的相互冲突/互斥的软件信息(不检查是否有较早、更早版本)
+// 判断 "Software\\Hytera\\HyteraPUC" 下是否有子项
+export prototype STRING GetExistRegKey_NewPUCProductName();     
+function STRING GetExistRegKey_NewPUCProductName()
+    string szProductRes, szKey, svString, szNameValue;
+    LIST   listSubKeys, listNames;
+    NUMBER nReturn, nResult, nSize, nType;
+begin
+    szProductRes = "";
+    listSubKeys  = ListCreate(STRINGLIST);
+    if ( listSubKeys = LIST_NULL ) then
+        return szProductRes;
+    endif;
+
+    RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+    
+    // 判断 "Software\\Hytera\\HyteraPUC" 下是否有子项
+    nReturn = RegDBQueryKey(IDSREGKEY_Hytera_HyteraPUC, REGDB_KEYS, listSubKeys );
+    if (nReturn = 0) then
+        // Get the first string in the list.
+        nResult = ListGetFirstString (listSubKeys, svString);
+
+        // Loop while list items continue to be retrieved.
+        while (nResult != END_OF_LIST)
+            szKey = IDSREGKEY_Hytera_HyteraPUC + "\\" + svString;
+            nType = REGDB_STRING;
+            szNameValue = "";
+            nSize       = -1;
+            // 取右侧字段值
+            if ( RegDBGetKeyValueEx(szKey, REGKEYNAME_ProductName, nType, szNameValue, nSize) >= 0) then
+                if (nType = REGDB_STRING) && (szNameValue != "") then
+                    szProductRes = szNameValue;
+                    ListDestroy(listSubKeys );
+                    return szProductRes;
+                endif;
+            endif;
+
+            // Get the next string in the list.
+            nResult = ListGetNextString (listSubKeys, svString);
+        endwhile;
+    endif;
+
+    ListDestroy(listSubKeys );
+    return szProductRes;
+end;
+ 
+// 判断是否存在1.0的服务器 
+export prototype IsExistRegKeyR10Ver_Server();
+function NUMBER IsExistRegKeyR10Ver_Server()
+    NUMBER nResult; 
+begin
+    nResult = 0;
+    if (IsExistRegKey_PUC_Dispatch(RegKeyName_Server) = 1) then
+        nResult = 3;
+        return nResult;
+    endif;
+    return nResult;
+end;
+// 判断是否存在1.0的网关 
+export prototype  IsExistRegKeyR10Ver_Gateway();
+function NUMBER IsExistRegKeyR10Ver_Gateway()
+    NUMBER nResult; 
+begin
+    nResult = 0;
+    if (IsExistRegKey_PUC_Dispatch(RegKeyName_Gateway) = 1) then
+        nResult = 3;
+        return nResult;
+    endif;
+    return nResult;
+end;
+// 判断是否存在1.0的客户端
+export prototype IsExistRegKeyR10Ver_Client();
+function NUMBER IsExistRegKeyR10Ver_Client()
+    NUMBER nResult; 
+begin
+    nResult = 0;
+    if (IsExistRegKey_PUC_Dispatch(RegKeyName_DispatchClient) = 1) then
+        nResult = 3;
+        return nResult;
+    endif;
+    return nResult;
+end;
+// 判断是否存在1.0的配置工具  
+export prototype  IsExistRegKeyR10Ver_Configuration();
+function NUMBER IsExistRegKeyR10Ver_Configuration()
+    NUMBER nResult; 
+begin
+    nResult = 0;
+    if (IsExistRegKey_PUC_Dispatch(RegKeyName_Configuration) = 1) then
+        nResult = 3;
+        return nResult;
+    endif;
+    return nResult;
+end;    
+
+// 判断是否存在1.0的网管工具
+export prototype  IsExistRegKeyR10Ver_NetManageServer();
+function NUMBER IsExistRegKeyR10Ver_NetManageServer()
+    NUMBER nResult; 
+begin
+    nResult = 0;
+    if (IsExistRegKey_PUC_Dispatch(RegKeyName_NetManageServer) = 1) then
+        nResult = 3;
+        return nResult;
+    endif;
+    return nResult;
+end; 
+
+
+// 判断是否存在1.0的日志查看工具  
+export prototype  IsExistRegKeyR10Ver_LogViewer();
+function NUMBER IsExistRegKeyR10Ver_LogViewer()
+    NUMBER nResult; 
+begin
+    nResult = 0;
+    if (IsExistRegKey_PUC_Dispatch(RegKeyName_LogViewer) = 1) then
+        nResult = 3;
+        return nResult;
+    endif;
+    return nResult;
+end;
+ 
+function NUMBER IsExistRegKey_PUC_Dispatch(strAppName)
+    string szTargetKey;
+    NUMBER nResult; 
+begin
+    nResult = 0;
+    RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+    szTargetKey = IDSREGKEY_Hytera_HyteraPUC_PUC10 + "\\" + strAppName;
+    if (RegDBKeyExist(szTargetKey) = 1) then 
+        nResult = 1;
+    endif;
+    return nResult;
+end;
+
+export prototype STRING GetOldVerInstalledFolder();
+function STRING GetOldVerInstalledFolder()
+    NUMBER nResult, nSize; 
+    STRING szKey, szName;
+    NUMBER nType;
+    STRING szResult;
+begin
+    szResult = "";
+    
+    nType = REGDB_STRING;
+    szName = "";
+    nSize  = -1;
+    szKey = IDSREGKEY_Hytera_HyteraPUC_PUC10 + "\\" + RegKeyName_Server;
+    RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+    if ( RegDBGetKeyValueEx(szKey, "InstallPath", nType, szName, nSize) >= 0) then
+        if (nType = REGDB_STRING) && (szName != "") then
+            szResult = szName;
+            return szResult;
+        endif;
+    endif;
+    
+    nType = REGDB_STRING;
+    szName = "";
+    nSize  = -1;
+    szKey = IDSREGKEY_Hytera_HyteraPUC_PUC10 + "\\" + RegKeyName_Gateway;
+    RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+    if ( RegDBGetKeyValueEx(szKey, "InstallPath", nType, szName, nSize) >= 0) then
+        if (nType = REGDB_STRING) && (szName != "") then
+            szResult = szName;
+            return szResult;
+        endif;
+    endif;
+    
+    nType = REGDB_STRING;
+    szName = "";
+    nSize  = -1;
+    szKey = IDSREGKEY_Hytera_HyteraPUC_PUC10 + "\\" + RegKeyName_DispatchClient;
+    RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+    if ( RegDBGetKeyValueEx(szKey, "InstallPath", nType, szName, nSize) >= 0) then
+        if (nType = REGDB_STRING) && (szName != "") then
+            szResult = szName;
+            return szResult;
+        endif;
+    endif;
+
+    return szResult;
+end;
+ */
+ 
+ /*
+function STRING GetOldVerUninstallProductCode()
+    NUMBER nType, nSize;
+    STRING szKey, strProdCode; 
+begin
+    strProdCode = "";    
+    if (IsExistRegKey_PUC_Dispatch(RegKeyName_Server) = 1) then
+        szKey = IDSREGKEY_Hytera_HyteraPUC_PUC10 + "\\" + RegKeyName_Server;
+        nType = REGDB_STRING;
+        nSize = -1;
+        if ( RegDBGetKeyValueEx(szKey, "ProductCode", nType, strProdCode, nSize) >= 0) then
+            if (nType = REGDB_STRING) && (strProdCode != "") then
+                return strProdCode;
+            endif;
+        endif;
+    endif;
+    if (IsExistRegKey_PUC_Dispatch(RegKeyName_Gateway) = 1) then
+        szKey = IDSREGKEY_Hytera_HyteraPUC_PUC10 + "\\" + RegKeyName_Gateway;
+        nType = REGDB_STRING;
+        nSize = -1;
+        if ( RegDBGetKeyValueEx(szKey, "ProductCode", nType, strProdCode, nSize) >= 0) then
+            if (nType = REGDB_STRING) && (strProdCode != "") then
+                return strProdCode;
+            endif;
+        endif;
+    endif;
+    if (IsExistRegKey_PUC_Dispatch(RegKeyName_DispatchClient) = 1) then
+        szKey = IDSREGKEY_Hytera_HyteraPUC_PUC10 + "\\" + RegKeyName_DispatchClient;
+        nType = REGDB_STRING;
+        nSize = -1;
+        if ( RegDBGetKeyValueEx(szKey, "ProductCode", nType, strProdCode, nSize) >= 0) then
+            if (nType = REGDB_STRING) && (strProdCode != "") then
+                return strProdCode;
+            endif;
+        endif;
+    endif;
+    return strProdCode;
+end;
+
+function CreateRegKeyR10Ver_Server()
+begin
+    Disable(LOGGING);
+    CreateRegKey_PUC_Dispatch(RegKeyName_Server);
+    SetRegKey_PUC_ProductName(RegKeyName_PUC10, ProductName_PUCR10);
+    Enable(LOGGING);
+end;
+
+function CreateRegKeyR10Ver_Configuration()
+begin
+    Disable(LOGGING);
+    CreateRegKey_PUC_Dispatch(RegKeyName_Configuration);
+    SetRegKey_PUC_ProductName(RegKeyName_PUC10, ProductName_PUCR10);
+    Enable(LOGGING);
+end;  
+
+function CreateRegKeyR10Ver_NetManageServer()
+begin
+    Disable(LOGGING);
+    CreateRegKey_PUC_Dispatch(RegKeyName_NetManageServer);
+    SetRegKey_PUC_ProductName(RegKeyName_PUC10, ProductName_PUCR10);
+    Enable(LOGGING);
+end;	
+
+function CreateRegKeyR10Ver_LogViewer()
+begin
+    Disable(LOGGING);
+    CreateRegKey_PUC_Dispatch(RegKeyName_LogViewer);
+    SetRegKey_PUC_ProductName(RegKeyName_PUC10, ProductName_PUCR10);
+    Enable(LOGGING);
+end;
+
+function CreateRegKeyR10Ver_Gateway()
+begin
+    Disable(LOGGING);
+    CreateRegKey_PUC_Dispatch(RegKeyName_Gateway); // 创建网关注册表目录
+    SetRegKey_PUC_ProductName(RegKeyName_PUC10, ProductName_PUCR10);  // 设置注册表PUC10中字段productname的值
+    Enable(LOGGING);
+end; 
+
+function CreateRegKeyR10Ver_Client()
+begin
+    Disable(LOGGING);
+    CreateRegKey_PUC_Dispatch(RegKeyName_DispatchClient);
+    SetRegKey_PUC_ProductName(RegKeyName_PUC10, ProductName_PUCR10);
+    Enable(LOGGING);
+end;
+
+function CreateRegKey_PUC_Dispatch(strAppName)
+    string szTargetKey, szVersion;
+begin
+    RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+    if (RegDBKeyExist( IDSREGKEY_Hytera ) < 0) then 
+        RegDBCreateKeyEx( IDSREGKEY_Hytera, " " ); 
+    endif;
+	
+    if (RegDBKeyExist( IDSREGKEY_Hytera_HyteraPUC ) < 0) then 
+        RegDBCreateKeyEx( IDSREGKEY_Hytera_HyteraPUC, " " ); 
+    endif;
+	
+    if (RegDBKeyExist( IDSREGKEY_Hytera_HyteraPUC_PUC10 ) < 0) then 
+        RegDBCreateKeyEx( IDSREGKEY_Hytera_HyteraPUC_PUC10, " " ); 
+    endif;
+
+    szTargetKey = IDSREGKEY_Hytera_HyteraPUC_PUC10 + "\\" + strAppName;
+    if (RegDBKeyExist( szTargetKey ) < 0) then 
+        RegDBCreateKeyEx( szTargetKey, " " ); 
+    endif;
+end;
+
+function SetRegKey_PUC_ProductName(strProductKey, strProductName)
+    string szTargetKey, strValue;
+begin
+    RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+    szTargetKey = IDSREGKEY_Hytera_HyteraPUC + "\\" + strProductKey;
+    strValue    = strProductName;
+    RegDBSetKeyValueEx(szTargetKey, REGKEYNAME_ProductName, REGDB_STRING, strValue, StrLength(strValue)); 
+end;
+
+// 删除R1.0键
+function DeleteRegKeyR10Ver_Server()
+begin
+    DeleteRegKey_PUC_Dispatch(RegKeyName_Server);
+end;
+
+function DeleteRegKeyR10Ver_Configuration()
+begin
+    DeleteRegKey_PUC_Dispatch(RegKeyName_Configuration);
+end; 
+
+function DeleteRegKeyR10Ver_NetManageServer()
+begin
+    DeleteRegKey_PUC_Dispatch(RegKeyName_NetManageServer);
+end;
+
+function DeleteRegKeyR10Ver_LogViewer()
+begin
+    DeleteRegKey_PUC_Dispatch(RegKeyName_LogViewer);
+end;
+
+function DeleteRegKeyR10Ver_Gateway()
+begin
+    DeleteRegKey_PUC_Dispatch(RegKeyName_Gateway);
+
+end;
+
+function DeleteRegKeyR10Ver_Client()
+begin
+    DeleteRegKey_PUC_Dispatch(RegKeyName_DispatchClient);
+end;
+
+function DeleteRegKey_PUC_Dispatch(strAppName)
+    string szTargetKey;
+    NUMBER nCount;
+begin
+    RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+    szTargetKey = IDSREGKEY_Hytera_HyteraPUC_PUC10 + "\\" + strAppName;
+    RegDBDeleteKey( szTargetKey );
+
+    nCount = GetLocalRegSubKeyCount(IDSREGKEY_Hytera_HyteraPUC_PUC10, REGDB_KEYS);
+    if ( nCount = 0 ) then
+        SetRegKey_PUC_ProductName(RegKeyName_PUC10, "");
+    endif;
+end;
+// 删除R1.0键结束
+
+function RestoreRegKeyR10Ver_PUCProductName()
+    NUMBER nCount;
+begin
+    RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+    nCount = GetLocalRegSubKeyCount(IDSREGKEY_Hytera_HyteraPUC_PUC10, REGDB_KEYS);
+    if ( nCount > 0 ) then
+        SetRegKey_PUC_ProductName(RegKeyName_PUC10, ProductName_PUCR10);
+    endif;
+end;
+ */

@@ -1,0 +1,404 @@
+﻿<UserControl x:Class="Hytera.EEMS.Manage.UserControls.AlarmControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hytera.EEMS.Manage.UserControls"
+             mc:Ignorable="d" Name="my" 
+             d:DesignHeight="300" d:DesignWidth="1000" Initialized="UserControl_Initialized" >
+
+    <UserControl.Resources>
+        <Style x:Key="DefaultDataGridRow" TargetType="{x:Type DataGridRow}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridRow}">
+                        <Border x:Name="DGR_Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <Grid>
+                                <SelectiveScrollingGrid Name="ssg">
+                                    <SelectiveScrollingGrid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </SelectiveScrollingGrid.ColumnDefinitions>
+                                    <SelectiveScrollingGrid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </SelectiveScrollingGrid.RowDefinitions>
+
+                                    <Grid Name="dcp" Height="44"  Grid.Column="1" VerticalAlignment="Top"  HorizontalAlignment="Stretch"  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                        <DataGridCellsPresenter Grid.Column="1" ItemsPanel="{TemplateBinding ItemsPanel}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    </Grid>
+                                    <DataGridDetailsPresenter Grid.Column="1" Grid.Row="1" SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding AreRowDetailsFrozen, ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical}, Converter={x:Static DataGrid.RowDetailsScrollingConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Visibility="{TemplateBinding DetailsVisibility}"/>
+                                    <DataGridRowHeader Grid.RowSpan="2" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Row}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+
+                                </SelectiveScrollingGrid>
+
+                                <local:ShowMoreControl x:Name="btnCameraView" Margin="0,0,0,-5" Width="1145" VerticalAlignment="Bottom" HorizontalAlignment="Center" ShowMoreText="{Binding ShowMoreText,ElementName=my}"  Visibility="{Binding Vis}" MouseLeftButtonDown="btnPicView_MouseLeftButtonDown"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Vis}" Value="Visible">
+                                <Setter Property="Height" Value="106"></Setter>
+                            </DataTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition SourceName="btnCameraView" Property="IsMouseOver"   Value="False" />
+                                    <Condition SourceName="dcp"  Property="IsMouseOver"   Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="dcp"  Property="Background" Value="#072f69" />
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid >
+        <DataGrid Name="dataGrid" Grid.Row="1" CanUserAddRows="False"  Style="{DynamicResource syDataGridM}">
+            <DataGrid.Columns >
+                <DataGridTemplateColumn  Width="90" CanUserSort="True" MinWidth="90">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource AlarmControlColumnSequenceNum}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center" Text="{Binding SequenceNum}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="120">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource AlarmControlColumnAlarmModule}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center" Name="alarmModule" Text="{Binding AlarmModule}" />
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding AlarmModule}" Value="14" >
+                                    <Setter TargetName="alarmModule" Property="Text" Value="{DynamicResource Alarm_14}" />
+                                    <Setter TargetName="alarmModule" Property="ToolTip" Value="{DynamicResource Alarm_14}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmModule}" Value="16" >
+                                    <Setter TargetName="alarmModule" Property="Text" Value="{DynamicResource Alarm_16}" />
+                                    <Setter TargetName="alarmModule" Property="ToolTip" Value="{DynamicResource Alarm_16}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmModule}" Value="17" >
+                                    <Setter TargetName="alarmModule" Property="Text" Value="{DynamicResource Alarm_17}" />
+                                    <Setter TargetName="alarmModule" Property="ToolTip" Value="{DynamicResource Alarm_17}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmModule}" Value="18" >
+                                    <Setter TargetName="alarmModule" Property="Text" Value="{DynamicResource Alarm_18}" />
+                                    <Setter TargetName="alarmModule" Property="ToolTip" Value="{DynamicResource Alarm_18}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmModule}" Value="19" >
+                                    <Setter TargetName="alarmModule" Property="Text" Value="{DynamicResource Alarm_19}" />
+                                    <Setter TargetName="alarmModule" Property="ToolTip" Value="{DynamicResource Alarm_19}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmModule}" Value="21" >
+                                    <Setter TargetName="alarmModule" Property="Text" Value="{DynamicResource Alarm_21}" />
+                                    <Setter TargetName="alarmModule" Property="ToolTip" Value="{DynamicResource Alarm_21}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmModule}" Value="23" >
+                                    <Setter TargetName="alarmModule" Property="Text" Value="{DynamicResource Alarm_23}" />
+                                    <Setter TargetName="alarmModule" Property="ToolTip" Value="{DynamicResource Alarm_23}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmModule}" Value="25" >
+                                    <Setter TargetName="alarmModule" Property="Text" Value="{DynamicResource Alarm_25}" />
+                                    <Setter TargetName="alarmModule" Property="ToolTip" Value="{DynamicResource Alarm_25}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmModule}" Value="28" >
+                                    <Setter TargetName="alarmModule" Property="Text" Value="{DynamicResource Alarm_28}" />
+                                    <Setter TargetName="alarmModule" Property="ToolTip" Value="{DynamicResource Alarm_28}" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="120">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource AlarmControlColumnAlarmStatus}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Name="alarmStatus" Text="{Binding AlarmStatus}"/>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding AlarmStatus}" Value="1" >
+                                    <Setter TargetName="alarmStatus" Property="Text" Value="{DynamicResource AlarmSearchControlAlarmStatusNoSolve}" />
+                                    <Setter TargetName="alarmStatus" Property="ToolTip" Value="{DynamicResource AlarmSearchControlAlarmStatusNoSolve}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmStatus}" Value="2" >
+                                    <Setter TargetName="alarmStatus" Property="Text" Value="{DynamicResource AlarmSearchControlAlarmStatusSolve}" />
+                                    <Setter TargetName="alarmStatus" Property="ToolTip" Value="{DynamicResource AlarmSearchControlAlarmStatusSolve}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmStatus}" Value="3" >
+                                    <Setter TargetName="alarmStatus" Property="Text" Value="{DynamicResource AlarmSearchControlAlarmStatusLose}" />
+                                    <Setter TargetName="alarmStatus" Property="ToolTip" Value="{DynamicResource AlarmSearchControlAlarmStatusLose}" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="200">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource AlarmControlColumnAlarmTime}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Grid.Column="1" Text="{Binding AlarmTime}"  ToolTip="{Binding AlarmTime}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="200">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource AlarmControlColumnSolvedTime}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Grid.Column="6" Text="{Binding SolvedTime}"  ToolTip="{Binding SolvedTime}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="120">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource AlarmControlColumnAlarmLevel}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Grid.Column="2" Name="alarmLevel" Text="{Binding AlarmLevel}"  />
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding AlarmLevel}" Value="1" >
+                                    <Setter TargetName="alarmLevel" Property="Text" Value="{DynamicResource AlarmSearchControlAlarmLevelOrdinary}" />
+                                    <Setter TargetName="alarmLevel" Property="ToolTip" Value="{DynamicResource AlarmSearchControlAlarmLevelOrdinary}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmLevel}" Value="2" >
+                                    <Setter TargetName="alarmLevel" Property="Text" Value="{DynamicResource AlarmSearchControlAlarmLevelSecondary}" />
+                                    <Setter TargetName="alarmLevel" Property="ToolTip" Value="{DynamicResource AlarmSearchControlAlarmLevelSecondary}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmLevel}" Value="3" >
+                                    <Setter TargetName="alarmLevel" Property="Text" Value="{DynamicResource AlarmSearchControlAlarmLevelSerious}" />
+                                    <Setter TargetName="alarmLevel" Property="ToolTip" Value="{DynamicResource AlarmSearchControlAlarmLevelSerious}" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="120">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource AlarmControlColumnAlarmCode}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Grid.Column="5" Text="{Binding AlarmCode}"  ToolTip="{Binding AlarmCode}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="120">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource AlarmControlColumnAlarmMessage}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <Border  BorderThickness="0,0,1,0" BorderBrush="#355076">
+                                <TextBlock Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Grid.Column="5" Name="alarmMessage" Text="{Binding AlarmMessage}"  ToolTip="{Binding AlarmMessage}"/>
+                            </Border>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9911" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9911}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9911}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9912" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9912}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9912}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9913" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9913}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9913}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9914" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9914}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9914}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9916" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9916}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9916}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9917" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9917}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9917}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9918" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9918}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9918}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9919" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9919}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9919}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9920" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9920}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9920}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9921" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9921}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9921}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9922" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9922}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9922}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9923" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9923}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9923}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9924" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9924}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9924}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9925" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9925}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9925}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9926" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9926}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9926}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9927" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9927}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9927}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9928" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9928}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9928}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9929" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9929}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9929}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9996" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9996}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9996}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9997" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9997}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9997}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9998" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9998}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9998}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9999" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9999}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9999}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9501" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9501}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9501}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="9502" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_9502}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_9502}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="1101" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_1101}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_1101}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="1201" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_1201}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_1201}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="1202" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_1202}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_1202}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="1203" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_1203}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_1203}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="1603" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_1603}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_1603}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="1803" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_1803}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_1803}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="2701" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_2701}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_2701}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="2702" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_2702}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_2702}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="2703" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_2703}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_2703}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="2601" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_2601}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_2601}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="2602" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_2602}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_2602}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="2603" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_2603}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_2603}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="2301" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_2301}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_2301}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="2302" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_2302}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_2302}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="2303" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_2303}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_2303}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="2401" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_2401}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_2401}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="2404" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_2404}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_2404}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AlarmCode}" Value="2403" >
+                                    <Setter TargetName="alarmMessage" Property="Text" Value="{DynamicResource Alarm_2403}" />
+                                    <Setter TargetName="alarmMessage" Property="ToolTip" Value="{DynamicResource Alarm_2403}" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+                                  
+        <StackPanel Name="spNodata" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+            <Image Source="/Hytera.EEMS.Resources;Component/Images/Manage/SearchNoDate.png" Width="111" Height="111"></Image>
+            <TextBlock Text="{DynamicResource SearchManagerSearchNoData}" FontSize="25" Foreground="#5f80bc"  Margin="0,5,0,0"></TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

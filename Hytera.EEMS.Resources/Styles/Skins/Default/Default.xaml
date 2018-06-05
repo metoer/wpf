@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--主面板背景-->
+    <BitmapImage x:Key="mainWindowBg" UriSource="/Hytera.EEMS.Resources;component/Images/Main/mainWindowBg.png" />
+
+    <!--主面板按钮背景-->
+    <!--<ImageBrush x:Key="mainBtnPress"  ImageSource="/Hytera.EEMS.Resources;component/Images/Main/buttonPress.png" />-->
+
+
+    <!--主面板工具栏按钮背景图-->
+    <BitmapImage x:Key="mainToolBtnBg" UriSource="/Hytera.EEMS.Resources;component/Images/Main/toolBtn.png" />
+</ResourceDictionary>

@@ -1,0 +1,60 @@
+﻿<res:BaseWindow x:Class="Hytera.EEMS.Main.SetWindow" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" IsDragMove="True"
+        xmlns:res="clr-namespace:Hytera.EEMS.Resources.Controls;assembly=Hytera.EEMS.Resources" Style="{StaticResource syWindow}"
+        Title="{StaticResource appMainSystemSet}" Height="407" Width="650" ShowInTaskbar="False">
+    <DockPanel>
+        <res:WindowHead  Margin="2,2,0,0" WindowTitle="{StaticResource appMainSystemSet}" HeadMaxVisibility="Collapsed" HeadMinVisibility="Collapsed" DockPanel.Dock="Top" />
+        <Grid DockPanel.Dock="Bottom" Margin="1,0,1,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="{StaticResource appSure}" Grid.Column="0"  Style="{StaticResource syCommomBtn}" x:Name="btnSure" Click="btnSure_Click" />
+            <Button Content="{StaticResource appCancel}"  Grid.Column="1" Style="{StaticResource syCommomBtn}"  x:Name="btnCanel" Click="btnCanel_Click" />
+        </Grid>
+
+        <Grid Margin="20,0,0,0" HorizontalAlignment="Center">          
+            <StackPanel Margin="0,5,0,0" >
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,20">
+                    <TextBlock Text="{StaticResource appMainDeviceNumSet}"  FontSize="{StaticResource fontSize18}" Foreground="{StaticResource fontColor12}" Margin="0,0,20,0"  />
+                    <TextBlock Text="{Binding Text,ElementName=rollRow}"   FontSize="{StaticResource fontSize18}" Foreground="{StaticResource fontColor12}" />
+                    <TextBlock Text="*" Height="20"   FontSize="{StaticResource fontSize18}" Foreground="{StaticResource fontColor12}" />
+                    <TextBlock Text="{Binding Text,ElementName=rollColumn}"   FontSize="{StaticResource fontSize18}" Foreground="{StaticResource fontColor12}" />
+                </StackPanel>
+                <Grid Margin="0,-40,20,0"  Height="315">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Image Width="528" Height="315" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Source="/Hytera.EEMS.Resources;Component/Images/Main/numBg.png" />
+                    <Image Width="516" Height="41" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Source="/Hytera.EEMS.Resources;Component/Images/Main/numSelectBg.png" />
+                    <res:RollValueControl TextMarkMargin="0,6,40,0" TextMark="{StaticResource appMainRowNum}" Background="Transparent"
+                		TextMarkHorizontalAlignment="Right" 
+                		TextHorizontalAlignment="Right"                            
+                		TextMargin="0,0,90,0"
+                		Text="5" 
+                		ItemHeight="41"
+                		SelectBorderBrush="Transparent"
+                		Foreground="#96aecd"
+                		SelectFontBrush="{StaticResource fontColor12}" 
+                		Grid.Column="0" 
+                		x:Name="rollRow" 
+                		FontSize="{StaticResource fontSize20}" Height="315" VerticalAlignment="Bottom"   />
+                    <res:RollValueControl  TextMarkMargin="100,6,0,0" 
+                		TextMark="{StaticResource appMainColumnNum}" 
+                		TextMarkHorizontalAlignment="Left" 
+                		Text="5" 
+                		ItemHeight="41"
+                		TextHorizontalAlignment="Left"
+                		TextMargin="80,0,0,0" 
+                		SelectBorderBrush="Transparent" 
+                		Foreground="#96aecd"
+                		SelectFontBrush="{StaticResource fontColor12}" 
+                		x:Name="rollColumn" 
+                		FontSize="{StaticResource fontSize20}" Grid.Column="1"  />
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</res:BaseWindow>

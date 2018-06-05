@@ -1,0 +1,51 @@
+﻿<res:BaseWindow x:Class="Hytera.EEMS.Manage.EditFileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hytera.EEMS.Manage"
+        xmlns:res="clr-namespace:Hytera.EEMS.Resources.Controls;assembly=Hytera.EEMS.Resources"
+        mc:Ignorable="d" Name="my"  WindowStartupLocation="CenterScreen" Style="{StaticResource syWindow}"
+        Title="EditFileWindow"  Height="567" Width="610"  IsDragMove="True" ShowInTaskbar="False">
+    <Grid>
+        <DockPanel>
+            <res:WindowHead DockPanel.Dock="Top" WindowTitle="{DynamicResource EditFileWindowHead}" HeadKeyVisibility="Visible" HeadMinVisibility="Collapsed" HeadMaxVisibility="Collapsed" Margin="2,2,0,0" ></res:WindowHead>
+            <StackPanel HorizontalAlignment="Center" DockPanel.Dock="Bottom" Orientation="Horizontal" >
+                <res:ImageButton Style="{DynamicResource syCommomBtn}" Width="305" Content="{DynamicResource EditFileWindowBtnSure}" x:Name="btnSure" Click="btnSure_Click"  />
+                <res:ImageButton Style="{DynamicResource syCommomBtn}" Width="305" Content="{DynamicResource EditFileWindowBtnCanel}" x:Name="btnCanel" Click="btnCanel_Click" />
+            </StackPanel>
+
+            <Grid Margin="0,0,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="61"></RowDefinition>
+                    <RowDefinition Height="53"></RowDefinition>
+                    <RowDefinition Height="53"></RowDefinition>
+                    <RowDefinition Height="53"></RowDefinition>
+                    <RowDefinition Height="52"></RowDefinition>
+                    <RowDefinition Height="114"></RowDefinition>
+                    <RowDefinition Height="24"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="147"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Style="{DynamicResource syEditFont}" Grid.Row="0" Grid.Column="0" Text="{DynamicResource EditFileWindowUserName}"></TextBlock>
+                <TextBox Style="{DynamicResource syEditFontTBox}" IsEnabled="False" Name="tbName" Grid.Row="0" Grid.Column="1" Text="{Binding UserName ,Mode=OneWay}"></TextBox>
+                <TextBlock Style="{DynamicResource syEditFont}" Grid.Row="1" Grid.Column="0" Text="{DynamicResource EditFileWindowUserCode}"></TextBlock>
+                <TextBox Style="{DynamicResource syEditFontTBox}" IsEnabled="False" Name="tbID" Grid.Row="1" Grid.Column="1" Text="{Binding UserCode ,Mode=OneWay}"></TextBox>
+                <TextBlock Style="{DynamicResource syEditFont}" Grid.Row="2" Grid.Column="0" Text="{DynamicResource EditFileWindowOrgName}"></TextBlock>
+                <TextBox Style="{DynamicResource syEditFontTBox}" IsEnabled="False" Name="tbOrgName" Grid.Row="2" Grid.Column="1"  Text="{Binding OrgName ,Mode=OneWay}"></TextBox>
+                <TextBlock Style="{DynamicResource syEditFont}" Grid.Row="3" Grid.Column="0" Text="{DynamicResource EditFileWindowRecordTime}"></TextBlock>
+                <TextBox Style="{DynamicResource syEditFontTBox}" IsEnabled="False" Name="tbRt" Grid.Row="3" Grid.Column="1" Text="{Binding RecordTime ,Mode=OneWay}"></TextBox>
+                <TextBlock Style="{DynamicResource syEditFont}" Grid.Row="4" Grid.Column="0" Text="{DynamicResource EditFileWindowUserImp}"></TextBlock>
+
+                <res:SelectButton x:Name="impSelect" Style="{DynamicResource syEditImpBtn}"  Click="SelectButton_Click"  Grid.Row="4" Grid.Column="1"  Width="150" Height="34" HorizontalAlignment="Left" VerticalAlignment="Center" >
+
+                </res:SelectButton>
+
+                <TextBlock Style="{DynamicResource syEditFont}"  Grid.Row="5" Grid.Column="0" Text="{DynamicResource EditFileWindowUserTag}"></TextBlock>
+                <TextBox Style="{DynamicResource syEditFontTBox}" Name="tbMark" Height="96" Grid.Row="5" Grid.Column="1" Text="{Binding UserTag ,Mode=OneWay}" MaxLength="128" TextWrapping="Wrap" AcceptsReturn="True" VerticalContentAlignment="Top"></TextBox>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</res:BaseWindow>

@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Hytera.EEMS.Resources.Controls.WindowHead"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" x:Name="my"
+            MaxHeight="41" d:DesignHeight="41" d:DesignWidth="300" Loaded="UserControl_Loaded">
+    <Grid DockPanel.Dock="Top" Height="41" >
+        <StackPanel HorizontalAlignment="Right" Margin="0,0,15,0" Orientation="Horizontal">
+            <Button Name="btnKey" Margin="0,0,-5,0"  Style="{StaticResource syHeadKey}" Visibility="{Binding HeadKeyVisibility,ElementName=my}" Width="45" Height="45"  Click="btnKey_Click" />
+            <Button Name="btnMin" Visibility="{Binding HeadMinVisibility,ElementName=my}" Width="45" Height="45" Content="_" Click="btnMin_Click" />
+            <Button Name="btnMax" Visibility="{Binding HeadMaxVisibility,ElementName=my}"  Width="45" Height="45" Content="M" Click="btnMax_Click" />
+            <Button Style="{StaticResource syHeadClose}" Name="btnClose" Visibility="{Binding HeadCloseVisibility,ElementName=my}"  Click="btnClose_Click"/>
+        </StackPanel>
+        <StackPanel Visibility="{Binding WindowTitleVisibility,ElementName=my}"  Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+            <Image  Name="windowIco" Width="18" Height="39"  Margin="0 0 7 0" Source="/Hytera.EEMS.Resources;Component/Images/Commom/titleImg.png"></Image>
+            <Label FontSize="18" Foreground="#ffffff" Content="{Binding WindowTitle,ElementName=my}"  ></Label>
+        </StackPanel>
+        <Image HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="406" Height="3" Source="/Hytera.EEMS.Resources;Component/Images/Commom/titleSp.png" />
+    </Grid>
+</UserControl>

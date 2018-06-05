@@ -1,0 +1,801 @@
+
+#include "ifx.h"
+
+
+export prototype RunVcRedistExe2008();
+export prototype RunVcRedistExe2010();
+export prototype RunVcRedistExe2013();
+export prototype RunVcRedistExe2012(); 
+export prototype RunFtpServer(); 
+export prototype  RunPostgreSQL(); 
+
+//export prototype RegPUCServices_SERVER();
+//export prototype UnRegOldPUCServices_SERVER();  
+
+export prototype RegStationServices_SERVER();
+export prototype UnRegOldStationServices_SERVER();  
+
+export prototype RegWebServices_SERVER();
+export prototype UnRegOldWebServices_SERVER();
+                                                            
+export prototype RegCloudCenterServices_SERVER();
+export prototype UnRegOldCloudCenterServices_SERVER(); 
+
+ export prototype RegNMServices_SERVER();
+export prototype UnRegOldNMServices_SERVER(); 
+
+export prototype RegPostgreSQLServices_SERVER();
+export prototype UnRegOldPostgreSQLServices_SERVER(); 
+
+export prototype RegPostgreSQL_DSServices_SERVER();
+export prototype UnRegOldPostgreSQL_DSServices_SERVER(); 
+
+export prototype RegFileServices_SERVER();
+export prototype UnRegOldFileServices_SERVER(); 
+
+export prototype RegLogServices_SERVER();
+export prototype UnRegOldLogServices_SERVER(); 
+
+export prototype RegNetManageServices_SERVER();
+export prototype UnRegOldNetManageServices_SERVER(); 
+
+export prototype RegServantRouterServices_SERVER();
+export prototype UnRegOldServantRouterServices_SERVER();  
+
+export prototype RegTomcatServices_SERVER();
+export prototype UnRegOldTomcatServices_SERVER();  
+
+export prototype RegTomcatServices_TC_SERVER();
+export prototype UnRegOldTomcatServices_TC_SERVER(); 
+
+export prototype StopPUCServices_CONFIGURATION(); 
+export prototype StopPUC_AllProcess();
+
+export prototype RegServices_DBService_HBASE();
+export prototype UnRegOldServices_DBService_HBASE();
+
+export prototype RegServices_FileService_HDFS(); 
+export prototype UnRegOldServices_FileService_HDFS();
+
+export prototype RegServices_FileSyncServer(); 
+export prototype UnRegOldServices_FileSyncServer();
+
+export prototype RegServices_ConfigAgent(); 
+export prototype UnRegOldServices_ConfigAgent();
+
+
+export prototype StopPUCServices_NetManageServer();
+
+
+export prototype NUMBER IsExistRegKey_MSSQLServerNativeClient();
+export prototype RunSQLNativeClient2005();
+export prototype RunDotNetFramework40();
+export prototype SetupRDS30Fonts();   
+export prototype RunDogUserDriver();
+export prototype RunGatewayIceBat();
+export prototype RunServerIceBat(); 
+
+//新增自动生成dump文件注册表
+export prototype RunAutoGenDumpFile();
+#define DOGPATH_UP 						"Install" 
+#define DOGPATH 						"DogUserSetup" 
+#define DOGNAME 						"DogUserSetup.bat" 
+
+#define FTPPATH_UP 						"ThirdApp" 
+#define FTPPATH 						"FtpServer" 
+#define FTPNAME 						"FtpServer.bat"
+
+#define SQLPATH_UP 						"Install" 
+#define SQLPATH 						"PostgreSQL" 
+#define SQLNAME 						"PostgreSQL.bat" 
+
+#define REGSERVICESBATFILE		"InstallService.bat"
+#define UNREGSERVICESBATFILE		"UnInstallService.bat"   
+
+#define REGSERVICESBATFILE_TC		"InstallService_config.bat"
+#define UNREGSERVICESBATFILE_TC		"UnInstallService_config.bat"      
+
+                                                                    
+#define IDS_FAILTOSetupVcRedist			"Failed to setup Microsoft Visual C++ 2008 SP1 Redistributable X86. Please run vcredist_x86.exe manually."
+#define IDS_FAILTOSetupVcRedist2010		"Failed to setup Microsoft Visual C++ 2010 Redistributable X86. Please run vcredist2010.exe manually."
+#define IDS_FAILTOSetupVcRedist2013		"Failed to setup Microsoft Visual C++ 2013 Redistributable X86. Please run vcredist_2013_x86.exe manually."             
+#define IDS_FAILTOSetupVcRedist2012		"Failed to setup Microsoft Visual C++ 2012 Redistributable X86. Please run vcredist_2012_x86.exe manually."
+  
+#define IDS_FAILTORunDumpFile            "Failed to run Auto Gen Dump File. Please run AutoGenDumpFile.reg manually."  
+#define IDS_FAILTOSTOPALLPUCPROCESS		"Failed to Kill all PUC process."    
+
+
+#define IDS_FAIL_REGSERVICE_Station 	"Failed to register Hytera SmartEEMS StationServer to Services! Please run InstallService.bat manually."  
+#define IDS_FAIL_REGSERVICE_Web		"Failed to register Hytera SmartEEMS WSIceServerInStation to Service! Services! Please run InstallService.bat manually."
+#define IDS_FAIL_REGSERVICE_CloudCenter  "Failed to register Hytera SmartEEMS CloudCenter  to Services! Please run InstallService.bat manually." 
+#define IDS_FAIL_REGSERVICE_NMServer  "Failed to register Hytera SmartEEMS NetManageCenterServer to Services! Please run InstallService.bat manually." 
+#define IDS_FAIL_REGSERVICE_PostgreSQL 	"Failed to register Hytera SmartEEMS DBService-PostgreSQL to Services! Please run InstallService.bat manually."  
+#define IDS_FAIL_REGSERVICE_PostgreSQL_DS		"Failed to register Hytera SmartEEMS DBService-PostgreSQL-DS to Services! Please run InstallService.bat manually."
+#define IDS_FAIL_REGSERVICE_File  "Failed to register Hytera SmartEEMS FileService-FTP to Services! Please run InstallService.bat manually." 
+#define IDS_FAIL_REGSERVICE_Log  "Failed to register Hytera SmartEEMS LogService to Services! Please run InstallService.bat manually." 
+#define IDS_FAIL_REGSERVICE_NetManage  "Failed to register Hytera SmartEEMS NetManageAgent to Services! Please run InstallService.bat manually." 
+#define IDS_FAIL_REGSERVICE_ServantRouter  "Failed to register Hytera SmartEEMS ServantRouter to Services! Please run InstallService.bat manually." 
+#define IDS_FAIL_REGSERVICE_Tomcat  "Failed to register Tomcat8forSmartEEMS to Services! Please run InstallService.bat manually." 
+#define IDS_FAIL_REGSERVICE_Tomcat_TC  "Failed to register Tomcat8forEEMSWebConfigServer to Services! Please run InstallService.bat manually." 
+
+#define IDS_FAIL_REGSERVICE_DBServiceHBASE      "Failed to register Hytera SmartEEMS DBService-HBASE to Services! Please run InstallService.bat manually." 
+#define IDS_FAIL_REGSERVICE_FileServiceHDFS     "Failed to register Hytera SmartEEMS FileService-HDFS to Services! Please run InstallService.bat manually." 
+#define IDS_FAIL_REGSERVICE_FileSyncServer      "Failed to register Hytera SmartEEMS FileSyncServer to Services! Please run InstallService.bat manually." 
+#define IDS_FAIL_REGSERVICE_ConfigAgent         "Failed to register Hytera SmartEEMS ConfigAgent to Services! Please run InstallService.bat manually." 
+
+
+#define IDS_FAILTOKILLPROCESS          "Failed to Kill SmartOne Process! Please run Process_Kill.bat manually." 
+#define VCREDIST_SUBFOLDER				"VcRedist"    
+#define VCREDIST_SUBFOLDER_UP				"Install"
+#define VCREDIST_BATFILE				"vcredist_x86.bat"
+#define VCREDIST_BATFILE_2010			"vcredist_2010.bat"
+#define VCREDIST_BATFILE_2013			"vcredist_2013.bat"
+ #define VCREDIST_BATFILE_2012			"vcredist_2012.bat"  
+ 
+#define AUTOGENDUMPFILE			        "AutoGenDumpFile.reg"		
+
+#define REGSERVICESBATFILE_PIDSERVER		"Install.bat"
+#define UNREGSERVICESBATFILE_PIDSERVER		"UnInstall.bat"  
+        
+#define REGSERVICESBATFILE_ClientServer		"Install.bat"
+#define UNREGSERVICESBATFILE_ClientServer	"UnInstall.bat" 
+
+#define REGSERVICESBATFILE_CONFIGURATION		"RegSysSrv.bat"
+#define UNREGSERVICESBATFILE_CONFIGURATION		"UnRegSysSrv.bat"
+#define STOPSERVICESBATFILE_CONFIGURATION       "StopSysSrv.bat"  
+
+#define REGSERVICESBATFILE_NetManageServer	"RegSysSrv.bat"
+#define UNREGSERVICESBATFILE_NetManageServer	"UnRegSysSrv.bat"
+#define STOPSERVICESBATFILE_NetManageServer    "StopSysSrv.bat"   
+#define StopPUC_AllProcessFileBat    "Process_Kill.bat"
+#define IDS_FAILTOSetupDog				"Failed to setup dog Driver"   
+#define IDS_FAILTOSetupSQL              "Failed to setup PostgreSQL"
+#define IDS_FAILTOSetupFTP				"Failed to setup FtpServer" 
+#define GATEWAY_SUBFOLDER			    "Gateway"
+#define GATEWAY_ICEGRIDADMIN_BAT    	"icegridadmin.bat"
+#define IDS_FAILTORunGWIcegridadmin  	"Failed to run Gateway Icegridadmin.bat"	
+ 
+#define SERVER_SUBFOLDER			    "Server"
+#define SERVER_ICEGRIDADMIN_BAT    		"icegridadmin.bat"
+#define IDS_FAILTORunSVIcegridadmin  	"Failed to run Server Icegridadmin.bat"	
+
+/*
+function  RunDogUserDriver()
+    STRING szProgram,szParam;
+      
+begin
+	szProgram = INSTALLDIR ^ DOGPATH_UP ^ DOGPATH ^ DOGNAME;
+    szParam = "/q";
+    LongPathToQuote( szProgram, TRUE );
+    if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAILTOSetupDog, SEVERE); 
+    endif;
+end;    
+*/
+
+
+
+function RunVcRedistExe2012() 
+    STRING svResult;
+    STRING szProgram, szParam;  
+begin
+    //szProgram = INSTALLDIR ^ VCREDIST_SUBFOLDER ^ VCREDIST_BATFILE;
+    szProgram = INSTALLDIR ^ VCREDIST_SUBFOLDER_UP ^ VCREDIST_SUBFOLDER ^ VCREDIST_BATFILE_2012;  
+   // MessageBox (szProgram, SEVERE); 
+    szParam = "/q";
+    LongPathToQuote( szProgram, TRUE );
+    if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAILTOSetupVcRedist2012, SEVERE); 
+    endif;
+end;
+ 
+
+ function RunVcRedistExe2013() 
+    STRING svResult;
+    STRING szProgram, szParam;  
+begin
+    //szProgram = INSTALLDIR ^ VCREDIST_SUBFOLDER ^ VCREDIST_BATFILE;
+    szProgram = INSTALLDIR ^ VCREDIST_SUBFOLDER_UP ^ VCREDIST_SUBFOLDER ^ VCREDIST_BATFILE_2013;  
+   // MessageBox (szProgram, SEVERE); 
+    szParam = "/q";
+    LongPathToQuote( szProgram, TRUE );
+    if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAILTOSetupVcRedist2013, SEVERE); 
+    endif;
+end; 
+
+function RunFtpServer()
+    STRING szProgram,szParam;
+      
+begin
+	szProgram = INSTALLDIR ^ FTPPATH_UP ^ FTPPATH ^ FTPNAME;
+    szParam = "/q";
+    LongPathToQuote( szProgram, TRUE );
+    if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+//if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT) < 0 ) then 
+		MessageBox (IDS_FAILTOSetupFTP, SEVERE); 
+    endif;
+end;
+
+
+function RunPostgreSQL()
+    STRING szProgram,szParam;
+      
+begin
+	szProgram = INSTALLDIR ^ SQLPATH_UP ^ SQLPATH ^ SQLNAME;
+    szParam = "/q";
+    LongPathToQuote( szProgram, TRUE );
+    if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then  
+    // if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT) < 0 ) then 
+		MessageBox (IDS_FAILTOSetupSQL, SEVERE); 
+    endif;
+end;
+
+
+//////////////////////////////////////////////////////////////////
+//
+#define REGKEY_SW_MS_WIN_CUR_Uninstall  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall"
+//
+function NUMBER IsExistRegKey_MSSQLServerNativeClient()
+    string szKey, szSubItem, szNameValue, szUninstallKey;
+    LIST   listSubKeys, listNames;
+    NUMBER nReturn, nResult, nSize, nType;
+    //string strKeyword1, strKeyword2;
+    string strKeyword;
+begin
+    listSubKeys  = ListCreate(STRINGLIST);
+    if ( listSubKeys = LIST_NULL ) then
+        return 0;
+    endif;
+
+    if (SYSINFO.bIsWow64) then
+        REGDB_OPTIONS = REGDB_OPTIONS | REGDB_OPTION_WOW64_64KEY;
+    endif;
+    RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+    
+    szUninstallKey = REGKEY_SW_MS_WIN_CUR_Uninstall;
+    //szUninstallKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
+
+    // 判断 "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" 下是否有子项
+    nReturn = RegDBQueryKey(szUninstallKey, REGDB_KEYS, listSubKeys);
+    if (nReturn >= 0) then
+        strKeyword = "Microsoft SQL Server Native Client";
+        // strKeyword2 = "Native Client";
+        
+        // Get the first string in the list.
+        nResult = ListGetFirstString(listSubKeys, szSubItem);
+        // Loop while list items continue to be retrieved.
+        while (nResult != END_OF_LIST)
+            szKey = szUninstallKey + "\\" + szSubItem;
+            nType = REGDB_STRING;
+            szNameValue = "";
+            nSize       = -1;
+            if (RegDBGetKeyValueEx(szKey, "DisplayName", nType, szNameValue, nSize) >= 0) then
+                // 需要判断是否含有2个关键词 "Microsoft SQL Server", "Native Client"
+               // if (nType = REGDB_STRING) && (StrFind(szNameValue, strKeyword1) >= 0) && (StrFind(szNameValue, strKeyword2) >= 20) then
+               // 需要判断是否含有关键词 "Microsoft SQL Server Native Client"
+                if (nType = REGDB_STRING) && (StrFind(szNameValue, strKeyword) >= 0)  then
+                    if (SYSINFO.bIsWow64) then
+                        REGDB_OPTIONS = REGDB_OPTIONS & ~REGDB_OPTION_WOW64_64KEY;
+                    endif;
+                    ListDestroy(listSubKeys );
+                    return 1;
+                endif;
+            endif;
+
+            // Get the next string in the list.
+            nResult = ListGetNextString(listSubKeys, szSubItem);
+        endwhile;
+    endif;
+    
+    if (SYSINFO.bIsWow64) then
+        REGDB_OPTIONS = REGDB_OPTIONS & ~REGDB_OPTION_WOW64_64KEY;
+    endif;
+
+    ListDestroy(listSubKeys );
+    return 0;
+end;
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+#define IDSTRING_REGKEY_NativeClient2005_X64	"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{751EE164-9F12-4E57-ADB0-02D8F34A10AD}"
+#define IDSTRING_REGKEY_NativeClient2005_X86	"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{BF251EAF-8697-4E89-EF09-C998F97BBC40}"
+#define IDSTRING_REGKEY_NativeClient2008_X64	"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{C79A7EAB-9D6F-4072-8A6D-F8F54957CD93}"
+#define IDSTRING_REGKEY_NativeClient2008_X86	"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{D9D937B0-E842-4130-9588-B948E876904A}"
+#define FILENAME_NativeClient2005_X64			"sqlncli_x64.msi"
+#define FILENAME_NativeClient2005_X86			"sqlncli.msi"
+
+function RunSQLNativeClient2005() 
+    STRING svResult;
+    STRING szProgram, szParam;  
+    string szCommand, szCmdLine;
+begin
+    //if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+    szCommand = WINSYSDIR ^ "msiexec.exe";
+    LongPathToShortPath(szCommand);
+    
+   
+    if (SYSINFO.bIsWow64) then //如果为64位操作系统 
+      RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+      if ( RegDBKeyExist(IDSTRING_REGKEY_NativeClient2005_X64) < 0 ) then    
+            szCmdLine = SRCDIR ^ FILENAME_NativeClient2005_X64;
+            LongPathToShortPath(szCmdLine); 
+            if (LaunchAppAndWait(szCommand, "/i"+szCmdLine, LAAW_OPTION_WAIT) < 0) then        
+                MessageBox ("Failed to install Microsoft SQL Server Native Client ! ", INFORMATION); 
+            endif;
+      endif;
+    else
+        
+       RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);  
+       if ( RegDBKeyExist(IDSTRING_REGKEY_NativeClient2005_X86) < 0 ) then      
+        szCmdLine = SRCDIR ^ FILENAME_NativeClient2005_X86;
+        LongPathToShortPath(szCmdLine);  
+       //if (LaunchAppAndWait(szCmdLine, "/q /norestart", LAAW_OPTION_WAIT) < 0) then        
+            if (LaunchAppAndWait(szCommand, "/i"+szCmdLine, LAAW_OPTION_WAIT) < 0) then        
+                MessageBox ("Failed to install Microsoft SQL Server Native Client ! ", INFORMATION); 
+            endif;
+      endif;
+    endif;
+end;
+
+
+///////////////////////////////////////////////////////////////////////////
+ #define IDSTRING_REGKEY_DotNetFramework40_x86		"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{0A0CADCF-78DA-33C4-A350-CD51849B9702}"
+#define IDSTRING_REGKEY_DotNetFramework40_x64		"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{8E34682C-8118-31F1-BC4C-98CD9675E1C2}"
+
+/*
+function RunDotNetFramework40() 
+    STRING svResult;
+    STRING szProgram, szParam;  
+    string szCommand, szCmdLine;
+begin
+    if (SYSINFO.bIsWow64) then
+        REGDB_OPTIONS = REGDB_OPTIONS | REGDB_OPTION_WOW64_64KEY;
+        RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+        if ( RegDBKeyExist(IDSTRING_REGKEY_DotNetFramework40_x64) < 0 ) then     
+             if (LaunchAppAndWait(SRCDIR ^ "Net Framework 4.5.1.exe", "", LAAW_OPTION_WAIT) < 0) then 
+                MessageBox ("Failed to installed Microsoft .NET Framework 4.0 ! ", INFORMATION); 
+            endif;
+        endif;
+        REGDB_OPTIONS = REGDB_OPTIONS & ~REGDB_OPTION_WOW64_64KEY;
+    else   
+        RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+        if ( RegDBKeyExist(IDSTRING_REGKEY_DotNetFramework40_x86) < 0 ) then     
+            //if (LaunchAppAndWait(SRCDIR ^ "dotNetFx40_Full_x86_x64.exe", "/q /norestart", LAAW_OPTION_WAIT) < 0) then 
+            if (LaunchAppAndWait(SRCDIR ^ "Net Framework 4.5.1.exe", "", LAAW_OPTION_WAIT) < 0) then 
+                MessageBox ("Failed to installed Microsoft .NET Framework 4.0 ! ", INFORMATION); 
+            endif;
+        endif;
+ endif;
+end;
+*/
+
+#define IDSTRING_REGKEY_DotNetFramework45_x86 	    "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full"
+#define IDSTRING_REGKEY_DotNetFramework45_x64 	    "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full"
+
+function RunDotNetFramework40() 
+    STRING svResult;
+    STRING szProgram, szParam;  
+    STRING szCommand, szCmdLine, szReleaseValue;
+    NUMBER nSize, nType, nReleaseValue;
+    BOOL   bInstall;
+begin  
+	//szCommand = WINSYSDIR ^ "msiexec.exe";
+    //LongPathToShortPath(szCommand);
+	szProgram = SRCDIR ^ "Net Framework 4.5.1.exe"; 
+    szParam = "/q /norestart";
+    LongPathToQuote( szProgram, TRUE );
+    bInstall = FALSE;   
+    //SdShowMsg("正在安装.net4.5.1......", TRUE);
+    if (SYSINFO.bIsWow64) then
+        REGDB_OPTIONS = REGDB_OPTIONS | REGDB_OPTION_WOW64_64KEY;
+        RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+        if ( RegDBKeyExist(IDSTRING_REGKEY_DotNetFramework45_x64) < 0 ) then     
+        	bInstall = TRUE;
+        else
+            // 存在，判断full\release是否是378758-4.5.1,windows8.1-378675，378389-4.5版本
+            nType = REGDB_NUMBER;
+            szReleaseValue = "";
+            nSize       = -1;
+            if (RegDBGetKeyValueEx(IDSTRING_REGKEY_DotNetFramework45_x64, "Release", nType, szReleaseValue, nSize) >= 0) then
+                StrToNum(nReleaseValue, szReleaseValue);
+                if (nType = REGDB_NUMBER) && (nReleaseValue < 378675)  then
+		 			bInstall = TRUE;
+                endif;
+            else
+            	bInstall = TRUE;
+            endif;
+    	endif;
+        REGDB_OPTIONS = REGDB_OPTIONS & ~REGDB_OPTION_WOW64_64KEY;
+    else   
+        RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+        if ( RegDBKeyExist(IDSTRING_REGKEY_DotNetFramework45_x86) < 0 ) then     
+        	bInstall = TRUE;
+        else
+       		// 存在，判断full\release是否是378758-4.5.1,windows8.1-378675，378389-4.5版本
+            nType = REGDB_NUMBER;
+            szReleaseValue = "";
+            nSize       = -1;
+            if (RegDBGetKeyValueEx(IDSTRING_REGKEY_DotNetFramework45_x86, "Release", nType, szReleaseValue, nSize) >= 0) then
+     			StrToNum(nReleaseValue, szReleaseValue);
+                if (nType = REGDB_NUMBER) && (nReleaseValue < 378675)  then
+		 			bInstall = TRUE;
+                endif;
+            else
+            	bInstall = TRUE;
+            endif;
+    	endif;
+       
+ 	endif;
+ 	if( bInstall ) then
+ 	    //szCmdLine = SRCDIR ^ "ndp451-kb2858728-x86-x64-allos-enu.msi";
+        //LongPathToShortPath(szCmdLine);
+        ////if (LaunchAppAndWait(SRCDIR ^ "dotNetFx40_Full_x86_x64.exe", "/q /norestart", LAAW_OPTION_WAIT) < 0) then 
+		if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_SHOW_HOURGLASS) < 0 ) then   
+      	//if (LaunchAppAndWait(szCommand, "/i"+szCmdLine, LAAW_OPTION_WAIT) < 0) then
+        	MessageBox ("Failed to installed Microsoft .NET Framework 4.5.1 ! ", INFORMATION); 
+       	endif;
+	endif;
+end; 
+ 
+ 
+//////////////////////////////////////////////////////////////////////////////////////
+#define STRING_FONTNAME1		"MAPX ARROWS_0.TTF"
+#define STRING_FONTTITLE1		"MapX Arrows"
+//
+#define STRING_FONTNAME2		"MSYH.TTF"
+#define STRING_FONTTITLE2		"微软雅黑"
+//
+#define STRING_FONTNAME3		"MSYHBD.TTF"
+#define STRING_FONTTITLE3		"微软雅黑"          
+
+function SetupRDS30Fonts() 
+    string szFileName, svFontTitle;
+begin
+    szFileName  = FOLDER_FONTS ^ STRING_FONTNAME1;
+    svFontTitle = STRING_FONTTITLE1;
+    RegisterFontResource ( szFileName, svFontTitle, TRUE, REGFONT_OPTION_DEFAULT );
+
+    szFileName  = FOLDER_FONTS ^ STRING_FONTNAME2;
+    svFontTitle = STRING_FONTTITLE2;
+    RegisterFontResource ( szFileName, svFontTitle, TRUE, REGFONT_OPTION_DEFAULT );
+    
+    szFileName  = FOLDER_FONTS ^ STRING_FONTNAME3;
+    svFontTitle = STRING_FONTTITLE3;
+    RegisterFontResource ( szFileName, svFontTitle, TRUE, REGFONT_OPTION_DEFAULT );
+end;        
+
+//////////////////////////////////////////////////////////////////////////////////////
+ function RegStationServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Server ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_Station, SEVERE); 
+	endif;
+end;
+
+function UnRegOldStationServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Server ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );   // ??????????
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+
+
+function RegWebServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Webservice ^ @ID_STRING0_WebServiceClient ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_Web, SEVERE); 
+	endif;
+end;
+
+function UnRegOldWebServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Webservice ^ @ID_STRING0_WebServiceClient ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );   // ??????????
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+ 
+ 
+function RegCloudCenterServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Cloud ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_CloudCenter, SEVERE); 
+	endif;
+end;
+
+function UnRegOldCloudCenterServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Cloud ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );   // ??????????
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+
+
+function RegNMServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Tools ^ @ID_STRING0_NMServer ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_NMServer, SEVERE); 
+	endif;
+end;
+
+function UnRegOldNMServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Tools ^ @ID_STRING0_NMServer ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );   // ??????????
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+  
+  
+function RegPostgreSQLServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Storage ^ @ID_STRING0_DBService_PostgreSQL ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_PostgreSQL, SEVERE); 
+	endif;
+end;
+
+function UnRegOldPostgreSQLServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Storage ^ @ID_STRING0_DBService_PostgreSQL ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );   // ??????????
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+ 
+ 
+function RegPostgreSQL_DSServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Storage ^ @ID_STRING0_DBService_PostgreSQL_DS ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_PostgreSQL_DS, SEVERE); 
+	endif;
+end;
+ 
+function UnRegOldPostgreSQL_DSServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Storage ^ @ID_STRING0_DBService_PostgreSQL_DS ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );   // ??????????
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+
+
+function RegFileServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Storage ^ @ID_STRING0_FileService_FTP ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_File, SEVERE); 
+	endif;
+end;
+
+function UnRegOldFileServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Storage  ^ @ID_STRING0_FileService_FTP ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );   // ??????????
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+ 
+ 
+function RegLogServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Tools ^ @ID_STRING0_Log ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_Log, SEVERE); 
+	endif;
+end;
+
+function UnRegOldLogServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Tools ^ @ID_STRING0_Log ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );   // ??????????
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+
+
+function RegNetManageServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Tools ^ @ID_STRING0_NetManage ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_NetManage, SEVERE); 
+	endif;
+end;
+
+function UnRegOldNetManageServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Tools ^ @ID_STRING0_NetManage  ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );   // ??????????
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+
+
+function RegServantRouterServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_CommonPlugin ^ @ID_STRING0_ServantRouter ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_ServantRouter, SEVERE); 
+	endif;
+end;
+
+function UnRegOldServantRouterServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_CommonPlugin ^ @ID_STRING0_ServantRouter ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );   // ??????????
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+
+ function RegTomcatServices_SERVER()
+	STRING szProgram, szParam;  
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_TWebServer ^ REGSERVICESBATFILE; 
+	szParam = ""; 
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_Tomcat, SEVERE); 
+	endif;
+end;  
+
+ function RegTomcatServices_TC_SERVER()
+	STRING szProgram, szParam;  
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_TConfigServer ^ REGSERVICESBATFILE_TC;  
+	szParam = ""; 
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_Tomcat_TC, SEVERE); 
+	endif;
+end;
+
+
+function UnRegOldTomcatServices_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_TWebServer ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );   // ??????????
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+
+function UnRegOldTomcatServices_TC_SERVER()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_TConfigServer ^ UNREGSERVICESBATFILE_TC;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );   // ??????????
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+
+function RegServices_DBService_HBASE()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Storage ^ @ID_STRING0_DBService_HBASE ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_DBServiceHBASE, SEVERE); 
+	endif;
+end;
+
+function UnRegOldServices_DBService_HBASE()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Storage  ^ @ID_STRING0_DBService_HBASE ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+
+
+function RegServices_FileService_HDFS()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Storage ^ @ID_STRING0_FileService_HDFS ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_FileServiceHDFS, SEVERE); 
+	endif;
+end;
+
+function UnRegOldServices_FileService_HDFS()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Storage  ^ @ID_STRING0_FileService_HDFS ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+
+
+function RegServices_FileSyncServer()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Storage ^ @ID_STRING0_FileSyncServer ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_FileSyncServer, SEVERE); 
+	endif;
+end;
+
+function UnRegOldServices_FileSyncServer()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Storage  ^ @ID_STRING0_FileSyncServer ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;
+
+
+function RegServices_ConfigAgent()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Tools ^ @ID_STRING0_ConfigAgent ^ REGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	if (LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN) < 0 ) then 
+		MessageBox (IDS_FAIL_REGSERVICE_ConfigAgent, SEVERE); 
+	endif;
+end;
+
+function UnRegOldServices_ConfigAgent()
+	STRING szProgram, szParam;
+begin
+	szProgram = INSTALLDIR ^ @ID_STRING0_Tools  ^ @ID_STRING0_ConfigAgent ^ UNREGSERVICESBATFILE;  
+	szParam = "";
+	LongPathToQuote( szProgram, TRUE );
+	LaunchAppAndWait(szProgram, szParam, LAAW_OPTION_WAIT | LAAW_OPTION_HIDDEN);
+end;

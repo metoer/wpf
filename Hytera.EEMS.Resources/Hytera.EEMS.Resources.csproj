@@ -1,0 +1,1006 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{73FC8214-31C1-4431-8A05-2267219E7EF4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hytera.EEMS.Resources</RootNamespace>
+    <AssemblyName>Hytera.EEMS.Resources</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\EEMS\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\EEMS\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\EEMS\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\EEMS\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EEMS\System.Windows.Interactivity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\AnimatedGIFControl.cs" />
+    <Compile Include="Controls\BaseWindow.cs" />
+    <Compile Include="Controls\HintPassword.xaml.cs">
+      <DependentUpon>HintPassword.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HintTextBox.xaml.cs">
+      <DependentUpon>HintTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Controls\LoadedControl.xaml.cs">
+      <DependentUpon>LoadedControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\Loading\AdornedControl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\Loading\AdornerPlacement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\Loading\FrameworkElementAdorner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\Loading\LoadingWait.xaml.cs">
+      <DependentUpon>LoadingWait.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\LoginPassWord\LoginPasswordBox.cs" />
+    <Compile Include="Controls\LoginPassWord\PasswordControl.xaml.cs">
+      <DependentUpon>PasswordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PortComboBoxItem.cs" />
+    <Compile Include="Controls\RollValueControl.xaml.cs">
+      <DependentUpon>RollValueControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SelectButton.cs" />
+    <Compile Include="Controls\SliderByMouse.cs" />
+    <Compile Include="Controls\MainWindowHead.xaml.cs">
+      <DependentUpon>MainWindowHead.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextBoxFilterBehavior.cs" />
+    <Compile Include="Controls\WindowHead.xaml.cs">
+      <DependentUpon>WindowHead.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converter\ValueToStringConverter.cs" />
+    <Compile Include="Converter\ProgressValueConverter.cs" />
+    <Compile Include="Lib\AppHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Windows\MessageBoxWindow.xaml.cs">
+      <DependentUpon>MessageBoxWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\NewMessageBox.cs" />
+    <Compile Include="Windows\ResultWindow.xaml.cs">
+      <DependentUpon>ResultWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Collect\buttonNoEnable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\HintPassword.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\HintTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LoadedControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Loading\LoadingWait.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LoginPassWord\PasswordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RollValueControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\MainWindowHead.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\WindowHead.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Commom\FingerStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Commom\PortSetStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Commom\CollectStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Commom\LoginStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Commom\AboutStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Commom\ManageStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Commom\MainStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Commom\Default.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Commom\Chinese.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Commom\CalendarStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Commom\DataGridStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Commom\ComboBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Commom\ScrollBarStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Skins\Default\Default.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\MessageBoxWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ResultWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\LoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hytera.EEMS.Common\Hytera.EEMS.Common.csproj">
+      <Project>{f91b27ce-c8f1-4cda-b580-53b4c3debcb4}</Project>
+      <Name>Hytera.EEMS.Common</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Hytera.EEMS.Dispatcher\Hytera.EEMS.Dispatcher.csproj">
+      <Project>{a9eb6121-d442-43cd-b237-d1ed95260aba}</Project>
+      <Name>Hytera.EEMS.Dispatcher</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Hytera.EEMS.Model\Hytera.EEMS.AppLib.csproj">
+      <Project>{1dbf33bf-6dac-4be2-a8ad-5838a6342f9a}</Project>
+      <Name>Hytera.EEMS.AppLib</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Collect\buttonDefault.png" />
+    <Resource Include="Images\Collect\buttonOver.png" />
+    <Resource Include="Images\Collect\buttonPress.png" />
+    <Resource Include="Images\Main\devItemBg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\mainWindowBg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Collect\toolDefault.png" />
+    <Resource Include="Images\Collect\toolOver.png" />
+    <Resource Include="Images\Collect\toolSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\refreshDefault.png" />
+    <Resource Include="Images\Main\refreshOver.png" />
+    <Resource Include="Images\Main\refreshPress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\toolBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\manageDefault.png" />
+    <Resource Include="Images\Manage\manageOver.png" />
+    <Resource Include="Images\Manage\manageSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\setDefault.png" />
+    <Resource Include="Images\Main\setOver.png" />
+    <Resource Include="Images\Main\setPress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\closeDefault.png" />
+    <Resource Include="Images\Main\closeOver.png" />
+    <Resource Include="Images\Main\closePress.png" />
+    <Resource Include="Images\Main\minDefault.png" />
+    <Resource Include="Images\Main\minOver.png" />
+    <Resource Include="Images\Main\minPress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\toolBg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\titleImg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\pbCenter.png" />
+    <Resource Include="Images\Main\pbLeft.png" />
+    <Resource Include="Images\Main\pbRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\dataOff.png" />
+    <Resource Include="Images\Main\dataOn.png" />
+    <Resource Include="Images\Main\serverOn.png" />
+    <Resource Include="Images\Main\severOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Collect\Devitem\adress.png" />
+    <Resource Include="Images\Collect\Devitem\btnDefault.png" />
+    <Resource Include="Images\Collect\Devitem\btnEnable.png" />
+    <Resource Include="Images\Collect\Devitem\btnOver.png" />
+    <Resource Include="Images\Collect\Devitem\btnPress.png" />
+    <Resource Include="Images\Collect\Devitem\code.png" />
+    <Resource Include="Images\Collect\Devitem\dev.png" />
+    <Resource Include="Images\Collect\Devitem\pblight.png" />
+    <Resource Include="Images\Collect\Devitem\pname.png" />
+    <Resource Include="Images\Collect\Devitem\toolBg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Commom\closeDefault.png" />
+    <Resource Include="Images\Commom\closeOver.png" />
+    <Resource Include="Images\Commom\closePress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Commom\titleImg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Commom\commomBg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Commom\btnDefault.png" />
+    <Resource Include="Images\Commom\btnOver.png" />
+    <Resource Include="Images\Commom\btnPress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Commom\titleSp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Commom\infoImg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Commom\longDefault.png" />
+    <Resource Include="Images\Commom\longOver.png" />
+    <Resource Include="Images\Commom\longPress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Collect\toggleDefault.png" />
+    <Resource Include="Images\Collect\toggleOver.png" />
+    <Resource Include="Images\Collect\togglePress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Collect\Devitem\batteryBg.png" />
+    <Resource Include="Images\Collect\Devitem\batteryValue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Collect\Devitem\flashing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainWindowHead\headCloseDefault.png" />
+    <Resource Include="Images\MainWindowHead\headCloseOver.png" />
+    <Resource Include="Images\MainWindowHead\headClosePress.png" />
+    <Resource Include="Images\MainWindowHead\toolSp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginWindow\loginBg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginWindow\contentBg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginWindow\fingerprint.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginWindow\ORsp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginWindow\loginBtnDefault.png" />
+    <Resource Include="Images\LoginWindow\loginBtnOver.png" />
+    <Resource Include="Images\LoginWindow\loginBtnPress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginWindow\defaultSp.png" />
+    <Resource Include="Images\LoginWindow\inputSp.png" />
+    <Resource Include="Images\LoginWindow\useDefault.png" />
+    <Resource Include="Images\LoginWindow\useSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginWindow\eyeDefault.png" />
+    <Resource Include="Images\LoginWindow\eyeLook.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginWindow\pwDefault.png" />
+    <Resource Include="Images\LoginWindow\pwSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginWindow\inverted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Calendar\Background.png" />
+    <Resource Include="Images\Manage\Calendar\BtnDefault.png" />
+    <Resource Include="Images\Manage\Calendar\BtnOver.png" />
+    <Resource Include="Images\Manage\Calendar\BtnSelect.png" />
+    <Resource Include="Images\Manage\Calendar\Head.png" />
+    <Resource Include="Images\Manage\Calendar\Select.png" />
+    <Resource Include="Images\Manage\Edit\BtnDefault.png" />
+    <Resource Include="Images\Manage\Edit\BtnOver.png" />
+    <Resource Include="Images\Manage\Edit\BtnSelect.png" />
+    <Resource Include="Images\Manage\Edit\CloseDafaule.png" />
+    <Resource Include="Images\Manage\Edit\CloseOver.png" />
+    <Resource Include="Images\Manage\Edit\CloseSelect.png" />
+    <Resource Include="Images\Manage\Edit\ComboBoxDefault.png" />
+    <Resource Include="Images\Manage\Edit\ComboBoxOver.png" />
+    <Resource Include="Images\Manage\Edit\ComboBoxSelect.png" />
+    <Resource Include="Images\Manage\Edit\EditBackground.png" />
+    <Resource Include="Images\Manage\Edit\GeneralDefault.png" />
+    <Resource Include="Images\Manage\Edit\GeneralOver.png" />
+    <Resource Include="Images\Manage\Edit\GeneralSelect.png" />
+    <Resource Include="Images\Manage\Edit\Head.png" />
+    <Resource Include="Images\Manage\Edit\ImportantOver.png" />
+    <Resource Include="Images\Manage\Edit\ImportantSelect.png" />
+    <Resource Include="Images\Manage\Edit\Partition.png" />
+    <Resource Include="Images\Manage\Edit\SearchBackground.png" />
+    <Resource Include="Images\Manage\logTabDefault.png" />
+    <Resource Include="Images\Manage\logTabOver.png" />
+    <Resource Include="Images\Manage\logTabSelect.png" />
+    <Resource Include="Images\Manage\mainHisPlayBtnDefault.png" />
+    <Resource Include="Images\Manage\mainHisPlayBtnSelect.png" />
+    <Resource Include="Images\Manage\mediaTabDefault.png" />
+    <Resource Include="Images\Manage\mediaTabOver.png" />
+    <Resource Include="Images\Manage\mediaTabSelect.png" />
+    <Resource Include="Images\Manage\Media\MediaCheckAllDefault.png" />
+    <Resource Include="Images\Manage\Media\MediaCheckAllSelect.png" />
+    <Resource Include="Images\Manage\Media\MediaClassify.png" />
+    <Resource Include="Images\Manage\Media\MediaClassifyLDefault.png" />
+    <Resource Include="Images\Manage\Media\MediaClassifyLOver.png" />
+    <Resource Include="Images\Manage\Media\MediaClassifyLSelect.png" />
+    <Resource Include="Images\Manage\Media\MediaClassifyRDefault.png" />
+    <Resource Include="Images\Manage\Media\MediaClassifyROver.png" />
+    <Resource Include="Images\Manage\Media\MediaClassifyRSelect.png" />
+    <Resource Include="Images\Manage\Media\MediaType.png" />
+    <Resource Include="Images\Manage\Media\MediaTypeOver.png" />
+    <Resource Include="Images\Manage\Media\MediaTypeSelect.png" />
+    <Resource Include="Images\Manage\Media\UploadDefault.png" />
+    <Resource Include="Images\Manage\Media\UploadEnabled.png" />
+    <Resource Include="Images\Manage\Media\UploadOver.png" />
+    <Resource Include="Images\Manage\Media\UploadSelect.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarDefault.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarOver.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageButtonDownDefault.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageButtonDownOver.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageButtonDownSelect.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageButtonUpDefault.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageButtonUpOver.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageButtonUpSelect.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarSelect.png" />
+    <Resource Include="Images\Manage\SearchBar\AdvancedBtnDefault.png" />
+    <Resource Include="Images\Manage\SearchBar\AdvancedBtnOver.png" />
+    <Resource Include="Images\Manage\SearchBar\AdvancedBtnSelect.png" />
+    <Resource Include="Images\Manage\SearchBar\CalendarBtnDefault.png" />
+    <Resource Include="Images\Manage\SearchBar\CalendarBtnOver.png" />
+    <Resource Include="Images\Manage\SearchBar\CalendarBtnSelect.png" />
+    <Resource Include="Images\Manage\SearchBar\DatePickerDefault.png" />
+    <Resource Include="Images\Manage\SearchBar\DatePickerOver.png" />
+    <Resource Include="Images\Manage\SearchBar\SearchBtnDefault.png" />
+    <Resource Include="Images\Manage\SearchBar\SearchBtnOver.png" />
+    <Resource Include="Images\Manage\SearchBar\SearchBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Edit\AdvancedBtnDefault.png" />
+    <Resource Include="Images\Manage\Edit\AdvancedBtnOver.png" />
+    <Resource Include="Images\Manage\Edit\AdvancedBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\CloseBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\CloseBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\CloseBtnOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Card\AddBtnDefault.png" />
+    <Resource Include="Images\Manage\Card\AddBtnSelect.png" />
+    <Resource Include="Images\Manage\Card\BackgroundSelect.png" />
+    <Resource Include="Images\Manage\Card\BarBackground.png" />
+    <Resource Include="Images\Manage\Card\Cameraicon.png" />
+    <Resource Include="Images\Manage\Card\CardSelect.png" />
+    <Resource Include="Images\Manage\Card\ChooseDefault.png" />
+    <Resource Include="Images\Manage\Card\ChooseSelect.png" />
+    <Resource Include="Images\Manage\Card\DownBtnDefault.png" />
+    <Resource Include="Images\Manage\Card\DownBtnSelect.png" />
+    <Resource Include="Images\Manage\Card\EditBtnDefault.png" />
+    <Resource Include="Images\Manage\Card\EditBtnSelect.png" />
+    <Resource Include="Images\Manage\Card\Favorite.png" />
+    <Resource Include="Images\Manage\Card\MainBackground.png" />
+    <Resource Include="Images\Manage\Card\PlayBtnDefault.png" />
+    <Resource Include="Images\Manage\Card\PicOver.png" />
+    <Resource Include="Images\Manage\Card\PicSelect.png" />
+    <Resource Include="Images\Manage\Card\PlayBtnSelect.png" />
+    <Resource Include="Images\Manage\Card\PlayStop.png" />
+    <Resource Include="Images\Manage\Card\Policeicon.png" />
+    <Resource Include="Images\Manage\Card\PoliceOfficeicon.png" />
+    <Resource Include="Images\Manage\Card\Timeicon.png" />
+    <Resource Include="Images\Manage\Card\VoicePic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\picTabDefault.png" />
+    <Resource Include="Images\Manage\Play\picTabOver.png" />
+    <Resource Include="Images\Manage\Play\picTabSelect.png" />
+    <Resource Include="Images\Manage\Play\videoTabDefault.png" />
+    <Resource Include="Images\Manage\Play\videoTabOver.png" />
+    <Resource Include="Images\Manage\Play\videoTabSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\MapBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\MapBtnOver.png" />
+    <Resource Include="Images\Manage\Play\MapBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\MainBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\GeneralOver.png" />
+    <Resource Include="Images\Manage\Play\GeneralSelect.png" />
+    <Resource Include="Images\Manage\Play\ImportantOver.png" />
+    <Resource Include="Images\Manage\Play\ImportantSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\ListBoxBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\Btn\CutBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\CutBtnEnabled.png" />
+    <Resource Include="Images\Manage\Play\Btn\CutBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\CutBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\FullScreenBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\FullScreenBtnEnabled.png" />
+    <Resource Include="Images\Manage\Play\Btn\FullScreenBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\FullScreenBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\LastBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\LastBtnEnabled.png" />
+    <Resource Include="Images\Manage\Play\Btn\LastBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\LastBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\ModeBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\ModeBtnEnabled.png" />
+    <Resource Include="Images\Manage\Play\Btn\ModeBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\ModeBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\NextBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\NextBtnEnabled.png" />
+    <Resource Include="Images\Manage\Play\Btn\NextBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\NextBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\PlayBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\PlayBtnEnabled.png" />
+    <Resource Include="Images\Manage\Play\Btn\PlayBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\PlayBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\TimeBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\TimeBtnEnabled.png" />
+    <Resource Include="Images\Manage\Play\Btn\TimeBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\TimeBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\VolumeBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\VolumeBtnEnabled.png" />
+    <Resource Include="Images\Manage\Play\Btn\VolumeBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\VolumeBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\Btn\VolumeBarBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\VolumeBarBtnEnabled.png" />
+    <Resource Include="Images\Manage\Play\Btn\VolumeBarBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\VolumeBarBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\PlayBarBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\CheckBar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\DelBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\DelBtnOver.png" />
+    <Resource Include="Images\Manage\Play\DelBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\Btn\BigBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\BigBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\BigBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\LeftBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\LeftBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\LeftBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\RightBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\RightBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\RightBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\SmallBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\SmallBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\SmallBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\Btn\PauseBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\PauseBtnEnabled.png" />
+    <Resource Include="Images\Manage\Play\Btn\PauseBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\PauseBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\StopBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\StopBtnEnabled.png" />
+    <Resource Include="Images\Manage\Play\Btn\StopBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\StopBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Edit\toggleDefault.png" />
+    <Resource Include="Images\Manage\Edit\toggleOver.png" />
+    <Resource Include="Images\Manage\Edit\togglePress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\Btn\RateBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\RateBtnEnabled.png" />
+    <Resource Include="Images\Manage\Play\Btn\RateBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\RateBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\Btn\FitBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\FitBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\FitBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\MuteBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\MuteBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\MuteBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\SequenceBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\SequenceBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\SequenceBtnSelect.png" />
+    <Resource Include="Images\Manage\Play\Btn\SingleBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\SingleBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\SingleBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\MainScrollViewer\VolCtrl_slider2_L.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\VolCtrl_slider2_M.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\VolCtrl_slider2_R.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\MainScrollViewer\VolCtrl_controler.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\VolCtrl_controler_active.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageDownDefault.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageDownOver.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageDownSelect.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageUpDefault.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageUpOver.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageUpSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Commom\WindowBg\bottom.png" />
+    <Resource Include="Images\Commom\WindowBg\left.png" />
+    <Resource Include="Images\Commom\WindowBg\leftBottom.png" />
+    <Resource Include="Images\Commom\WindowBg\leftTop.png" />
+    <Resource Include="Images\Commom\WindowBg\mid.png" />
+    <Resource Include="Images\Commom\WindowBg\right.png" />
+    <Resource Include="Images\Commom\WindowBg\rightBottom.png" />
+    <Resource Include="Images\Commom\WindowBg\rightTop.png" />
+    <Resource Include="Images\Commom\WindowBg\top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageMDefault.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageMOver.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageMSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageButtonDownDefault.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageButtonDownOver.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageButtonDownSelect.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageButtonUpDefault.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageButtonUpOver.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageButtonUpSelect.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageDownDefault.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageDownOver.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageDownSelect.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageMDefault.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageMOver.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageMSelect.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageUpDefault.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageUpOver.png" />
+    <Resource Include="Images\Manage\Play\ScrollViewer\ScrollBarPageUpSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Grid\CameraImpPic.png" />
+    <Resource Include="Images\Manage\Grid\UserImpPic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\itemBg.png" />
+    <Resource Include="Images\Main\itemSelectBg.png" />
+    <Resource Include="Images\Main\setPanelbg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\numSelectBg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\numBg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\selectIp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Commom\BtnBg\btnDefLeft.png" />
+    <Resource Include="Images\Commom\BtnBg\btnDefMid.png" />
+    <Resource Include="Images\Commom\BtnBg\btnDefRgiht.png" />
+    <Resource Include="Images\Commom\BtnBg\btnOverLeft.png" />
+    <Resource Include="Images\Commom\BtnBg\btnOverMid.png" />
+    <Resource Include="Images\Commom\BtnBg\btnOverRight.png" />
+    <Resource Include="Images\Commom\BtnBg\btnPressLeft.png" />
+    <Resource Include="Images\Commom\BtnBg\btnPressMid.png" />
+    <Resource Include="Images\Commom\BtnBg\btnPressRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\PlayBackground.png" />
+    <Resource Include="Images\Manage\Play\VideoPic.png" />
+    <Resource Include="Images\Manage\Play\VoicePic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Card\FavoriteCamera.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Grid\LogsBarBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Grid\BarBtnOver.png" />
+    <Resource Include="Images\Manage\Grid\BarBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Grid\CheckBtnDefault.png" />
+    <Resource Include="Images\Manage\Grid\CheckBtnOver.png" />
+    <Resource Include="Images\Manage\Grid\CheckBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\PlayList\DelBtnDefault.png" />
+    <Resource Include="Images\Manage\PlayList\DelBtnOver.png" />
+    <Resource Include="Images\Manage\PlayList\DelBtnSelect.png" />
+    <Resource Include="Images\Manage\PlayList\PlayBtnDefault.png" />
+    <Resource Include="Images\Manage\PlayList\PlayBtnOver.png" />
+    <Resource Include="Images\Manage\PlayList\PlayBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\PlayList\BackgroundPic\bottom.png" />
+    <Resource Include="Images\Manage\PlayList\BackgroundPic\left.png" />
+    <Resource Include="Images\Manage\PlayList\BackgroundPic\leftBottom.png" />
+    <Resource Include="Images\Manage\PlayList\BackgroundPic\leftTop.png" />
+    <Resource Include="Images\Manage\PlayList\BackgroundPic\mid.png" />
+    <Resource Include="Images\Manage\PlayList\BackgroundPic\right.png" />
+    <Resource Include="Images\Manage\PlayList\BackgroundPic\rightBottom.png" />
+    <Resource Include="Images\Manage\PlayList\BackgroundPic\rightTop.png" />
+    <Resource Include="Images\Manage\PlayList\BackgroundPic\top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageButtonDownDefault.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageButtonDownOver.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageButtonDownSelect.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageButtonUpDefault.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageButtonUpOver.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageButtonUpSelect.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageDownDefault.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageDownOver.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageDownSelect.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageMDefault.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageMOver.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageMSelect.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageUpDefault.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageUpOver.png" />
+    <Resource Include="Images\Manage\PlayList\ScrollViewer\ScrollBarPageUpSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\DataRefresh\pbLeft.png" />
+    <Resource Include="Images\Main\DataRefresh\pbMid.png" />
+    <Resource Include="Images\Main\DataRefresh\pbRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\Welcome\LoadingBG.png" />
+    <Resource Include="Images\Main\Welcome\LoadingRun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\Set\lanDefault.png" />
+    <Resource Include="Images\Main\Set\lanOver.png" />
+    <Resource Include="Images\Main\Set\lanPress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\Set\lanSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\Welcome\windowBg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Edit\TreeViewDefault.png" />
+    <Resource Include="Images\Manage\Edit\TreeViewExDefault.png" />
+    <Resource Include="Images\Manage\Edit\TreeViewExSelect.png" />
+    <Resource Include="Images\Manage\Edit\TreeViewSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\Warn\btnDefault.png" />
+    <Resource Include="Images\Main\Warn\btnOver.png" />
+    <Resource Include="Images\Main\Warn\btnPress.png" />
+    <Resource Include="Images\Main\Warn\controlBg.png" />
+    <Resource Include="Images\Main\Warn\downDefault.png" />
+    <Resource Include="Images\Main\Warn\downOver.png" />
+    <Resource Include="Images\Main\Warn\downPress.png" />
+    <Resource Include="Images\Main\Warn\upDefault.png" />
+    <Resource Include="Images\Main\Warn\upOver.png" />
+    <Resource Include="Images\Main\Warn\upPress.png" />
+    <Resource Include="Images\Main\Warn\warnIco.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Card\DownBtnUploaded.png" />
+    <Resource Include="Images\Manage\Card\DownBtnUploadedSelect.png" />
+    <Resource Include="Images\Manage\Card\DownBtnUploading.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eems.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\SearchNoDate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Commom\PlayWindowBg\bottom.png" />
+    <Resource Include="Images\Commom\PlayWindowBg\left.png" />
+    <Resource Include="Images\Commom\PlayWindowBg\leftBottom.png" />
+    <Resource Include="Images\Commom\PlayWindowBg\leftTop.png" />
+    <Resource Include="Images\Commom\PlayWindowBg\mid.png" />
+    <Resource Include="Images\Commom\PlayWindowBg\right.png" />
+    <Resource Include="Images\Commom\PlayWindowBg\rightBottom.png" />
+    <Resource Include="Images\Commom\PlayWindowBg\rightTop.png" />
+    <Resource Include="Images\Commom\PlayWindowBg\top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageButtonLeftDefault.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageButtonLeftOver.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageButtonLeftSelect.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageButtonRightDefault.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageButtonRightOver.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageButtonRightSelect.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageHMDefault.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageHMOver.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageHMSelect.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageLeftDefault.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageLeftOver.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageLeftSelect.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageRightDefault.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageRightOver.png" />
+    <Resource Include="Images\Manage\MainScrollViewer\ScrollBarPageRightSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\Btn\SaveBtnDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\SaveBtnEnabled.png" />
+    <Resource Include="Images\Manage\Play\Btn\SaveBtnOver.png" />
+    <Resource Include="Images\Manage\Play\Btn\SaveBtnSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\About\empower.png" />
+    <Resource Include="Images\Main\About\hytera.png" />
+    <Resource Include="Images\Main\About\license.png" />
+    <Resource Include="Images\Main\About\pc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\aboutDefault.png" />
+    <Resource Include="Images\Main\aboutOver.png" />
+    <Resource Include="Images\Main\aboutPress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\PicNoDate.png" />
+    <Resource Include="Images\Manage\Play\VideoNoDate.png" />
+    <Resource Include="Images\Manage\Play\VoiceNoDate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\PicPlayBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\VoicePlayBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\PortSet\circle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\PortSet\resetDefault.png" />
+    <Resource Include="Images\Main\PortSet\resetOver.png" />
+    <Resource Include="Images\Main\PortSet\resetPress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\PortSet\portOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\statusInfos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\PortSet\devItem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Collect\Devitem\firstPort.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Card\DownBtnOver.png" />
+    <Resource Include="Images\Manage\Card\DownBtnUploadingOver.png" />
+    <Resource Include="Images\Manage\Card\DownBtnUploadingSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Card\DownBtnFail.png" />
+    <Resource Include="Images\Manage\Card\DownBtnFailOver.png" />
+    <Resource Include="Images\Manage\Card\DownBtnFailSelect.png" />
+    <Resource Include="Images\Manage\Card\DownBtnUploadedOver.png" />
+    <Resource Include="Images\Manage\Card\DownBtnWait.png" />
+    <Resource Include="Images\Manage\Card\DownBtnWaitOver.png" />
+    <Resource Include="Images\Manage\Card\DownBtnWaitSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Card\NoChooseDefault.png" />
+    <Resource Include="Images\Manage\Card\NoChooseSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Main\KeyDefault.png" />
+    <Resource Include="Images\Main\KeyMover.png" />
+    <Resource Include="Images\Main\KeyPress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Commom\KeyDefault.png" />
+    <Resource Include="Images\Commom\KeyOver.png" />
+    <Resource Include="Images\Commom\keyPress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\Btn\PlayPoint.png" />
+    <Resource Include="Images\MainWindowHead\keyDefault.png" />
+    <Resource Include="Images\MainWindowHead\KeyOver.png" />
+    <Resource Include="Images\MainWindowHead\KeyPress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Play\Btn\VolumePointDefault.png" />
+    <Resource Include="Images\Manage\Play\Btn\VolumePointSelect.png" />
+    <Resource Include="Images\Main\DataRefresh\refreshBg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Card\AddBtnOver.png" />
+    <Resource Include="Images\Manage\Card\EditBtnOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Finger\FingerDefault.png" />
+    <Resource Include="Images\Finger\FingerOver.png" />
+    <Resource Include="Images\Finger\FingerSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Manage\Card\PlayBtnOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Finger\fingerNum.png" />
+    <Resource Include="Images\Finger\useType.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Finger\ToggleDefault.png" />
+    <Resource Include="Images\Finger\ToggleOver.png" />
+    <Resource Include="Images\Finger\TogglePress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Finger\recordBord.png" />
+    <Resource Include="Images\Finger\recordImg.png" />
+    <Resource Include="Images\Finger\recordMove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Finger\recordFail.png" />
+    <Resource Include="Images\Finger\recordSuccess.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Finger\editorDefault.png" />
+    <Resource Include="Images\Finger\editorOver.png" />
+    <Resource Include="Images\Finger\editorPress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Finger\btnEditor.png" />
+    <Resource Include="Images\Finger\btnRead.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Finger\btnDelete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginWindow\loginFingerBord.png" />
+    <Resource Include="Images\LoginWindow\loginFingerSep.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginWindow\fingerFail.png" />
+    <Resource Include="Images\LoginWindow\fingerRightBg.png" />
+    <Resource Include="Images\LoginWindow\fingerSuccess.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Finger\btnDefault.png" />
+    <Resource Include="Images\Finger\btnEnable.png" />
+    <Resource Include="Images\Finger\btnOver.png" />
+    <Resource Include="Images\Finger\btnPress.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

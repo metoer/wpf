@@ -1,0 +1,1065 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:control="clr-namespace:Hytera.EEMS.Resources.Controls"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ImageBrush x:Key="tab_media_normalBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/mediaTabDefault.png" />
+    <ImageBrush x:Key="tab_media_overBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/mediaTabOver.png" />
+    <ImageBrush x:Key="tab_media_selectBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/mediaTabSelect.png" />
+    <ImageBrush x:Key="tab_log_normalBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/logTabDefault.png" />
+    <ImageBrush x:Key="tab_log_overBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/logTabOver.png" />
+    <ImageBrush x:Key="tab_log_selectBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/logTabSelect.png" />
+
+    <ImageBrush x:Key="tab_video_normalBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Play/videoTabDefault.png" />
+    <ImageBrush x:Key="tab_video_overBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Play/videoTabOver.png" />
+    <ImageBrush x:Key="tab_video_selectBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Play/videoTabSelect.png" />
+    <ImageBrush x:Key="tab_pic_normalBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Play/picTabDefault.png" />
+    <ImageBrush x:Key="tab_pic_overBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Play/picTabOver.png" />
+    <ImageBrush x:Key="tab_pic_selectBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Play/picTabSelect.png" />
+
+
+
+    <ImageBrush x:Key="tab_collect_overBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/BarBtnOver.png" />
+    <ImageBrush x:Key="tab_collect_selectBrush" ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/BarBtnSelect.png" />
+    <ImageBrush x:Key="ListBoxBrush"  ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Play/ListBoxBackground.png" />
+
+    <Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+        <Setter Property="Background"  Value="{DynamicResource ListBoxBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border  Name="Border" BorderThickness="0" CornerRadius="2" >
+                        <ScrollViewer Margin="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Style="{DynamicResource styleScrollViewerPlay}">
+                            <ItemsPresenter></ItemsPresenter>
+                        </ScrollViewer>
+                        <Border.Background>
+                            <ImageBrush  ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Play/ListBoxBackground.png" />
+                        </Border.Background>
+                    </Border>
+                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syImageBtn"  TargetType="{x:Type control:ImageButton}" >
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding DefaultSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="ImgPress" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding MouseDownSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgMouseOver" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding MouseOverSource}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgMouseOver" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ImgPress" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syHisPlayBtn"  TargetType="{x:Type control:ImageButton}" >
+        <Setter Property="Width" Value="63" />
+        <Setter Property="Height" Value="66" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="FontSize" Value="{StaticResource fontSize10}" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="/Hytera.EEMS.Resources;Component/Images/Manage/mainHisPlayBtnDefault.png" />
+
+                        <ContentPresenter VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,1,0,0"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ImgDefault" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/mainHisPlayBtnSelect.png" />
+                            <Setter Property="Foreground" Value="#ffffff" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgDefault" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/mainHisPlayBtnSelect.png" />
+                            <Setter Property="Foreground" Value="#ffffff" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syAdvancedBtn"  TargetType="{x:Type control:ImageButton}" >
+        <Setter Property="Width" Value="92" />
+        <Setter Property="Height" Value="34" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="FontSize" Value="{StaticResource fontSize15}" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="/Hytera.EEMS.Resources;Component/Images/Manage/SearchBar/AdvancedBtnDefault.png" />
+
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ImgDefault" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/SearchBar/AdvancedBtnSelect.png" />
+                            <Setter Property="Foreground" Value="#001c58" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgDefault" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/SearchBar/AdvancedBtnOver.png" />
+                            <Setter Property="Foreground" Value="#00ffff" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syAdvancedFont" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="{DynamicResource fontSize15}" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="syAdvancedFontTBox" TargetType="{x:Type TextBox}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="{DynamicResource fontSize15}" />
+        <Setter Property="Foreground" Value="#354153" />
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Width" Value="165"/>
+        <Setter Property="Height" Value="31"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+    </Style>
+
+    <Style x:Key="syAdvancedOkBtn"  TargetType="{x:Type control:ImageButton}" >
+        <Setter Property="Width" Value="281" />
+        <Setter Property="Height" Value="55" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="{StaticResource fontSize15}" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="/Hytera.EEMS.Resources;Component/Images/Manage/Edit/AdvancedBtnDefault.png" />
+
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ImgDefault" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/Edit/AdvancedBtnSelect.png" />
+                            <Setter Property="Foreground" Value="#001c58" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgDefault" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/Edit/AdvancedBtnOver.png" />
+                            <Setter Property="Foreground" Value="#00ffff" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syOperateBtn"  TargetType="{x:Type control:ImageButton}" >
+        <Setter Property="Width" Value="208" />
+        <Setter Property="Height" Value="54" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="{StaticResource fontSize15}" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="/Hytera.EEMS.Resources;Component/Images/Manage/Calendar/BtnDefault.png" />
+
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ImgDefault" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/Calendar/BtnSelect.png" />
+                            <Setter Property="Foreground" Value="#001c58" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgDefault" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/Calendar/BtnOver.png" />
+                            <Setter Property="Foreground" Value="#00ffff" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syDateFont" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="{DynamicResource fontSize16}" />
+        <Setter Property="Foreground" Value="#85b3ff" />
+    </Style>
+
+    <Style x:Key="syDateTextFont" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="#3a4c75" />
+    </Style>
+
+    <Style x:Key="syHeadFont" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="{DynamicResource fontSize16}" />
+        <Setter Property="Foreground" Value="#ffffff" />
+    </Style>
+
+    <Style x:Key="syUploadBtn"  TargetType="{x:Type control:ImageButton}" >
+        <Setter Property="Width" Value="150" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="Foreground" Value="#85b3ff" />
+        <Setter Property="FontSize" Value="{StaticResource fontSize16}" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="/Hytera.EEMS.Resources;Component/Images/Manage/Media/UploadDefault.png" />
+
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Margin="30,0,0,0"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ImgDefault" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/Media/UploadSelect.png" />
+                            <Setter Property="Foreground" Value="#fdce7a" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgDefault" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/Media/UploadOver.png" />
+                            <Setter Property="Foreground" Value="#00a0e9" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ImgDefault" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/Media/UploadEnabled.png" />
+                            <Setter Property="Foreground" Value="#304d81" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syMediaTypeSBtn" TargetType="control:SelectButton">
+        <Setter Property="Width" Value="97" />
+        <Setter Property="Height" Value="34" />
+        <Setter Property="IsSelect" Value="False" />
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="Foreground" Value="#85b3ff" />
+        <Setter Property="FontSize" Value="{StaticResource fontSize16}" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:SelectButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding DefaultSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="ImgPress" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding SelectImageSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgMouseOver" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding MouseOverSource}" />
+
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <ContentPresenter VerticalAlignment="Center"  />
+                            <TextBlock Name="tb" VerticalAlignment="Center" Text="{TemplateBinding ShowText}" ToolTip="{TemplateBinding ShowText}" TextTrimming="CharacterEllipsis"></TextBlock>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgMouseOver" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                            <Setter Property="Foreground" Value="#00a0e9" />
+                        </Trigger>
+                        <Trigger Property="IsSelect" Value="True">
+                            <Setter TargetName="ImgPress" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                            <Setter Property="Foreground" Value="#fdce7a" />
+                        </Trigger>
+                        <Trigger Property="IsCharacterEllipsis" Value="True">
+                            <Setter TargetName="tb" Property="Width" Value="50" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syMediaClassifyBtn" TargetType="control:SelectButton">
+        <Setter Property="Width" Value="39" />
+        <Setter Property="Height" Value="34" />
+        <Setter Property="IsSelect" Value="False" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:SelectButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding DefaultSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="ImgPress" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding SelectImageSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgMouseOver" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding MouseOverSource}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgMouseOver" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsSelect" Value="True">
+                            <Setter TargetName="ImgPress" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syMediaCheckBtn" TargetType="control:SelectButton">
+        <Setter Property="Width" Value="112" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="IsSelect" Value="False" />
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="Foreground" Value="#94bdfe" />
+        <Setter Property="FontSize" Value="{StaticResource fontSize16}" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:SelectButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Left" VerticalAlignment="Center"  x:Name="ImgDefault" Width="25" Height="25" Source="{TemplateBinding DefaultSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="ImgPress" Width="25" Height="25" Source="{TemplateBinding SelectImageSource}" />
+
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelect" Value="True">
+                            <Setter TargetName="ImgPress" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syShowMoreFont" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="{DynamicResource fontSize18}" />
+        <Setter Property="Foreground" Value="#0c4bc4" />
+    </Style>
+
+    <Style x:Key="syEditFont" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="{DynamicResource fontSize15}" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0,0,13,0"/>
+    </Style>
+
+    <Style x:Key="syEditFontTBox" TargetType="{x:Type TextBox}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="{DynamicResource fontSize15}" />
+        <Setter Property="Foreground" Value="#354153" />
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Width" Value="405"/>
+        <Setter Property="Height" Value="31"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+    </Style>
+
+    <Style x:Key="syEditImpBtn" TargetType="control:SelectButton">
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:SelectButton}">
+                    <Grid Name="gd">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{DynamicResource syImpFileFont}" Name="tb1" Grid.Column="0" Height="20" Text="{DynamicResource EditFileWindowEditImp}" ></TextBlock>
+                        <TextBlock Style="{DynamicResource syImpFileFont}" Name="tb2" Grid.Column="1" Height="20" Text="{DynamicResource EditFileWindowEditOrdinary}"></TextBlock>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelect" Value="True">
+                            <Setter TargetName="tb1" Property="Foreground" Value="#ffea00" />
+                            <Setter TargetName="tb2" Property="Foreground" Value="#a8a9ae" />
+                            <Setter TargetName="gd" Property="Background"  >
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Edit/ImportantSelect.png"></ImageBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsSelect" Value="False">
+                            <Setter TargetName="tb1" Property="Foreground" Value="#a8a9ae" />
+                            <Setter TargetName="tb2" Property="Foreground" Value="#ffea00" />
+                            <Setter TargetName="gd" Property="Background"  >
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Edit/GeneralSelect.png"></ImageBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syImpFileFont" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="{DynamicResource fontSize16}" />
+        <Setter Property="Foreground" Value="#a8bad3" />
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="syEditBtn"  TargetType="{x:Type control:ImageButton}" >
+        <Setter Property="Width" Value="287" />
+        <Setter Property="Height" Value="55" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="{StaticResource fontSize15}" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="/Hytera.EEMS.Resources;Component/Images/Manage/Edit/BtnDefault.png" />
+
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ImgDefault" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/Edit/BtnSelect.png" />
+                            <Setter Property="Foreground" Value="#001c58" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgDefault" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/Edit/BtnOver.png" />
+                            <Setter Property="Foreground" Value="#00ffff" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syBarImageBtn"  TargetType="{x:Type control:ImageButton}" >
+        <Setter Property="Width" Value="22"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Bottom"  x:Name="ImgDefault"  Source="{TemplateBinding DefaultSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" x:Name="ImgPress" Source="{TemplateBinding MouseDownSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Bottom"  x:Name="ImgMouseOver" Source="{TemplateBinding MouseOverSource}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgMouseOver" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ImgPress" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syBarImageBtnPic"  TargetType="{x:Type control:ImageButton}" >
+        <Setter Property="Width" Value="22"/>
+        <Setter Property="Height" Value="22"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Bottom"  x:Name="ImgDefault"  Source="{TemplateBinding DefaultSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" x:Name="ImgPress" Source="{TemplateBinding MouseDownSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Bottom"  x:Name="ImgMouseOver" Source="{TemplateBinding MouseOverSource}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgMouseOver" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ImgPress" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="syMarkImageBtn"  TargetType="{x:Type control:ImageButton}" >
+        <Setter Property="IsEnabled" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Right" VerticalAlignment="Center"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding DefaultSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="ImgPress" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding DefaultSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Right" VerticalAlignment="Center"  x:Name="ImgMouseOver" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding DefaultSource}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgMouseOver" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ImgPress" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syCardTBFont" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="#8599b8" />
+    </Style>
+
+    <Style x:Key="syCradBtn" TargetType="control:SelectButton">
+        <Setter Property="Width" Value="39" />
+        <Setter Property="Height" Value="34" />
+        <Setter Property="IsSelect" Value="False" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:SelectButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding DefaultSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="ImgPress" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding SelectImageSource}" />
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelect" Value="True">
+                            <Setter TargetName="ImgPress" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syGPSFont" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="{DynamicResource fontSize16}" />
+        <Setter Property="Foreground" Value="#eeeeee" />
+    </Style>
+
+    <Style x:Key="syPlayImpBtn" TargetType="control:SelectButton">
+        <Setter Property="IsSelect" Value="False" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:SelectButton}">
+                    <Grid Name="gd">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{DynamicResource syImpFileFont}" Name="tb1" Grid.Column="0" Height="20" Text="{DynamicResource PlayWindowFileImp}" ></TextBlock>
+                        <TextBlock Style="{DynamicResource syImpFileFont}" Name="tb2" Grid.Column="1" Height="20" Text="{DynamicResource PlayWindowFileOrdinary}"></TextBlock>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition  Property="IsMouseOver" Value="True" />
+                                <Condition  Property="IsSelect" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="tb1" Property="Foreground" Value="#ffea00" />
+                                <Setter TargetName="tb2" Property="Foreground" Value="#a8a9ae" />
+                                <Setter TargetName="gd" Property="Background"  >
+                                    <Setter.Value>
+                                        <ImageBrush ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Play/ImportantOver.png"></ImageBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition  Property="IsMouseOver" Value="True" />
+                                <Condition  Property="IsSelect" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="tb1" Property="Foreground" Value="#a8a9ae" />
+                                <Setter TargetName="tb2" Property="Foreground" Value="#ffea00" />
+                                <Setter TargetName="gd" Property="Background"  >
+                                    <Setter.Value>
+                                        <ImageBrush ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Play/GeneralOver.png"></ImageBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition  Property="IsMouseOver" Value="False" />
+                                <Condition  Property="IsSelect" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="tb1" Property="Foreground" Value="#ffea00" />
+                                <Setter TargetName="tb2" Property="Foreground" Value="#a8a9ae" />
+                                <Setter TargetName="gd" Property="Background"  >
+                                    <Setter.Value>
+                                        <ImageBrush ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Play/ImportantSelect.png"></ImageBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition  Property="IsMouseOver" Value="False" />
+                                <Condition  Property="IsSelect" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="tb1" Property="Foreground" Value="#a8a9ae" />
+                                <Setter TargetName="tb2" Property="Foreground" Value="#ffea00" />
+                                <Setter TargetName="gd" Property="Background"  >
+                                    <Setter.Value>
+                                        <ImageBrush ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Play/GeneralSelect.png"></ImageBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syPlayBarBtn"  TargetType="{x:Type control:ImageButton}" >
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding DefaultSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="ImgPress" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding MouseDownSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="ImgMouseOver" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding MouseOverSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="IsEnabled" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding NoEnableSource}" />
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgMouseOver" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ImgPress" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="IsEnabled" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syLeftProgbar"  TargetType="{x:Type ProgressBar}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid>
+                        <Border Height="2" Name="PART_Track">
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                    <GradientStop Color="#00a0e9" Offset="0"/>
+                                    <GradientStop Color="#60cdff" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <Grid
+                                Name="PART_Indicator" Height="2"
+                                HorizontalAlignment="Left" >
+                            <Grid.Background>
+                                <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                    <GradientStop Color="#00ff00" Offset="0"/>
+                                    <GradientStop Color="#0a7c25" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                        <Grid Name="g" Width="{Binding ActualWidth,ElementName=PART_Indicator}" HorizontalAlignment="Left">
+                            <Image Margin="0,0,-10,0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="20" Height="20" Source="/Hytera.EEMS.Resources;Component/Images/Collect/Devitem/pblight.png" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding PlayPosition}" Value="1">
+                            <Setter TargetName="g" Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding PlayPosition}" Value="0">
+                            <Setter TargetName="g" Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syPlayListFont" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="{DynamicResource fontSize15}" />
+    </Style>
+
+    <Style x:Key="syPlayDelBtn"  TargetType="{x:Type control:ImageButton}" >
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Center"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding DefaultSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ImgPress" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding MouseDownSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"  x:Name="ImgMouseOver" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding MouseOverSource}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syPlayHisBtn"  TargetType="{x:Type control:ImageButton}" >
+        <Setter Property="Width" Value="19"/>
+        <Setter Property="Height" Value="19"/>
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageButton}">
+                    <Grid >
+                        <Image HorizontalAlignment="Left" VerticalAlignment="Center"  x:Name="ImgDefault" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding DefaultSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="ImgPress" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding MouseDownSource}" />
+
+                        <Image Opacity="0" HorizontalAlignment="Left" VerticalAlignment="Center"  x:Name="ImgMouseOver" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Source="{TemplateBinding MouseOverSource}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgMouseOver" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ImgPress" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <ControlTemplate x:Key="syPlaySlider" TargetType="{x:Type Slider}">
+        <Grid>
+            <Grid  Background="{TemplateBinding Background}" Height="6"></Grid>
+            <Border x:Name="TrackBackground" CornerRadius="0" BorderThickness="0">
+                <ProgressBar Background="{TemplateBinding Background}" Padding="0" BorderThickness="0" Width="{TemplateBinding Width}"
+                                     Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}"
+                                     Value="{TemplateBinding Value}" Height="20" VerticalAlignment="Stretch"
+                                     Style="{DynamicResource SliderProgressBarStyle}" SmallChange="{TemplateBinding SmallChange}" >
+                </ProgressBar>
+            </Border>
+            <Track x:Name="PART_Track" Visibility="Visible">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Style="{DynamicResource SliderButtonStyle}" Command="Slider.DecreaseLarge" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb>
+                        <Thumb.Template>
+                            <ControlTemplate>
+                                <Image Name="img" Width="20" Height="20" Margin="-2,0,8,0" Source="/Hytera.EEMS.Resources;Component/Images/Manage/Play/Btn/PlayPoint.png" />
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Style="{DynamicResource SliderButtonStyle}"   Command="Slider.IncreaseLarge" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver"  Value="True">
+                <Setter TargetName="PART_Track"  Property="Visibility"  Value="Visible" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="SliderProgressBarStyle" TargetType="{x:Type ProgressBar}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid>
+                        <Border x:Name="PART_Track"  BorderThickness="0">
+                        </Border>
+                        <Grid
+                                Name="PART_Indicator" Height="5"
+                                HorizontalAlignment="Left" VerticalAlignment="Center">
+
+                            <Grid.Background>
+                                <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                    <GradientStop Color="#21ac37" Offset="0"/>
+                                    <GradientStop Color="#afd25a" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF2E763A" Offset="0" />
+                    <GradientStop Color="#FF40C15F" Offset="1" />
+                    <GradientStop Color="#FF2E763A" Offset="0.33" />
+                    <GradientStop Color="#FF39A14F" Offset="0.67" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SliderButtonStyle"  TargetType="{x:Type RepeatButton}">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle"   Value="true" />
+        <Setter Property="IsTabStop"   Value="false" />
+        <Setter Property="Focusable"  Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="syVolumeSlider" TargetType="{x:Type Slider}">
+        <Grid>
+            <Grid  Background="{TemplateBinding Background}" Height="2"></Grid>
+            <Border x:Name="TrackBackground" CornerRadius="0" BorderThickness="0">
+                <ProgressBar Background="{TemplateBinding Background}" Padding="0" BorderThickness="0" Width="{TemplateBinding Width}"
+                                     Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" 
+                                     Value="{TemplateBinding Value}" Height="16" VerticalAlignment="Stretch"
+                                     Style="{DynamicResource VolumeSliderProgressBarStyle}" SmallChange="{TemplateBinding SmallChange}" >
+                </ProgressBar>
+            </Border>
+            <Track x:Name="PART_Track" Visibility="Visible" >
+                <Track.DecreaseRepeatButton >
+                    <RepeatButton Width="0" Style="{DynamicResource VolumeSliderButtonStyle}" Command="Slider.DecreaseLarge" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb>
+                        <Thumb.Template>
+                            <ControlTemplate>
+                                <Image x:Name="img" Margin="-6,0,-6,0" Width="16" Height="16" Source="/Hytera.EEMS.Resources;Component/Images/Manage/Play/Btn/VolumePointDefault.png" />
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver"  Value="True">
+                                        <Setter TargetName="img" Property="Source" Value="/Hytera.EEMS.Resources;Component/Images/Manage/Play/Btn/VolumePointSelect.png"></Setter>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Width="0" Style="{DynamicResource VolumeSliderButtonStyle}"   Command="Slider.IncreaseLarge" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+
+    <Style x:Key="VolumeSliderProgressBarStyle" TargetType="{x:Type ProgressBar}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid>
+                        <Border x:Name="PART_Track"  BorderThickness="0" >
+
+                        </Border>
+                        <Grid Name="PART_Indicator" Height="2" 
+                                HorizontalAlignment="Left" VerticalAlignment="Center" Background="#febe5c">
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF2E763A" Offset="0" />
+                    <GradientStop Color="#FF40C15F" Offset="1" />
+                    <GradientStop Color="#FF2E763A" Offset="0.33" />
+                    <GradientStop Color="#FF39A14F" Offset="0.67" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="VolumeSliderButtonStyle"  TargetType="{x:Type RepeatButton}">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle"   Value="true" />
+        <Setter Property="IsTabStop"   Value="false" />
+        <Setter Property="Focusable"  Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syGridHeadTBFont" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="Background" Value="#222f4a"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="syGridCellTBFont" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Margin" Value="8,0,8,0"/>
+        <Setter Property="Foreground" Value="#bbd0fd" />
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+    </Style>
+
+    <Style x:Key="syGridHeadBdFont" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#355076"/>
+        <Setter Property="Background" Value="#222f4a"/>
+        <Setter Property="Height" Value="44"/>
+    </Style>
+
+    <Style x:Key="syGridCellBdFont" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#355076"/>
+        <Setter Property="Height" Value="57"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <Style x:Key="syLogCheckBtn" TargetType="control:SelectButton">
+        <Setter Property="Width" Value="18" />
+        <Setter Property="Height" Value="18" />
+        <Setter Property="IsSelect" Value="False" />
+        <Setter Property="FontFamily" Value="{DynamicResource yaHei}" />
+        <Setter Property="Foreground" Value="#94bdfe" />
+        <Setter Property="FontSize" Value="{StaticResource fontSize16}" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:SelectButton}">
+                    <Grid >
+                        <Image   x:Name="ImgDefault" Width="15" Height="15" Source="{TemplateBinding DefaultSource}" />
+
+                        <Image Opacity="0"  x:Name="ImgPress" Width="15" Height="15" Source="{TemplateBinding SelectImageSource}" />
+
+                        <Image Opacity="0"  x:Name="ImgOver" Width="15" Height="15" Source="{TemplateBinding MouseOverSource}" />
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelect" Value="True">
+                            <Setter TargetName="ImgPress" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ImgOver" Property="Opacity" Value="1" />
+                            <Setter TargetName="ImgDefault" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="syPlsyListProg"  TargetType="{x:Type ProgressBar}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid>
+                        <Border Height="2" Name="PART_Track">
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                    <GradientStop Color="#00a0e9" Offset="0"/>
+                                    <GradientStop Color="#60cdff" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <Grid
+                                Name="PART_Indicator" Height="2"
+                                HorizontalAlignment="Left" >
+                            <Grid.Background>
+                                <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                    <GradientStop Color="#bc7300" Offset="0"/>
+                                    <GradientStop Color="#ffcd7c" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                        <Grid Name="g" Width="{Binding ActualWidth,ElementName=PART_Indicator}" HorizontalAlignment="Left">
+                            <Image Margin="0,0,-10,0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="20" Height="20" Source="/Hytera.EEMS.Resources;Component/Images/Collect/Devitem/pblight.png" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding PlayPosition}" Value="1">
+                            <Setter TargetName="g" Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding PlayPosition}" Value="0">
+                            <Setter TargetName="g" Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--ToolTip通用样式-->
+    <Style TargetType="{x:Type ToolTip}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <Border BorderBrush="#023c9d" BorderThickness="1" Background="#ffffff" Opacity="0.9">
+                        <TextBlock FontSize="15" Text="{TemplateBinding Content}" Foreground="#000000" HorizontalAlignment="Left" VerticalAlignment="Top" TextTrimming="WordEllipsis" TextWrapping="WrapWithOverflow" Margin="10"></TextBlock>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

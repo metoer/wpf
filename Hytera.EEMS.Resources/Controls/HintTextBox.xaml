@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Hytera.EEMS.Resources.Controls.HintTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" x:Name="UserControl"  Height="30" >
+    <Grid>
+        <TextBox Name="tbText" Height="{Binding ElementName=UserControl, Path=Height}" 
+                 Width="{Binding ElementName=UserControl, Path=Width}" 
+                 Text="{Binding ElementName=UserControl, Path=Text}"
+                 Foreground="{Binding Foreground,ElementName=UserControl}"
+                 CaretBrush="{Binding CaretBrush,ElementName=UserControl}"
+                 MaxLength="{Binding ElementName=UserControl,Path=MaxLenght}"
+              BorderThickness="0" Background="Transparent"
+                 >
+            <TextBox.Template>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border Name="Border" CornerRadius="2" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" >
+                        <Grid>
+                            <TextBlock Margin="6 0 0 0" FontSize="{TemplateBinding FontSize}" Background="Transparent" Foreground="{Binding HintForeground,ElementName=UserControl}" Text="{Binding ElementName=UserControl, Path=Hint}" Name="tbk1" VerticalAlignment="Center"></TextBlock>
+                            <ScrollViewer VerticalContentAlignment="Center" Background="Transparent" VerticalAlignment="Center" Margin="3 0 0 0" x:Name="PART_ContentHost"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="#EEEEEE"/>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#EEEEEE"/>
+                            <Setter Property="Foreground" Value="#888888"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="tbk1" Property="Opacity" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
+    </Grid>
+</UserControl>

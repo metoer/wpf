@@ -1,0 +1,1740 @@
+//===========================================================================
+//
+//  File Name:    Setup.rul
+//
+//  Description:  Blank setup main script file
+//
+//  Comments:     Blank setup is an empty setup project. If you want to
+//				  create a new project via. step-by step instructions use the
+//				  Project Assistant.
+//
+//===========================================================================
+
+// Included header files ----------------------------------------------------
+#include "ifx.h"
+#include "RegService.rul"  
+#include "Service.rul"
+#include "Firewall.rul"
+#include "Fileproc.rul"
+
+NUMBER g_nType;
+NUMBER g_nSetup;	//标志是从安装包启动还是从菜单启动
+NUMBER g_nUpgradeSvr;
+NUMBER g_nUpgradeGtw;
+NUMBER g_nUpgradeClt;
+STRING g_szOldProductName;
+STRING g_szOldVerNum;
+STRING g_szCurrVerNum;
+
+
+ 
+
+//---------------------------------------------------------------------------
+// OnBegin
+//
+// The OnBegin event is called directly by the framework after the setup
+// initializes.
+//---------------------------------------------------------------------------
+function OnBegin()
+    NUMBER nResult, nSetupType, nvSize, nUser,nvUser;
+    STRING szTitle, szMsg, szQuestion, svName, svCompany, szFile, szProduct, szCurrentPath;
+    STRING szLicenseFile;   
+    STRING szOpt1, szOpt2,szName,szCompany,svDir;
+    LIST list, listStartCopy,listData;
+	BOOL bCustom,bLicenseAccepted ;  
+	STRING szValue, szOldUninstall, szLasterRDS,szId;
+    NUMBER nvType,  nId; 
+begin
+	// TO DO: you may change default non-UI setting, for example
+	//
+	
+	
+	if(!MAINTENANCE) then
+    	// 判断是否是系统管理员权限
+   		//szMsg = "You do not have sufficient security privileges to install software on this computer.  Please contact your system administrator or log off and  log-in again as an administrator."; 
+     	if (!SYSINFO.WINNT.bAdmin_Logged_On)then 
+        	SetDialogTitle ( DLG_MSG_INFORMATION, @IDS_ERROR );
+        	MessageBox (@IDS_FAILTOSETUP_ADMINISTRATOR,WARNING);
+        	abort; 
+     	endif;
+   	endif;
+
+	
+	// You may also perform your custom initialization steps, check requirements, etc.
+	//查看是从菜单删除进入还是从安装包进入
+	//菜单删除的话就是直接卸载，安装包进入就是重新安装和卸载界面
+	nResult = GetCurrentDir(szCurrentPath);
+	if(StrFind(szCurrentPath, "RarSFX")>=0) then
+		g_nSetup = 1;
+	else  
+		g_nSetup = -1;
+	endif;
+	
+	//SdProductName("SmartDispatch 4.2");
+	g_szOldProductName = "";
+	g_szOldVerNum = "";
+    
+    //初始化PUC注册表，通过注册表来判断是否安装了PUC
+//	InitRegKey_Hytera_PUC_Dispatch();
+	
+	//显示用户许可协议
+	Disable (BACKBUTTON); 
+	if(!MAINTENANCE)then 
+		szTitle ="";
+		szOpt1 = "";
+		szOpt2 = "";   
+		if(SELECTED_LANGUAGE = 0x0804)then
+			szLicenseFile = SUPPORTDIR ^"license_chs.txt";
+		else
+			szLicenseFile = SUPPORTDIR ^"license_eng.txt";
+		endif;
+		bLicenseAccepted = FALSE; 
+		nResult = SdLicense2(szTitle,szOpt1,szOpt2,szLicenseFile,bLicenseAccepted);
+	endif;
+end;
+//---------------------------------------------------------------------------
+// OnFirstUIBefore
+//
+// The OnFirstUIBefore event is called by the framework when the setup is
+// running in first install mode. By default this event displays UI allowing
+// the end user to specify installation parameters.
+//---------------------------------------------------------------------------
+function OnFirstUIBefore()
+    NUMBER nResult, nSetupType, nvSize, nUser;
+    STRING szTitle, szMsg, szQuestion, svName, svCompany, szFile;
+    STRING szLicenseFile;
+    LIST listData;
+	BOOL bCustom;    
+	STRING szFeatureName1;
+	STRING szFeatureName2;
+	STRING szFeatureName3; 
+	STRING szFeatureName4; 
+	STRING szFeatureName5; 
+	STRING szFeatureName6;
+	STRING szFeatureName7;  
+	STRING szFeatureName8;  
+	STRING szFeatureName9; 
+	STRING szFeatureName10;
+	STRING szFeatureName11;  
+	STRING szFeatureName12; 
+	STRING szFeatureName13;  
+	STRING szFeatureName14; 
+	STRING szFeatureName15;
+	STRING szFeatureName16;  
+	STRING szFeatureName17;
+	STRING szFeatureName18; 
+	STRING szFeatureName19;    
+	STRING szFeatureName20;  
+	STRING szFeatureName21; 
+	STRING szFeatureName22;
+	STRING szFeatureName23;
+	STRING szFeatureName24;
+	STRING szFeatureName25;
+	STRING szFeatureName26;
+	STRING szFeatureName27;
+	STRING szFeatureName28; 
+	STRING szFeatureName70;
+		
+    NUMBER nId, nType;
+    STRING szId;
+    STRING szValue, szOldUninstall, szLasterPUC;  
+    STRING  INSTALLDIR_GATEWAY;
+    STRING  INSTALLDIR_CLIENT;
+    STRING  INSTALLDIR_SERVER;
+    NUMBER nOldVerBackuped;
+    NUMBER nVerSvr, nVerGtw, nVerClt, nVerCfg, nVerLog;
+    STRING szOldVerPath, szTempPath1, szTempPath2;
+    NUMBER nIsCompatible, bExistR36V2;
+    STRING szOldVerProdCode;
+	
+	STRING szFeatureName51;
+	STRING szFeatureName52;
+	STRING szFeatureName53;
+	STRING szFeatureName61;
+	STRING szFeatureName62;
+	STRING szFeatureName63;  
+	NUMBER nSel1,nSel2,nSel3,nSel5,nSel61,nSel63,nSel12;
+    NUMBER nSel24,nSel25,nSel26,nSel7,nSel10,nSel11,nSel20;
+begin	
+			  
+    
+    g_szOldProductName = "";
+	g_szOldVerNum = "";  	//取安装版本号
+	g_szCurrVerNum = "1.0"; //目前版本号   
+	
+	
+	nSel1 = 0;
+    nSel2 = 0;
+    nSel3 = 0; 
+    nSel5 = 0;
+    nSel61 = 0;
+    nSel63 = 0;
+    nSel12 = 0;
+    nSel24 = 0;   
+    nSel25 = 0; 
+    nSel26 = 0;   
+    nSel7 = 0;   
+    nSel10 = 0; 
+    nSel11 = 0;
+    nSel20 = 0;
+	  
+
+	SHELL_OBJECT_FOLDER = @PRODUCT_NAME;
+    //大模块，客户端、服务器、网关、配置工具、日志服务器
+	szFeatureName4 ="Apache";  
+	szFeatureName5 ="Station";  
+	szFeatureName2 ="Station\\StationClient"; 
+	szFeatureName3 ="Station\\StationServer";
+	szFeatureName52 ="Station\\DBService_PostgreSQL_DS"; 
+
+	szFeatureName6 ="FileService";
+	szFeatureName61 ="FileService\\FileService_FTP";
+	szFeatureName12 ="FileService\\StreamingServer";
+	szFeatureName63 ="FileService\\FileService_HDFS";  
+	
+	szFeatureName70 ="ConfigSysServer"; 
+	szFeatureName7 ="ConfigSysServer\\Logview"; 
+	szFeatureName25 ="ConfigSysServer\\ConfigServer";
+	    
+	szFeatureName8 ="Log";
+    szFeatureName9 ="NetManage";
+
+	szFeatureName24 ="ElectronicCenter"; 
+	szFeatureName1 ="ElectronicCenter\\CloudCenter"; 
+	szFeatureName20 ="ElectronicCenter\\ServantRouter";
+	szFeatureName11 ="ElectronicCenter\\CloudWebServer";
+	szFeatureName62 ="ElectronicCenter\\FileSyncServer";
+	szFeatureName53 ="ElectronicCenter\\DBService_HBASE";
+	szFeatureName51 ="ElectronicCenter\\DBService_PostgreSQL";
+	szFeatureName10 ="ElectronicCenter\\NMServer";
+	
+    szFeatureName13 ="WebService_Server";  
+    szFeatureName14 ="WebService_Client"; 
+	szFeatureName15 ="AppData"; 
+	szFeatureName18 ="Script_PostgreSQL";
+	szFeatureName19 ="Apache_32";     
+    szFeatureName21 ="DBService_PostgreSQL_DS";  
+    szFeatureName23 ="FileService_HDFS";
+    
+
+    szFeatureName26 ="ConfigAgent";    
+    szFeatureName27 ="Apache_TConfigServer";
+    szFeatureName28 ="Apache_32_TConfigServer";    
+    
+ 
+    
+    
+//欢迎界面
+Dlg_SdWelcome:
+    szTitle = "";
+    szMsg   = "";
+    nResult = SdWelcome(szTitle, szMsg);
+    if (nResult = BACK) goto Dlg_SdWelcome; // 控制下一步上一步
+	
+	szTitle   = "";
+	svName    = "";
+    svCompany = "";
+//注册界面
+Dlg_SdRegisterUser:
+    szMsg = "";
+    szTitle = "";
+    nResult = SdRegisterUser( szTitle, szMsg, svName, svCompany );
+    if (nResult = BACK) goto Dlg_SdWelcome;
+//安装类型，现在默认都为CUSTOM，直接跳到模块选择界面
+Dlg_SetupType: 
+    szMsg = "";
+    szTitle = "";
+    nSetupType = CUSTOM;
+    goto Dlg_SdFeatureTree; // 跳过
+    szTitle = "";
+    szMsg   = ""; 
+    nSetupType = CUSTOM;
+    nResult = SetupType2(szTitle, szMsg, "", nSetupType, 0);
+    if (nResult = BACK) then
+        goto Dlg_SdRegisterUser;
+    else
+	    nSetupType = nResult;
+        if (nSetupType != CUSTOM) then
+	        nvSize = 0;
+	        FeatureCompareSizeRequired(MEDIA, INSTALLDIR, nvSize);
+	        if (nvSize != 0) then      
+            	MessageBox(szSdStr_NotEnoughSpace, WARNING);
+	            goto Dlg_SdFeatureTree;
+            endif;
+			bCustom = FALSE;
+			goto Dlg_SdFeatureTree;
+		else
+			bCustom = TRUE;
+        endif;
+    endif;    
+//模块选择界面
+Dlg_SdFeatureTree: 
+    szTitle    = "";
+    szMsg      = "";   
+    
+    
+    
+    //默认勾选Feature
+    if ((nSel1 = 0) && (nSel2 = 0) && (nSel3 = 0) && (nSel5 = 0) && (nSel61 = 0) && (nSel63 = 0) && (nSel12 = 0) && (nSel24 = 0) && (nSel25 = 0) && (nSel26 = 0) && (nSel7 = 0) && (nSel10 = 0) && (nSel11 = 0) && (nSel20 = 0))then  
+    FeatureSelectItem ( MEDIA, szFeatureName1, TRUE );  
+    FeatureSelectItem ( MEDIA, szFeatureName2, TRUE );
+    FeatureSelectItem ( MEDIA, szFeatureName3, TRUE ); 
+    FeatureSelectItem ( MEDIA, szFeatureName5, TRUE );   
+    FeatureSelectItem ( MEDIA, szFeatureName61, TRUE );
+    FeatureSelectItem ( MEDIA, szFeatureName63, FALSE );
+    FeatureSelectItem ( MEDIA, szFeatureName12, TRUE );    
+    FeatureSelectItem ( MEDIA, szFeatureName24, TRUE );  
+    FeatureSelectItem ( MEDIA, szFeatureName25, TRUE );  
+    FeatureSelectItem ( MEDIA, szFeatureName26, TRUE );  
+    FeatureSelectItem ( MEDIA, szFeatureName7, TRUE );
+    FeatureSelectItem ( MEDIA, szFeatureName10, TRUE ); 
+    FeatureSelectItem ( MEDIA, szFeatureName11, TRUE );   
+    FeatureSelectItem ( MEDIA, szFeatureName20, TRUE );      
+endif;
+
+//记录界面回退     
+
+    
+    if (FeatureIsItemSelected(MEDIA, szFeatureName1)=1) then
+    	nSel1 = 1;  
+    else
+    	nSel1 = 0;
+    endif;
+    if (FeatureIsItemSelected(MEDIA, szFeatureName2)=1) then
+      	nSel2 = 1;  
+    else
+    	nSel2 = 0;
+    endif;
+    if (FeatureIsItemSelected(MEDIA, szFeatureName3)=1) then
+       	nSel3 = 1; 
+    else
+    	nSel3 = 0;
+    endif; 
+	if (FeatureIsItemSelected(MEDIA, szFeatureName5)=1) then
+		nSel5 = 1; 
+	else
+    	nSel5 = 0;	
+	endif;
+
+    if (FeatureIsItemSelected(MEDIA, szFeatureName61)=1) then
+      	nSel61 = 1; 
+    else
+    	nSel61 = 0;
+    endif;
+
+    if ((FeatureIsItemSelected(MEDIA, szFeatureName63)=1) && (FeatureIsItemSelected(MEDIA, szFeatureName61)=0)) then
+       	nSel63 = 1;
+    else
+    	nSel63 = 0;
+    endif;  
+    
+    if ((FeatureIsItemSelected(MEDIA, szFeatureName63)=1) && (FeatureIsItemSelected(MEDIA, szFeatureName61)=1)) then
+    	nSel63 = 0;
+    endif;
+        
+	if (FeatureIsItemSelected(MEDIA, szFeatureName12)=1) then
+    	nSel12 = 1;
+    else
+    	nSel12 = 0;
+    endif;
+    if (FeatureIsItemSelected(MEDIA, szFeatureName24)=1) then
+      	nSel24 = 1; 
+    else
+    	nSel24 = 0;
+    endif;     
+    if (FeatureIsItemSelected(MEDIA, szFeatureName25)=1) then
+       	nSel25 = 1;  
+    else
+    	nSel25 = 0;
+    endif; 
+  
+	if (FeatureIsItemSelected(MEDIA, szFeatureName26)=1) then
+       	nSel26 = 1;
+    else
+    	nSel26 = 0;
+    endif;   
+    if (FeatureIsItemSelected(MEDIA, szFeatureName7)=1) then
+    	nSel7 = 1;  
+    else
+    	nSel7 = 0;
+    endif;
+    if (FeatureIsItemSelected(MEDIA, szFeatureName10)=1) then
+      	nSel10 = 1; 
+    else
+    	nSel10 = 0;
+    endif;     
+    if (FeatureIsItemSelected(MEDIA, szFeatureName11)=1) then
+       	nSel11 = 1; 
+    else
+    	nSel11 = 0;
+    endif; 
+  
+	if (FeatureIsItemSelected(MEDIA, szFeatureName20)=1) then
+       	nSel20 = 1;  
+    else
+    	nSel20 = 0;
+    endif;
+
+
+  if (nSel1 == 1)	 then
+	FeatureSelectItem ( MEDIA, szFeatureName1, TRUE );
+	endif;
+	
+	if (nSel2 == 1)	 then
+	FeatureSelectItem ( MEDIA, szFeatureName2, TRUE );
+	endif;	 
+	
+	if (nSel3 == 1)	then
+	FeatureSelectItem ( MEDIA, szFeatureName3, TRUE );
+	endif;      
+	
+	if (nSel5 == 1)	 then
+	FeatureSelectItem ( MEDIA, szFeatureName5, TRUE );
+	endif;   
+	
+	if (nSel61 == 1)	 then
+	FeatureSelectItem ( MEDIA, szFeatureName61, TRUE );
+	endif;
+	
+	if (nSel63 == 1)	 then
+	FeatureSelectItem ( MEDIA, szFeatureName63, TRUE ); 
+	else
+	FeatureSelectItem ( MEDIA, szFeatureName63, FALSE );
+	endif;	 
+	
+	if (nSel12 == 1)	then
+	FeatureSelectItem ( MEDIA, szFeatureName12, TRUE );
+	endif;      
+	
+	if (nSel24 == 1)	 then
+	FeatureSelectItem ( MEDIA, szFeatureName24, TRUE );
+	endif;                   
+               
+   	if (nSel25 == 1)	then
+	FeatureSelectItem ( MEDIA, szFeatureName25, TRUE );
+	endif;      
+	
+	if (nSel26 == 1)	 then
+	FeatureSelectItem ( MEDIA, szFeatureName26, TRUE );
+	endif;   
+	
+	if (nSel7 == 1)	 then
+	FeatureSelectItem ( MEDIA, szFeatureName7, TRUE );
+	endif;
+	
+	if (nSel10 == 1)	 then
+	FeatureSelectItem ( MEDIA, szFeatureName10, TRUE );
+	endif;	 
+	
+	if (nSel11 == 1)	then
+	FeatureSelectItem ( MEDIA, szFeatureName11, TRUE );
+	endif;      
+	
+	if (nSel20 == 1)	 then
+	FeatureSelectItem ( MEDIA, szFeatureName20, TRUE );
+	endif;  
+   
+    
+    if (nSetupType = CUSTOM) then  
+		nResult = SdFeatureTree(szTitle, szMsg, INSTALLDIR, "", 2);
+		if (nResult = BACK) goto Dlg_SdRegisterUser;   
+		
+	if ((FeatureIsItemSelected(MEDIA, szFeatureName61)=1) && (FeatureIsItemSelected(MEDIA, szFeatureName63)=1))then
+    	MessageBox("FTP文件服务和HDFS文件服务只能选一个",WARNING); 	 
+    	goto Dlg_SdFeatureTree;
+    endif;                                  
+		                                  
+	if ((FeatureIsItemSelected(MEDIA, szFeatureName61)=1))then
+    	FeatureSelectItem ( MEDIA, szFeatureName63, FALSE ); 
+    	//nResult = SdFeatureTree(szTitle, szMsg, INSTALLDIR, "", 2);
+		//if (nResult = BACK) goto Dlg_SdRegisterUser;   
+    elseif ((FeatureIsItemSelected(MEDIA, szFeatureName63)=1))then
+    	FeatureSelectItem ( MEDIA, szFeatureName61, FALSE );
+    	//nResult = SdFeatureTree(szTitle, szMsg, INSTALLDIR, "", 2);
+		//if (nResult = BACK) goto Dlg_SdRegisterUser;  
+	   endif;  
+	   
+		//如果模块都不选择，则跳回到模块选择界面
+        if (   (FeatureIsItemSelected(MEDIA, szFeatureName1)=0) &&  (FeatureIsItemSelected(MEDIA, szFeatureName2)=0)
+			&& (FeatureIsItemSelected(MEDIA, szFeatureName3)=0) &&  (FeatureIsItemSelected(MEDIA, szFeatureName51)=0)
+			&& (FeatureIsItemSelected(MEDIA, szFeatureName52)=0) && (FeatureIsItemSelected(MEDIA, szFeatureName53)=0)
+			&& (FeatureIsItemSelected(MEDIA, szFeatureName61)=0) && (FeatureIsItemSelected(MEDIA, szFeatureName7)=0)
+			&& (FeatureIsItemSelected(MEDIA, szFeatureName62)=0) && (FeatureIsItemSelected(MEDIA, szFeatureName63)=0)
+			&& (FeatureIsItemSelected(MEDIA, szFeatureName10)=0) && (FeatureIsItemSelected(MEDIA, szFeatureName11)=0)		
+			&& (FeatureIsItemSelected(MEDIA, szFeatureName12)=0) && (FeatureIsItemSelected(MEDIA, szFeatureName20)=0) 
+			&& (FeatureIsItemSelected(MEDIA, szFeatureName25)=0)) then  
+		//	Disable(NEXTBUTTON);  
+		//	nResult = SdFeatureTree(szTitle, szMsg, INSTALLDIR, "", 2); 
+		//	Enable(NEXTBUTTON); 
+		//else
+		     
+            goto Dlg_SdFeatureTree;
+        endif;    
+    endif;   
+    
+
+    // WebService服务/客户端: 只要安装了采集站服务、电子证据云中心的任一项
+    /*
+    if ((FeatureIsItemSelected(MEDIA, szFeatureName1)=1) || (FeatureIsItemSelected(MEDIA, szFeatureName3)=1) )then
+    	FeatureSelectItem ( MEDIA, szFeatureName13, TRUE );  
+    	FeatureSelectItem ( MEDIA, szFeatureName14, TRUE );  
+    else
+    	FeatureSelectItem ( MEDIA, szFeatureName13, FALSE );
+    	FeatureSelectItem ( MEDIA, szFeatureName14, FALSE );
+    endif;
+	*/
+	if (FeatureIsItemSelected(MEDIA, szFeatureName1)=1) then 
+	     FeatureSelectItem ( MEDIA, szFeatureName13, TRUE );
+	 else
+    	FeatureSelectItem ( MEDIA, szFeatureName13, FALSE ); 
+    endif;
+          
+	if (FeatureIsItemSelected(MEDIA, szFeatureName3)=1)  then
+	     FeatureSelectItem ( MEDIA, szFeatureName14, TRUE );
+	 else
+    	FeatureSelectItem ( MEDIA, szFeatureName14, FALSE ); 
+    endif;               
+	// Apache: 只要安装了采集站服务、电子证据云中心、电子证据查询管理服务器、流媒体服务的任一项    
+    if ((FeatureIsItemSelected(MEDIA, szFeatureName1)=1) || (FeatureIsItemSelected(MEDIA, szFeatureName3)=1) || (FeatureIsItemSelected(MEDIA, szFeatureName11)=1) || (FeatureIsItemSelected(MEDIA, szFeatureName12)=1)) then    
+        if (SYSINFO.bIsWow64 !=0) then
+            FeatureSelectItem ( MEDIA, szFeatureName4, TRUE ); // 64bit  
+            FeatureSelectItem ( MEDIA, szFeatureName19, FALSE );  
+		else
+            FeatureSelectItem ( MEDIA, szFeatureName19, TRUE );   
+            FeatureSelectItem ( MEDIA, szFeatureName4, FALSE ); // 64bit
+		endif;
+    else
+    	FeatureSelectItem ( MEDIA, szFeatureName4, FALSE );
+    	FeatureSelectItem ( MEDIA, szFeatureName19, FALSE );
+    endif;
+
+
+ if (FeatureIsItemSelected(MEDIA, szFeatureName25)=1) then    
+        if (SYSINFO.bIsWow64 !=0) then
+            FeatureSelectItem ( MEDIA, szFeatureName27, TRUE ); // 64bit  
+            FeatureSelectItem ( MEDIA, szFeatureName28, FALSE );  
+		else
+            FeatureSelectItem ( MEDIA, szFeatureName28, TRUE );   
+            FeatureSelectItem ( MEDIA, szFeatureName27, FALSE ); // 64bit
+		endif;
+    else
+    	FeatureSelectItem ( MEDIA, szFeatureName27, FALSE );
+    	FeatureSelectItem ( MEDIA, szFeatureName28, FALSE );
+    endif;
+
+ 
+    // PostgreSQL脚本文件: 只要安装了DBService-PostgreSQL
+	if (FeatureIsItemSelected(MEDIA, szFeatureName51)=1) then
+    	FeatureSelectItem ( MEDIA, szFeatureName18, TRUE );
+    else
+    	FeatureSelectItem ( MEDIA, szFeatureName18, FALSE );
+    endif;
+    
+   
+	
+    // 默认安装
+	FeatureSelectItem ( MEDIA, szFeatureName8, TRUE );
+	FeatureSelectItem ( MEDIA, szFeatureName9, TRUE );
+	FeatureSelectItem ( MEDIA, szFeatureName15, TRUE );
+	FeatureSelectItem ( MEDIA, szFeatureName26, TRUE );
+	
+//路径选择界面    
+Dlg_SdAskDestPath:    	
+    nResult = SdAskDestPath(szTitle, szMsg, INSTALLDIR, 0);
+    if (nResult = BACK) goto Dlg_SdFeatureTree;
+    nvSize = 0;
+    FeatureCompareSizeRequired(MEDIA, INSTALLDIR, nvSize); // 计算安装路径所在磁盘的空间
+    if (nvSize != 0) then
+    	MessageBox(szSdStr_NotEnoughSpace, WARNING);
+        goto Dlg_SdFeatureTree;
+    endif;
+//信息显示界面
+Dlg_SdStartCopy:
+    szTitle = "";
+    szMsg   = "";
+    
+    listData = ListCreate (STRINGLIST);
+    ListAddString(listData, @ID_STRING0_PCTARGETFOLDER, AFTER);
+    ListAddString(listData, "    " + INSTALLDIR, AFTER);
+    ListAddString(listData, "", AFTER);
+    ListAddString(listData, @ID_STRING0_PCUSERINFO, AFTER);
+    ListAddString(listData, "    " + @ID_STRING0_PCUSERNAME + svName, AFTER);
+    ListAddString(listData, "    " + @ID_STRING0_PCCOMPANY + svCompany, AFTER);
+    ListAddString(listData, "", AFTER);
+    
+    switch (nSetupType) 
+        case CUSTOM :  ListAddString(listData,"    " + @ID_STRING0_SetupType + @ID_STRING0_Custom,AFTER); 
+    endswitch; 
+    
+    ListAddString(listData, "   ", AFTER); 
+    ListAddString(listData, @ID_STRING0_Feature, AFTER); 
+     
+     ////////////////////默认勾选显示即安装///////////////////此功能饼图也可实现////////////////
+
+    
+    if (FeatureIsItemSelected(MEDIA, szFeatureName1)=1) then
+        ListAddString(listData,"    "+    @ID_STRING4 ,AFTER);
+    endif; 
+    
+    if (FeatureIsItemSelected(MEDIA, szFeatureName2)=1) then
+        ListAddString(listData,"    "+    @ID_STRING5 ,AFTER);
+    endif; 
+    
+    if (FeatureIsItemSelected(MEDIA, szFeatureName3)=1) then
+       ListAddString(listData,"    "+    @ID_STRING6 ,AFTER);
+    endif;     
+    
+	if (FeatureIsItemSelected(MEDIA, szFeatureName51)=1) then
+       ListAddString(listData,"    "+    @ID_STRING103 ,AFTER);
+    endif; 
+    
+    if (FeatureIsItemSelected(MEDIA, szFeatureName52)=1) then 
+        ListAddString(listData,"    "+    @ID_STRING124 ,AFTER);
+    endif;
+
+    if (FeatureIsItemSelected(MEDIA, szFeatureName53)=1) then 
+		ListAddString(listData,"    "+    @ID_STRING125 ,AFTER);
+	endif;
+    
+	if (FeatureIsItemSelected(MEDIA, szFeatureName61)=1) then
+       ListAddString(listData,"    "+    @ID_STRING104 ,AFTER);
+    endif;
+
+	if (FeatureIsItemSelected(MEDIA, szFeatureName62)=1) then 
+       ListAddString(listData,"    "+    @ID_STRING127 ,AFTER);
+    endif;
+	
+	if (FeatureIsItemSelected(MEDIA, szFeatureName63)=1) then 
+       ListAddString(listData,"    "+    @ID_STRING126 ,AFTER);
+    endif;
+	
+	if (FeatureIsItemSelected(MEDIA, szFeatureName25)=1) then
+       ListAddString(listData,"    "+    @ID_STRING128 ,AFTER);
+    endif;
+    
+	if (FeatureIsItemSelected(MEDIA, szFeatureName7)=1) then
+        ListAddString(listData,"    "+    @ID_STRING105 ,AFTER);
+    endif; 
+    
+    if (FeatureIsItemSelected(MEDIA, szFeatureName10)=1) then
+        ListAddString(listData,"    "+    @ID_STRING98 ,AFTER);
+    endif; 
+    
+    if (FeatureIsItemSelected(MEDIA, szFeatureName11)=1) then
+        ListAddString(listData,"    "+    @ID_STRING106 ,AFTER);
+    endif;   
+    if (FeatureIsItemSelected(MEDIA, szFeatureName12)=1) then
+       ListAddString(listData,"    "+    @ID_STRING107 ,AFTER);
+    endif;    
+      //  if (FeatureIsItemSelected(MEDIA, szFeatureName16)=1) then
+      // ListAddString(listData,"    "+    @ID_STRING108 ,AFTER);
+   // endif;   
+   
+   // if (FeatureIsItemSelected(MEDIA, szFeatureName17)=1) then
+     //   ListAddString(listData,"    "+    @ID_STRING111 ,AFTER);
+    //endif; 
+    
+    if (FeatureIsItemSelected(MEDIA, szFeatureName20)=1) then
+        ListAddString(listData,"    "+    @ID_STRING114 ,AFTER);
+    endif;    
+    
+    nResult = SdStartCopy( szTitle, szMsg, listData );			
+	ListDestroy(listData); 
+	 
+    if (nResult = BACK) then
+       goto Dlg_SdAskDestPath;;
+    endif;
+
+    // Added in IS 2009 - Set appropriate StatusEx static text.
+    SetStatusExStaticText( SdLoadString( IDS_IFX_STATUSEX_STATICTEXT_FIRSTUI ) );  //显示安装中
+
+    // setup default status
+    Enable(STATUSEX);
+    Disable(CANCELBUTTON);
+    return 0; 
+  
+end;     
+
+  //---------------------------------------------------------------------------
+// OnMaintUIBefore
+//
+// The OnMaintUIBefore event is called by the framework when the setup is
+// running in maintenance mode. By default this event displays UI that
+// allows the end user to add or remove features, repair currently
+// installed features or uninstall the application.
+//---------------------------------------------------------------------------
+function OnMaintUIBefore()
+	NUMBER nResult, nType;
+	STRING svDir, svResult, szCaption;
+    NUMBER nMediaFlags;
+    string szTitle, szMsg, szIgnore;
+    string szAppPath_client, szAppPathName_client; 
+    string szAppPath_gateway, szAppPathName_gateway;
+    string szAppPath_server, szAppPathName_server;
+    number nRet;  
+    LIST   listID;
+    NUMBER nReturn;  
+	STRING szFeatureName1;
+	STRING szFeatureName2;
+	STRING szFeatureName3; 
+	STRING szFeatureName4; 
+	STRING szFeatureName5; 
+	STRING szFeatureName6;
+	STRING szFeatureName7;  
+	STRING szFeatureName8;  
+	STRING szFeatureName9; 
+	STRING szFeatureName10;
+	STRING szFeatureName11;  
+	STRING szFeatureName12; 
+	STRING szFeatureName13;  
+	STRING szFeatureName14; 
+	STRING szFeatureName15;    
+	STRING szFeatureName16;
+	STRING szFeatureName17;
+	STRING szFeatureName18;
+	STRING szFeatureName19;
+	STRING szFeatureName20; 
+	STRING szFeatureName21;      
+	STRING szFeatureName22;
+	STRING szFeatureName23;
+	STRING szFeatureName24;
+	STRING szFeatureName25;
+	STRING szFeatureName26;  
+	STRING szFeatureName27;
+	STRING szFeatureName28;	
+    NUMBER nSel1, nSel2, nSel3, nSel7, nSel5, nSel6, nSel10, nSel11, nSel12, nSel16, nSel17, nSel18 ;
+	
+	STRING szFeatureName51;
+	STRING szFeatureName52;
+	STRING szFeatureName53;
+	STRING szFeatureName61;
+	STRING szFeatureName62;
+	STRING szFeatureName63;   
+	STRING szFeatureName70;
+
+begin
+	// TO DO: if you want to enable background, window title, and caption bar title   								
+	// SetTitle( @PRODUCT_NAME, 24, WHITE );					
+	// SetTitle( @PRODUCT_NAME, 0, BACKGROUNDCAPTION );  			
+	// SetColor(BACKGROUND,RGB (0, 128, 128));					
+	// Enable( FULLWINDOWMODE );						
+	// Enable( BACKGROUND );
+	nType = REMOVEALL;
+	g_nType = REMOVEALL;
+	
+    
+   szFeatureName4 ="Apache";  
+	szFeatureName5 ="Station";  
+	szFeatureName2 ="Station\\StationClient"; 
+	szFeatureName3 ="Station\\StationServer";
+	szFeatureName52 ="Station\\DBService_PostgreSQL_DS"; 
+
+	szFeatureName6 ="FileService";
+	szFeatureName61 ="FileService\\FileService_FTP";
+	szFeatureName12 ="FileService\\StreamingServer";
+	szFeatureName63 ="FileService\\FileService_HDFS";  
+	
+	szFeatureName70 ="ConfigSysServer"; 
+	szFeatureName7 ="ConfigSysServer\\Logview"; 
+	szFeatureName25 ="ConfigSysServer\\ConfigServer";
+	    
+	szFeatureName8 ="Log";
+    szFeatureName9 ="NetManage";
+
+	szFeatureName24 ="ElectronicCenter"; 
+	szFeatureName1 ="ElectronicCenter\\CloudCenter"; 
+	szFeatureName20 ="ElectronicCenter\\ServantRouter";
+	szFeatureName11 ="ElectronicCenter\\CloudWebServer";
+	szFeatureName62 ="ElectronicCenter\\FileSyncServer";
+	szFeatureName53 ="ElectronicCenter\\DBService_HBASE";
+	szFeatureName51 ="ElectronicCenter\\DBService_PostgreSQL";
+	szFeatureName10 ="ElectronicCenter\\NMServer";
+	
+    szFeatureName13 ="WebService_Server";  
+    szFeatureName14 ="WebService_Client"; 
+	szFeatureName15 ="AppData"; 
+	szFeatureName18 ="Script_PostgreSQL";
+	szFeatureName19 ="Apache_32";     
+    szFeatureName21 ="DBService_PostgreSQL_DS";  
+    szFeatureName23 ="FileService_HDFS";
+    
+
+    szFeatureName26 ="ConfigAgent";    
+    szFeatureName27 ="Apache_TConfigServer";
+    szFeatureName28 ="Apache_32_TConfigServer";    
+if(g_nSetup = 1) then	
+Dlg_Start:
+
+    // Added in Version 9.5 - Support for REMOVEONLY option.
+    if( !REMOVEONLY ) then
+		// In standard mode show maintenance dialog
+		Disable(BACKBUTTON);
+		nType = SdWelcomeMaint(szTitle, szMsg, MODIFY);// 选择修改还是删除界面
+		Enable(BACKBUTTON);
+	else
+        // Hide the initial progress dialog as otherwise the user can
+        // click on it, and hide the MessageBox.
+        Disable( DIALOGCACHE );
+
+        // In RemoveOnly mode, set to remove.
+        nType = REMOVEALL;
+    endif;
+	 
+	g_nType = nType;
+	 
+	// Show Uninstall Confirmation Dialog
+    if ( nType = REMOVEALL ) then
+		nResult = MessageBox( SdLoadString( IFX_MAINTUI_MSG ), MB_YESNO );
+		if (nResult != IDYES ) then
+            if( REMOVEONLY ) then
+                // In REMOVEONLY mode, abort the setup.
+                abort;
+            else
+                // In non-REMOVEONLY mode, redisplay the previous dialog.
+			    goto Dlg_Start;
+            endif;
+		endif;
+	endif;
+
+	nResult = NEXT;
+ else
+ 	nType = REMOVEALL;
+ endif;
+ 
+Dlg_SdFeatureTree:
+ /*
+    // 记录用户选择前的选择项
+    nSel1 = 0;
+    nSel2 = 0;
+    nSel3 = 0; 
+    nSel5 = 0;
+    nSel6 = 0;
+    nSel7 = 0;
+    nSel10 = 0;
+    nSel11 = 0;   
+    nSel12 = 0; 
+    nSel16 = 0;   
+    nSel17 = 0;   
+    nSel18 = 0;
+    if (FeatureIsItemSelected(MEDIA, szFeatureName1)=1) then
+    	nSel1 = 1;
+    endif;
+    if (FeatureIsItemSelected(MEDIA, szFeatureName2)=1) then
+      	nSel2 = 1;
+    endif;
+    if (FeatureIsItemSelected(MEDIA, szFeatureName3)=1) then
+       	nSel3 = 1;
+    endif; 
+	if (FeatureIsItemSelected(MEDIA, szFeatureName51)=1) then
+		nSel5 = 1;
+	endif;
+
+    if (FeatureIsItemSelected(MEDIA, szFeatureName61)=1) then
+      	nSel6 = 1;
+    endif;
+
+    if (FeatureIsItemSelected(MEDIA, szFeatureName7)=1) then
+       	nSel7 = 1;
+    endif;
+        
+	if (FeatureIsItemSelected(MEDIA, szFeatureName10)=1) then
+    	nSel10 = 1;
+    endif;
+    if (FeatureIsItemSelected(MEDIA, szFeatureName11)=1) then
+      	nSel11 = 1;
+    endif;     
+    if (FeatureIsItemSelected(MEDIA, szFeatureName12)=1) then
+       	nSel12 = 1;
+    endif; 
+  
+	if (FeatureIsItemSelected(MEDIA, szFeatureName20)=1) then
+       	nSel18 = 1;
+    endif;
+    */
+     
+	if (nType = MODIFY) then 	
+		szTitle = "";
+		szMsg = "";
+		nResult = SdFeatureTree(szTitle, szMsg, INSTALLDIR, "", 2); 
+		if (nResult = BACK) goto Dlg_Start;
+	endif;
+
+	// setup default status 
+	SetStatusWindow(0, "");
+	Enable(STATUSEX);
+	StatusUpdate(ON, 100);      
+
+    if (nType = MODIFY) then 
+        if (   (FeatureIsItemSelected(MEDIA, szFeatureName1)=0) &&  (FeatureIsItemSelected(MEDIA, szFeatureName2)=0)
+			&& (FeatureIsItemSelected(MEDIA, szFeatureName3)=0) &&  (FeatureIsItemSelected(MEDIA, szFeatureName51)=0)
+			&& (FeatureIsItemSelected(MEDIA, szFeatureName52)=0) && (FeatureIsItemSelected(MEDIA, szFeatureName53)=0)
+			&& (FeatureIsItemSelected(MEDIA, szFeatureName61)=0) && (FeatureIsItemSelected(MEDIA, szFeatureName7)=0)
+			&& (FeatureIsItemSelected(MEDIA, szFeatureName62)=0) && (FeatureIsItemSelected(MEDIA, szFeatureName63)=0)
+			&& (FeatureIsItemSelected(MEDIA, szFeatureName10)=0) && (FeatureIsItemSelected(MEDIA, szFeatureName11)=0)
+			&& (FeatureIsItemSelected(MEDIA, szFeatureName12)=0) && (FeatureIsItemSelected(MEDIA, szFeatureName20)=0)
+			&&  (FeatureIsItemSelected(MEDIA, szFeatureName25)=0)) then 
+			 
+        	nType = REMOVEALL;
+        	g_nType = REMOVEALL;
+        endif;
+    endif;    
+    
+     
+	// 检查文件是否锁定，同时注销服务
+	szAppPath_client = INSTALLDIR ^ @ID_STRING0_Client;
+	szAppPathName_client = szAppPath_client ^ FILENAME_LOCK_PIDCLIENT;  
+	
+	// 卸载电子证据云中心，删除注册表和配置文件
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName1)=0) ) then 
+	   // DeleteRegKeyR10Ver_Client();  
+	   UnRegOldCloudCenterServices_SERVER(); 
+	   DeleteConfigFiles("CloudCenter");
+	    
+	endif; 
+		
+//卸载采集站客户端，删除注册表和配置文件
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName2)=0) ) then 
+	 //   DeleteRegKeyR10Ver_Client();
+	  //   UnRegOldICCClientServices_SERVER();     
+	     DeleteConfigFiles("StationClient");     
+	endif;
+	
+	 //卸载采集站服务，删除注册表和配置文件
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName3)=0) ) then 
+	 //   DeleteRegKeyR10Ver_Client();
+	  //  UnRegOldICCPIDServices_SERVER();   
+	  UnRegOldStationServices_SERVER(); 
+	 DeleteConfigFiles("StationServer");      
+	endif;        
+	
+	// 卸载数据库服务，删除注册表和配置文件
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName51)=0) ) then 
+	 //   DeleteRegKeyR10Ver_Client();
+	//    UnRegOldICCPIDServices_SERVER(); 
+		UnRegOldPostgreSQLServices_SERVER();
+		DeleteConfigFiles("DBService_PostgreSQL");      
+	endif;
+
+	// 卸载文件服务，删除注册表和配置文件
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName61)=0) ) then 
+	  //  DeleteRegKeyR10Ver_Client();
+	   // UnRegOldICCPIDServices_SERVER(); 
+	   UnRegOldFileServices_SERVER(); 
+	 DeleteConfigFiles("FileService_FTP");      
+	endif;
+	
+	// 卸载日志客户端，删除注册表和配置文件
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName7)=0) ) then 
+	 DeleteConfigFiles("LogView");      
+	endif; 	
+	
+    if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName8)=0) ) then 
+	 UnRegOldLogServices_SERVER();   
+	 DeleteConfigFiles("Log");      
+	endif; 
+	
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName9)=0) ) then 
+	 UnRegOldNetManageServices_SERVER();   
+	 DeleteConfigFiles("NetManage");      
+	endif;
+	
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName10)=0) ) then 
+	 UnRegOldNMServices_SERVER();  
+	 DeleteConfigFiles("NMServer");      
+	endif;  
+	
+    if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName14)=0) ) then  
+	 UnRegOldWebServices_SERVER(); 
+	 DeleteConfigFiles("WebService_Client");      
+	endif; 	 
+	
+	 // 卸载ThirdApp
+	//if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName16)=0) ) then 
+	// DeleteConfigFiles("FtpServer");      
+	//endif; 	 
+    
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName20)=0) ) then 
+		// DeleteRegKeyR10Ver_Client();
+		// UnRegOldICCPIDServices_SERVER(); 
+		UnRegOldServantRouterServices_SERVER();  
+		DeleteConfigFiles("ServantRouter"); 
+	endif; 
+	 
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName52)=0) ) then 
+		UnRegOldPostgreSQL_DSServices_SERVER();   
+		DeleteConfigFiles("DBService_PostgreSQL_DS");        
+	endif;
+	
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName53)=0) ) then 
+		UnRegOldServices_DBService_HBASE();
+		DeleteConfigFiles("DBService_HBASE");
+	endif;
+	
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName63)=0) ) then 
+		UnRegOldServices_FileService_HDFS();
+		DeleteConfigFiles("FileService_HDFS");
+	endif;
+	
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName62)=0) ) then 
+		UnRegOldServices_FileSyncServer();
+		DeleteConfigFiles("FileSyncServer");
+	endif;
+	
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName25)=0) ) then 
+		//UnRegOldServices_ConfigServer();
+		DeleteConfigFiles("ConfigServer"); 
+	    DeleteConfigFiles("Apache_TConfigServer"); 
+	    DeleteConfigFiles("Apache_32_TConfigServer");  
+	    UnRegOldTomcatServices_TC_SERVER();
+	endif;
+	
+	if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName26)=0) ) then 
+		UnRegOldServices_ConfigAgent();
+		DeleteConfigFiles("ConfigAgent");
+	endif;
+
+	 if (( nType = REMOVEALL ) || (FeatureIsItemSelected(MEDIA, szFeatureName4)=0) ||  (FeatureIsItemSelected(MEDIA, szFeatureName19)=0) || (FeatureIsItemSelected(MEDIA, szFeatureName27)=0) ||  (FeatureIsItemSelected(MEDIA, szFeatureName28)=0)) then  
+	 UnRegOldTomcatServices_SERVER();   
+	 DeleteConfigFiles("Apache"); 
+	 DeleteConfigFiles("Apache_32");
+       
+	endif;	
+	
+	switch(nType)
+        case REMOVEALL: 	//表示卸载
+		   // DeleteFirewallSetting();	// 运行删除防火墙例外脚本
+		   // StopPUC_AllProcess();//删除PUC所有进程
+		    //删除日志目录 
+		    //[AppDataFolder]PUC\PUC_Client\
+		    //[CommonAppDataFolder]PUC\PUC_Server
+		    //[CommonAppDataFolder]PUC\PUC_Gateway
+		    DeleteConfigFiles("all");  // 删除所有的配置文件
+		    FeatureRemoveAll(); 	// 删除所有模块
+    endswitch;
+
+	// setup default status 
+	SetStatusWindow(0, "");
+	Enable(STATUSEX);
+	StatusUpdate(ON, 100);
+end;
+
+
+
+//---------------------------------------------------------------------------
+// OnFirstUIAfter
+//
+// The OnFirstUIAfter event called by the framework after the file transfer
+// of the setup when the setup is running in first install mode. By default
+// this event displays UI that informs the end user that the setup has been
+// completed successfully.
+//---------------------------------------------------------------------------
+function OnFirstUIAfter()
+    STRING szTitle, szMsg1, szMsg2, szOption1, szOption2;
+    NUMBER bOpt1, bOpt2;  
+    NUMBER nType;
+    STRING szfilename, szFolder, szmsg1, szmsg2;
+    NUMBER nresult; 
+	STRING szFeatureName1;
+	STRING szFeatureName2;
+	STRING szFeatureName3; 
+	STRING szFeatureName4; 
+	STRING szFeatureName5; 
+	STRING szFeatureName6;
+	STRING szFeatureName7;  
+	STRING szFeatureName8;  
+	STRING szFeatureName9; 
+	STRING szFeatureName10;
+	STRING szFeatureName11;  
+	STRING szFeatureName12; 
+	STRING szFeatureName13;  
+	STRING szFeatureName14; 
+	STRING szFeatureName15; 
+	STRING szFeatureName16; 
+	STRING szFeatureName17;   
+	STRING szFeatureName18;  
+	STRING szFeatureName19;
+	STRING szFeatureName20;
+	STRING szFeatureName21; 
+	STRING szFeatureName22;
+	STRING szFeatureName23;
+	STRING szFeatureName24;
+	STRING szFeatureName25;
+	STRING szFeatureName26;    
+	STRING szFeatureName27;
+	STRING szFeatureName28;	
+            
+    STRING szOpt1,szOpt2;
+    STRING szInstallPath, szKey1, szKey;
+    STRING szProductCode;
+    STRING szNewPath;
+    STRING szGatewayType;
+    NUMBER nSize, nvType;
+
+	STRING szFeatureName51;
+	STRING szFeatureName52;
+	STRING szFeatureName53;
+	STRING szFeatureName61;
+	STRING szFeatureName62;
+	STRING szFeatureName63;
+    STRING szFeatureName70;
+begin   
+
+	
+    szFeatureName4 ="Apache";  
+	szFeatureName5 ="Station";  
+	szFeatureName2 ="Station\\StationClient"; 
+	szFeatureName3 ="Station\\StationServer";
+	szFeatureName52 ="Station\\DBService_PostgreSQL_DS"; 
+
+	szFeatureName6 ="FileService";
+	szFeatureName61 ="FileService\\FileService_FTP";
+	szFeatureName12 ="FileService\\StreamingServer";
+	szFeatureName63 ="FileService\\FileService_HDFS";  
+	
+	szFeatureName70 ="ConfigSysServer"; 
+	szFeatureName7 ="ConfigSysServer\\Logview"; 
+	szFeatureName25 ="ConfigSysServer\\ConfigServer";
+	    
+	szFeatureName8 ="Log";
+    szFeatureName9 ="NetManage";
+
+	szFeatureName24 ="ElectronicCenter"; 
+	szFeatureName1 ="ElectronicCenter\\CloudCenter"; 
+	szFeatureName20 ="ElectronicCenter\\ServantRouter";
+	szFeatureName11 ="ElectronicCenter\\CloudWebServer";
+	szFeatureName62 ="ElectronicCenter\\FileSyncServer";
+	szFeatureName53 ="ElectronicCenter\\DBService_HBASE";
+	szFeatureName51 ="ElectronicCenter\\DBService_PostgreSQL";
+	szFeatureName10 ="ElectronicCenter\\NMServer";
+	
+    szFeatureName13 ="WebService_Server";  
+    szFeatureName14 ="WebService_Client"; 
+	szFeatureName15 ="AppData"; 
+	//szFeatureName16 ="FTPServer"; 
+	//szFeatureName17 ="PostgreSQL";
+	szFeatureName18 ="Script_PostgreSQL";
+	szFeatureName19 ="Apache_32";     
+    szFeatureName21 ="DBService_PostgreSQL_DS";  
+    szFeatureName23 ="FileService_HDFS";
+    
+
+    szFeatureName26 ="ConfigAgent";    
+    szFeatureName27 ="Apache_TConfigServer";
+    szFeatureName28 ="Apache_32_TConfigServer";   
+    szGatewayType = "";  
+    
+    //Disable(STATUSEX); 
+    szTitle = "";
+    szMsg1 = ""; 
+    szMsg2 = "";
+    szOpt1 = "";
+    szOpt2 = "";
+     
+     
+    if (FeatureIsItemSelected(MEDIA, szFeatureName3)=1) then
+        ServiceRemoveService("Hytera SmartEEMS StationServer"); // ???????Service?
+        UnRegOldStationServices_SERVER();
+        RegStationServices_SERVER();
+    endif;
+    
+        
+    if (FeatureIsItemSelected(MEDIA, szFeatureName14)=1) then
+    	ServiceRemoveService("Hytera SmartEEMS WSIceServerInStationService"); // ???????Service?
+        UnRegOldWebServices_SERVER();
+        RegWebServices_SERVER();
+    endif;  
+    
+    if (FeatureIsItemSelected(MEDIA, szFeatureName1)=1) then
+       	ServiceRemoveService("Hytera SmartEEMS CloudCenter"); // ???????Service?
+        UnRegOldCloudCenterServices_SERVER();
+        RegCloudCenterServices_SERVER();
+    endif;     
+    
+     if (FeatureIsItemSelected(MEDIA, szFeatureName10)=1) then
+       	ServiceRemoveService("Hytera SmartEEMS NetManageCenterServer"); // ???????Service?
+        UnRegOldNMServices_SERVER();
+        RegNMServices_SERVER();
+    endif; 
+
+    
+     if (FeatureIsItemSelected(MEDIA, szFeatureName51)=1) then
+       	ServiceRemoveService("Hytera SmartEEMS DBService-PostgreSQL"); // ???????Service?
+        UnRegOldPostgreSQLServices_SERVER();
+        RegPostgreSQLServices_SERVER();
+    endif; 
+    
+     if (FeatureIsItemSelected(MEDIA, szFeatureName52)=1) then // szFeatureName21
+       	ServiceRemoveService("Hytera SmartEEMS DBService-PostgreSQL-DS"); // ???????Service?
+        UnRegOldPostgreSQL_DSServices_SERVER();
+        RegPostgreSQL_DSServices_SERVER();
+    endif;  
+    
+     if (FeatureIsItemSelected(MEDIA, szFeatureName61)=1) then
+       	ServiceRemoveService("Hytera SmartEEMS FileService-FTP"); // ???????Service?
+        UnRegOldFileServices_SERVER();
+        RegFileServices_SERVER();
+    endif;
+
+	if (FeatureIsItemSelected(MEDIA, szFeatureName53)=1) then 
+		ServiceRemoveService("Hytera SmartEEMS DBService-HBASE");
+		UnRegOldServices_DBService_HBASE();
+		RegServices_DBService_HBASE();
+	endif;
+	
+	if (FeatureIsItemSelected(MEDIA, szFeatureName63)=1) then 
+		ServiceRemoveService("Hytera SmartEEMS FileService-HDFS");
+        UnRegOldServices_FileService_HDFS();
+        RegServices_FileService_HDFS();
+	endif;
+	
+	if (FeatureIsItemSelected(MEDIA, szFeatureName62)=1) then 
+		ServiceRemoveService("Hytera SmartEEMS FileSyncServer");
+        UnRegOldServices_FileSyncServer();
+        RegServices_FileSyncServer();
+	endif;
+	
+	if (FeatureIsItemSelected(MEDIA, szFeatureName26)=1) then
+		ServiceRemoveService("Hytera SmartEEMS ConfigAgent");
+        UnRegOldServices_ConfigAgent();
+        RegServices_ConfigAgent();
+	endif;
+      
+      if (FeatureIsItemSelected(MEDIA, szFeatureName8)=1) then
+       	ServiceRemoveService("Hytera SmartEEMS LogService"); // ???????Service?
+        UnRegOldLogServices_SERVER();
+        RegLogServices_SERVER();
+    endif;   
+    
+      if (FeatureIsItemSelected(MEDIA, szFeatureName9)=1) then
+       	ServiceRemoveService("Hytera SmartEEMS NetManageAgent"); // ???????Service?
+        UnRegOldNetManageServices_SERVER();
+        RegNetManageServices_SERVER();
+    endif; 
+    
+      if (FeatureIsItemSelected(MEDIA, szFeatureName20)=1) then
+       	ServiceRemoveService("Hytera SmartEEMS ServantRouter"); // ???????Service?
+        UnRegOldServantRouterServices_SERVER();
+        RegServantRouterServices_SERVER();
+    endif;  
+    //&& gaiwei ||
+    if ((FeatureIsItemSelected(MEDIA, szFeatureName1)=1) ||
+    	(FeatureIsItemSelected(MEDIA, szFeatureName3)=1) ||
+    	(FeatureIsItemSelected(MEDIA, szFeatureName11)=1) ||
+    	(FeatureIsItemSelected(MEDIA, szFeatureName12)=1)) then      
+        ServiceRemoveService("Tomcat8forSmartEEMS"); 
+        UnRegOldTomcatServices_SERVER(); 
+        RegTomcatServices_SERVER(); 
+    endif;    
+    
+        if (FeatureIsItemSelected(MEDIA, szFeatureName25)=1) then      
+        ServiceRemoveService("Tomcat8forEEMSWebConfigServer");
+        UnRegOldTomcatServices_TC_SERVER();   
+        RegTomcatServices_TC_SERVER() ;
+    endif;  
+    
+    
+    
+    // 新增自动生成dump文件注册表
+    //RunAutoGenDumpFile();
+    
+    // 运行防火墙脚本，添加防火墙例外
+   // AddFirewallSetting();
+
+   
+   //运行数据库文件
+
+      
+     
+    //SetupRDS30Fonts();
+    // 安装最后执行PUC服务器的icegridadmin.bat文件，只有在安装服务器的情况下执行
+    //if ((FeatureIsItemSelected(MEDIA, szFeatureName2)=1) ) then
+    	//SdShowMsg(@ID_STRING_SERVER_BAT, TRUE);
+    	//RunServerIceBat();                    
+    	//SdShowMsg(@ID_STRING_SERVER_BAT, FALSE);
+   // endif;
+    // 安装最后执行PUC网关的icegridadmin.bat文件，只有在安装网关的情况下执行
+    //if ((FeatureIsItemSelected(MEDIA, szFeatureName3)=1) ) then
+    	//SdShowMsg(@ID_STRING_GATEWAY_BAT, TRUE);
+    	//RunGatewayIceBat();
+    	//SdShowMsg(@ID_STRING_GATEWAY_BAT, FALSE);
+    //endif;
+        
+    // 安装最后判断是否已安装.net 4.5.50938，否则安装，装了客户端才需要安装这个   
+    //if ((FeatureIsItemSelected(MEDIA, szFeatureName1)=1) ) then     
+    //if (nType = TYPICAL ) then    
+    Enable(STATUSEX);  
+    RunDotNetFramework40();
+    Disable(STATUSEX);
+   // endif;       
+   
+        
+    RunVcRedistExe2012();  
+    RunVcRedistExe2013(); 
+  //0109  
+  //  RunFtpServer(); 
+  //  RunPostgreSQL();  
+ 
+	bOpt1   = FALSE;
+    bOpt2   = FALSE;    
+   szMsg1 = SdLoadString(IFX_SDFINISH_MSG1);
+  //  if((FeatureIsItemSelected(MEDIA, szFeatureName2)=1) || (FeatureIsItemSelected(MEDIA, szFeatureName3)=1)) then
+        //安装完成带重启提示的界面
+   //     SdFinishReboot ( szTitle , szMsg1 , SYS_BOOTMACHINE , szMsg2 , 0 );
+  //  else  
+   	SdFinishEx(szTitle, szMsg1, szMsg2, szOption1, szOption2, bOpt1, bOpt2);
+  //  endif;
+end;  
+
+//---------------------------------------------------------------------------
+// OnMaintUIAfter
+//
+// The OnMaintUIAfter event called by the framework after the file transfer
+// of the setup when the setup is running in maintenance mode. By default
+// this event displays UI that informs the end user that the maintenance setup
+// has been completed successfully.
+//---------------------------------------------------------------------------
+function OnMaintUIAfter()
+	STRING szTitle, szMsg1, szMsg2, szOption1, szOption2;
+	NUMBER bOpt1, bOpt2; 
+	STRING szFeatureName1;
+	STRING szFeatureName2;
+	STRING szFeatureName3; 
+	STRING szFeatureName4; 
+	STRING szFeatureName5; 
+	STRING szFeatureName6;
+	STRING szFeatureName7;  
+	STRING szFeatureName8;  
+	STRING szFeatureName9; 
+	STRING szFeatureName10;
+	STRING szFeatureName11;  
+	STRING szFeatureName12; 
+	STRING szFeatureName13;  
+	STRING szFeatureName14; 
+	STRING szFeatureName15;   
+	STRING szFeatureName16; 
+	STRING szFeatureName17;  
+	STRING szFeatureName18;
+	STRING szFeatureName19;
+	STRING szFeatureName20; 
+	STRING szFeatureName21;
+	STRING szFeatureName22;
+	STRING szFeatureName23;
+	STRING szFeatureName24;
+	STRING szFeatureName25;
+	STRING szFeatureName26;  
+	STRING szFeatureName27;
+	STRING szFeatureName28;	
+    NUMBER nType;
+    STRING szProductCode, szKey, szInstallPath;
+    STRING szGatewayType;
+    NUMBER nSize, nvType;
+    STRING szDocFile;
+
+	STRING szFeatureName51;
+	STRING szFeatureName52;
+	STRING szFeatureName53;
+	STRING szFeatureName61;
+	STRING szFeatureName62;
+	STRING szFeatureName63;
+	 STRING szFeatureName70;
+
+begin 
+   
+     szFeatureName4 ="Apache";  
+	szFeatureName5 ="Station";  
+	szFeatureName2 ="Station\\StationClient"; 
+	szFeatureName3 ="Station\\StationServer";
+	szFeatureName52 ="Station\\DBService_PostgreSQL_DS"; 
+
+	szFeatureName6 ="FileService";
+	szFeatureName61 ="FileService\\FileService_FTP";
+	szFeatureName12 ="FileService\\StreamingServer";
+	szFeatureName63 ="FileService\\FileService_HDFS";  
+	
+	szFeatureName70 ="ConfigSysServer"; 
+	szFeatureName7 ="ConfigSysServer\\Logview"; 
+	szFeatureName25 ="ConfigSysServer\\ConfigServer";
+	    
+	szFeatureName8 ="Log";
+    szFeatureName9 ="NetManage";
+
+	szFeatureName24 ="ElectronicCenter"; 
+	szFeatureName1 ="ElectronicCenter\\CloudCenter"; 
+	szFeatureName20 ="ElectronicCenter\\ServantRouter";
+	szFeatureName11 ="ElectronicCenter\\CloudWebServer";
+	szFeatureName62 ="ElectronicCenter\\FileSyncServer";
+	szFeatureName53 ="ElectronicCenter\\DBService_HBASE";
+	szFeatureName51 ="ElectronicCenter\\DBService_PostgreSQL";
+	szFeatureName10 ="ElectronicCenter\\NMServer";
+	
+    szFeatureName13 ="WebService_Server";  
+    szFeatureName14 ="WebService_Client"; 
+	szFeatureName15 ="AppData"; 
+	//szFeatureName16 ="FTPServer"; 
+	//szFeatureName17 ="PostgreSQL";
+	szFeatureName18 ="Script_PostgreSQL";
+	szFeatureName19 ="Apache_32";     
+    szFeatureName21 ="DBService_PostgreSQL_DS";  
+    szFeatureName23 ="FileService_HDFS";
+    
+
+    szFeatureName26 ="ConfigAgent";    
+    szFeatureName27 ="Apache_TConfigServer";
+    szFeatureName28 ="Apache_32_TConfigServer";
+    szGatewayType = "";
+	
+	Disable(STATUSEX);
+    
+    
+    if( REMOVEALLMODE ) then
+        szTitle = SdLoadString(IFX_SDFINISH_REMOVE_TITLE); //提示删除
+        szMsg1 = SdLoadString(IFX_SDFINISH_REMOVE_MSG1);
+    else
+        szTitle = SdLoadString(IFX_SDFINISH_MAINT_TITLE); //提示修改   
+        szMsg1  = SdLoadString(IFX_SDFINISH_MAINT_MSG1);
+    endif;
+    
+    bOpt1   = FALSE;
+	bOpt2   = FALSE;
+    szMsg2 = "";   
+    szMsg1 = "";  
+    szOption1 =""; 
+    szOption2 ="";
+	
+    if (g_nType = REMOVEALL) then
+        szMsg1 = @IDS__IsExitDialog_UninstallSuccess;
+        szTitle = @ID_STRING_UninstallFinished;
+    else
+        szMsg1 = @ID_STRING0_MaintModifySuccess;
+        szTitle = @ID_STRING0_MaintModifyFinished;
+       // RestoreRegKeyR10Ver_PUCProductName();
+    endif; 
+
+    szProductCode = PRODUCT_GUID;
+     
+    // 完全卸载 
+	// 删除安装目录\开始菜单\用户安装目录
+   
+	if (g_nType = REMOVEALL) then
+        // delete install folder and Program folder    
+      //  ServiceRemoveService("Hytera SmartEEMS StationServer");
+         
+        
+        DeleteFolderIcon (FOLDER_DESKTOP,@ID_STRING26);
+                                   
+        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING10, ALLCONTENTS); // 删除采集站客户端
+        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING11, ALLCONTENTS); // 删除采集站服务
+        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING12, ALLCONTENTS); // 删除电子证据云中心  
+        
+        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING13, ALLCONTENTS); // 删除WebService
+        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING14, ALLCONTENTS); // 删除TWebServer
+        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING16, ALLCONTENTS); // 删除Tools
+        
+        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING27, ALLCONTENTS); // 删除Storage
+         DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING121, ALLCONTENTS); // 删除Storage
+		//DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING43, ALLCONTENTS); // 删除日志服务器        
+        
+        
+        //DeleteFile(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING0_UNINSTALLTEXT);// 删除卸载快捷方式
+        
+        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ALLCONTENTS); // 删除SmartEEMS
+        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); // 删除Hytera
+        DeleteDir(INSTALLDIR, ALLCONTENTS);  
+        //DeleteDir(ProgramFilesFolder ^ "InstallShield Installation Information" ^ szProductCode,ALLCONTENTS);
+	    //DeleteDir(ProgramFilesFolder ^ "InstallShield Installation Information" ^ szProductCode,ONLYDIR);  
+        
+        /*
+        //delete xml file
+        DeleteXmlFileOfClient();   
+        DeleteXmlFileOfGateway(); 
+        DeleteXmlFileOfServer();  
+        */
+    else
+    	// 部分卸载，删除相应的文件夹和快捷方式
+       if (FeatureIsItemSelected(MEDIA, szFeatureName1)=0) then 
+	      //  DeleteFolderIcon (FOLDER_DESKTOP, @ID_STRING27);   
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING12, ALLCONTENTS); 
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);	           
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR);
+            DeleteDir(INSTALLDIR ^ @ID_STRING0_Cloud, ALLCONTENTS);   
+        endif;
+       
+        if (FeatureIsItemSelected(MEDIA, szFeatureName2)=0) then  
+	        DeleteFolderIcon (FOLDER_DESKTOP, @ID_STRING26);
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING10, ALLCONTENTS);	          
+            DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);	
+            DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR);
+            DeleteDir(INSTALLDIR ^ @ID_STRING0_Client, ALLCONTENTS); 
+        endif;
+         
+        if (FeatureIsItemSelected(MEDIA, szFeatureName3)=0) then 
+           // DeleteFolderIcon (FOLDER_DESKTOP, @ID_STRING26); 
+            DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING10, ALLCONTENTS); 
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);	
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); 
+	        DeleteDir(INSTALLDIR ^ @ID_STRING0_Client, ALLCONTENTS); 
+        endif;    
+        
+         if (FeatureIsItemSelected(MEDIA, szFeatureName51)=0 && FeatureIsItemSelected(MEDIA, szFeatureName61)=0) then 
+           // DeleteFolderIcon (FOLDER_DESKTOP, @ID_STRING26); 
+            DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING27, ALLCONTENTS); 
+            DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING115, ALLCONTENTS);
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);	
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); 
+	        //fxh DeleteDir(INSTALLDIR ^ @ID_STRING0_Storage, ALLCONTENTS);
+	        DeleteDir(INSTALLDIR ^ @ID_STRING115, ALLCONTENTS); 
+        endif;   
+        
+         if (FeatureIsItemSelected(MEDIA, szFeatureName51)=0) then 
+           // DeleteFolderIcon (FOLDER_DESKTOP, @ID_STRING26); 
+            //DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING27, ALLCONTENTS); 
+            DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING115 ^ @ID_STRING0_DBService_PostgreSQL, ALLCONTENTS);
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING115, ALLCONTENTS); 
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);	
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); 
+	       // DeleteDir(INSTALLDIR ^ @ID_STRING0_Storage, ALLCONTENTS);
+	        DeleteDir(INSTALLDIR ^ @ID_STRING115, ALLCONTENTS); 
+        endif;  
+        
+        
+          if (FeatureIsItemSelected(MEDIA, szFeatureName52)=0) then // szFeatureName21
+           // DeleteFolderIcon (FOLDER_DESKTOP, @ID_STRING26); 
+            //DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING27, ALLCONTENTS); 
+            DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING115 ^ @ID_STRING0_DBService_PostgreSQL_DS, ALLCONTENTS);
+            DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING115, ALLCONTENTS);
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);	
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); 
+	       // DeleteDir(INSTALLDIR ^ @ID_STRING0_Storage, ALLCONTENTS);
+	        DeleteDir(INSTALLDIR ^ @ID_STRING115, ALLCONTENTS); 
+        endif;
+        
+          if (FeatureIsItemSelected(MEDIA, szFeatureName7)=0 && FeatureIsItemSelected(MEDIA, szFeatureName10)=0) then 
+            //DeleteFolderIcon (FOLDER_DESKTOP, @ID_STRING26); 
+            DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING16, ALLCONTENTS); 
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);	
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); 
+	        DeleteDir(INSTALLDIR ^ @ID_STRING0_Tools, ALLCONTENTS); 
+        endif;  
+         
+          if (FeatureIsItemSelected(MEDIA, szFeatureName11)=0 && FeatureIsItemSelected(MEDIA, szFeatureName12)=0) then 
+           // DeleteFolderIcon (FOLDER_DESKTOP, @ID_STRING26); 
+            DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING14, ALLCONTENTS); 
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);	
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); 
+	        DeleteDir(INSTALLDIR ^ @ID_STRING0_TWebserver, ALLCONTENTS); 
+        endif;  
+    
+           if (FeatureIsItemSelected(MEDIA, szFeatureName1)=0 && FeatureIsItemSelected(MEDIA, szFeatureName3)=0) then 
+           // DeleteFolderIcon (FOLDER_DESKTOP, @ID_STRING26); 
+            DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING13, ALLCONTENTS); 
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);	
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); 
+	        DeleteDir(INSTALLDIR ^ @ID_STRING0_Webservice, ALLCONTENTS); 
+        endif;     
+          /*
+           if (FeatureIsItemSelected(MEDIA, szFeatureName16)=0) then 
+           // DeleteFolderIcon (FOLDER_DESKTOP, @ID_STRING26); 
+            DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING110, ALLCONTENTS); 
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);	
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); 
+	        DeleteDir(INSTALLDIR ^ @ID_STRING110, ALLCONTENTS); 
+        endif; */ 
+        
+           if (FeatureIsItemSelected(MEDIA, szFeatureName20)=0) then 
+           // DeleteFolderIcon (FOLDER_DESKTOP, @ID_STRING26);  delete ServantRouter
+            DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING121 ^ @ID_STRING119, ALLCONTENTS); 
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);	
+	        DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); 
+	        DeleteDir(INSTALLDIR ^ @ID_STRING110, ALLCONTENTS); 
+        endif;
+         
+		if (FeatureIsItemSelected(MEDIA, szFeatureName53)=0) then 
+            		//fxh DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING115 ^ @ID_STRING0_DBService_HBASE, ALLCONTENTS); 
+	        	DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);
+	        	DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); 
+	        	//fxh DeleteDir(INSTALLDIR ^ @ID_STRING115, ALLCONTENTS); 
+		endif;
+
+		if (FeatureIsItemSelected(MEDIA, szFeatureName63)=0) then 
+            		//fxh DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING115 ^ @ID_STRING0_FileService_HDFS, ALLCONTENTS); 
+	        	DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);
+	        	DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); 
+	        	//fxh DeleteDir(INSTALLDIR ^ @ID_STRING115, ALLCONTENTS); 
+		endif;
+
+		if (FeatureIsItemSelected(MEDIA, szFeatureName62)=0) then 
+            		//fxh DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING115 ^ @ID_STRING0_FileSyncServer, ALLCONTENTS); 
+	        	DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);
+	       	 	DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); 
+	        	//fxh DeleteDir(INSTALLDIR ^ @ID_STRING115, ALLCONTENTS); 
+		endif;
+
+		if (FeatureIsItemSelected(MEDIA, szFeatureName26)=0) then 
+            		//fxh DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING115 ^ @ID_STRING0_ConfigAgent, ALLCONTENTS); 
+	        	DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2, ONLYDIR);
+	        	DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1, ONLYDIR); 
+	        	//fxh DeleteDir(INSTALLDIR ^ @ID_STRING115, ALLCONTENTS); 
+		endif;
+		
+    endif;    
+
+        
+        if(g_nType = MODIFY) then
+        
+        	if (FeatureIsItemSelected(MEDIA, szFeatureName3)=1) then
+       ServiceRemoveService("Hytera SmartEEMS StationServer"); // ???????Service?
+        UnRegOldStationServices_SERVER();
+        RegStationServices_SERVER();
+    endif;
+    
+        
+    if (FeatureIsItemSelected(MEDIA, szFeatureName14)=1 )then
+    	ServiceRemoveService("Hytera SmartEEMS WSIceServerInStationService"); // ???????Service?
+        UnRegOldWebServices_SERVER();
+        RegWebServices_SERVER();
+    endif;  
+    
+    if (FeatureIsItemSelected(MEDIA, szFeatureName1)=1) then
+       ServiceRemoveService("Hytera SmartEEMS CloudCenter"); // ???????Service?
+        UnRegOldCloudCenterServices_SERVER();
+        RegCloudCenterServices_SERVER();
+    endif;     
+    
+     if (FeatureIsItemSelected(MEDIA, szFeatureName10)=1) then
+       ServiceRemoveService("Hytera SmartEEMS NetManageCenterServer"); // ???????Service?
+        UnRegOldNMServices_SERVER();
+        RegNMServices_SERVER();
+    endif; 
+
+    
+     if (FeatureIsItemSelected(MEDIA, szFeatureName51)=1) then
+       ServiceRemoveService("Hytera SmartEEMS DBService-PostgreSQL"); // ???????Service?
+        UnRegOldPostgreSQLServices_SERVER();
+        RegPostgreSQLServices_SERVER();
+    endif; 
+    
+     if (FeatureIsItemSelected(MEDIA, szFeatureName52)=1) then // szFeatureName21
+       ServiceRemoveService("Hytera SmartEEMS DBService-PostgreSQL-DS"); // ???????Service?
+        UnRegOldPostgreSQL_DSServices_SERVER();
+        RegPostgreSQL_DSServices_SERVER();
+    endif;  
+    
+     if (FeatureIsItemSelected(MEDIA, szFeatureName61)=1) then
+       ServiceRemoveService("Hytera SmartEEMS FileService-FTP"); // ???????Service?
+        UnRegOldFileServices_SERVER();
+        RegFileServices_SERVER();
+    endif;  
+
+      
+      if (FeatureIsItemSelected(MEDIA, szFeatureName8)=1) then
+       ServiceRemoveService("Hytera SmartEEMS LogService"); // ???????Service?
+        UnRegOldLogServices_SERVER();
+        RegLogServices_SERVER();
+    endif;   
+    
+      if (FeatureIsItemSelected(MEDIA, szFeatureName9)=1) then
+       ServiceRemoveService("Hytera SmartEEMS NetManageAgent"); // ???????Service?
+        UnRegOldNetManageServices_SERVER();
+        RegNetManageServices_SERVER();
+    endif; 
+    
+      if (FeatureIsItemSelected(MEDIA, szFeatureName20)=1) then
+       ServiceRemoveService("Hytera SmartEEMS ServantRouter"); // ???????Service?
+        UnRegOldServantRouterServices_SERVER();
+        RegServantRouterServices_SERVER();
+    endif;
+
+	if (FeatureIsItemSelected(MEDIA, szFeatureName53)=1) then 
+		ServiceRemoveService("Hytera SmartEEMS DBService-HBASE");
+		UnRegOldServices_DBService_HBASE();
+		RegServices_DBService_HBASE();
+	endif;
+
+	if (FeatureIsItemSelected(MEDIA, szFeatureName63)=1) then 
+		ServiceRemoveService("Hytera SmartEEMS FileService-HDFS");
+		UnRegOldServices_FileService_HDFS();
+		RegServices_FileService_HDFS();
+	endif;
+
+	if (FeatureIsItemSelected(MEDIA, szFeatureName62)=1) then 
+		ServiceRemoveService("Hytera SmartEEMS FileSyncServer");
+		UnRegOldServices_FileSyncServer();
+		RegServices_FileSyncServer();
+	endif;
+
+	if (FeatureIsItemSelected(MEDIA, szFeatureName26)=1) then
+		ServiceRemoveService("Hytera SmartEEMS ConfigAgent");
+		UnRegOldServices_ConfigAgent();
+		RegServices_ConfigAgent();
+	endif;
+         
+	if ((FeatureIsItemSelected(MEDIA, szFeatureName1)=1) ||
+		(FeatureIsItemSelected(MEDIA, szFeatureName3)=1) || 
+		(FeatureIsItemSelected(MEDIA, szFeatureName11)=1) || 
+		(FeatureIsItemSelected(MEDIA, szFeatureName12)=1)) then      
+        //MessageBox ("Tomcat8forSmartEEMS",WARNING);
+        ServiceRemoveService("Tomcat8forSmartEEMS"); 
+        UnRegOldTomcatServices_SERVER(); 
+        RegTomcatServices_SERVER(); 
+    endif;    
+    
+        if (FeatureIsItemSelected(MEDIA, szFeatureName25)=1) then      
+        ServiceRemoveService("Tomcat8forEEMSWebConfigServer");
+        UnRegOldTomcatServices_TC_SERVER();   
+        RegTomcatServices_TC_SERVER() ;
+    endif;  
+	 
+	 
+	 
+	 
+      		if (FeatureIsItemSelected(MEDIA, szFeatureName2)=1) then 	
+				//创建client的快捷方式
+				szDocFile = TARGETDIR ^ @ID_STRING0_Client ^ "EEMS.exe";	
+			LongPathToQuote(szDocFile, TRUE );	
+				AddFolderIcon(FOLDER_DESKTOP, @ID_STRING26 , szDocFile, TARGETDIR ^ @ID_STRING0_Client , TARGETDIR ^ @ID_STRING0_Client ^ FILENAME_LOCK_PIDCLIENT , 0 ,"" , REPLACE ); 
+		        
+			else
+				DeleteDir(FOLDER_PROGRAMS ^ @ID_STRING2_PROGRAM_FOLDER1 ^ @ID_STRING2_PROGRAM_FOLDER2 ^ @ID_STRING10, ALLCONTENTS); 
+		    	DeleteDir(INSTALLDIR ^ @ID_STRING0_Client, ALLCONTENTS); 
+            	//DeleteRegKey_DWS(szFeatureName1); 
+            	DeleteDir(FOLDER_DESKTOP^@ID_STRING26, ALLCONTENTS);
+            	//DeleteRegKeyR10Ver_Client();
+			endif;
+
+		endif; 
+    	 
+    	
+    
+   bOpt1   = FALSE;
+   bOpt2   = FALSE; 
+   
+ //  if((FeatureIsItemSelected(MEDIA, szFeatureName2)=1) || (FeatureIsItemSelected(MEDIA, szFeatureName3)=1)) then
+  //  	SdFinishReboot ( szTitle , szMsg1 , SYS_BOOTMACHINE , szMsg2 , 0 );
+  //  else    
+   //    	SdFinish ( szTitle , szMsg1 , szMsg2 , szOption1 , szOption2 , bOpt1 , bOpt2 );
+   // endif;
+   SdFinishEx(szTitle, szMsg1, szMsg2, szOption1, szOption2, bOpt1, bOpt2);  
+end;
+
+
+
+
+//---------------------------------------------------------------------------
+// OnEnd
+//
+// The OnEnd event is called at the end of the setup. This event is not
+// called if the setup is aborted.
+//---------------------------------------------------------------------------
+function OnEnd()
+    STRING szProductCode;
+begin
+	/*    
+    if (g_nType = REMOVEALL) then
+        szProductCode = PRODUCT_GUID;
+          
+        DeleteDir(ProgramFilesFolder ^ "InstallShield Installation Information" ^ szProductCode, ALLCONTENTS);
+        DeleteDir(ProgramFilesFolder ^ "InstallShield Installation Information" ^ szProductCode, ONLYDIR);  
+    endif;
+    */
+end;
+

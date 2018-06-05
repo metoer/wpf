@@ -1,0 +1,387 @@
+// Firewall.rul
+
+// 升级包才需要:
+// (1) 备份xml配置文件; (2) 删除旧版本的垃圾文件; (3) 用备份的xml文件替换新安装的xml文件
+
+
+#include "ifx.h"
+// 服务器运行文件
+#define FILENAME_LOCK_SERVER            "Monitor.bat"
+#define FILENAME_LOCK1_SERVER           "Monitor.exe"
+#define FILENAME_LOCK2_SERVER           "icegridregistry.exe"
+#define FILENAME_LOCK3_SERVER           "icegridnode.exe"
+#define FILENAME_LOCK4_SERVER           "glacier2router.exe"
+#define FILENAME_LOCK5_SERVER           "LoginServer.exe"
+#define FILENAME_LOCK6_SERVER           "LogServer.exe"
+#define FILENAME_LOCK7_SERVER           "Observercenter.exe"
+#define FILENAME_LOCK8_SERVER           "database.exe"
+#define FILENAME_LOCK9_SERVER           "datacenter.exe"
+#define FILENAME_LOCK10_SERVER          "Business.exe"
+#define FILENAME_LOCK11_SERVER          "BaseComponent.exe"
+#define FILENAME_LOCK12_SERVER          "Equipmentmgr.exe"
+
+// 网关运行文件
+#define FILENAME_LOCK_GATEWAY           "Monitor.bat"
+#define FILENAME_LOCK1_GATEWAY          "Monitor.exe"
+#define FILENAME_LOCK2_GATEWAY          "icegridregistry.exe"
+#define FILENAME_LOCK3_GATEWAY          "icegridnode.exe"  
+#define FILENAME_LOCK4_GATEWAY          "icegridnode.exe" 
+#define FILENAME_LOCK5_GATEWAY          "LoginServer.exe"
+#define FILENAME_LOCK6_GATEWAY          "LogServer.exe"
+#define FILENAME_LOCK7_GATEWAY          "Observercenter.exe"
+#define FILENAME_LOCK8_GATEWAY          "database.exe"
+#define FILENAME_LOCK9_GATEWAY          "datacenter.exe"
+#define FILENAME_LOCK10_GATEWAY         "Business.exe"
+#define FILENAME_LOCK11_GATEWAY         "BaseComponent.exe"
+#define FILENAME_LOCK12_GATEWAY         "PDTAPI_1.exe"
+#define FILENAME_LOCK13_GATEWAY         "PDTAPI_2.exe"
+#define FILENAME_LOCK14_GATEWAY         "PDTAPI_3.exe"
+#define FILENAME_LOCK15_GATEWAY         "PDTAPI_4.exe"
+#define FILENAME_LOCK16_GATEWAY         "PDTAPI_5.exe"
+// 智能客户端运行文件
+#define FILENAME_LOCK_PIDCLIENT            "Hytera.ICC_PID.exe"  
+//智能业务
+ #define FILENAME_LOCK_PIDSERVER            "Hytera.ICC.PIDServer.exe"   
+ // 本地语音
+  #define FILENAME_LOCK_CLIENTSERVER            "SmartOneClient.exe" 
+// 
+#define FILENAME_LOCK_MACTOOL           "HyteraSerialNumberTool.exe" 
+// 运行文件                    
+#define FILENAME_LOCK_TOOL_CONFIGURATION    "ConfigureServer.exe"
+// 日志查看工具运行文件
+#define FILENAME_LOCK_TOOL_LOGVIEWER        "LogView.exe"  
+
+// 网管工具运行文件                    
+#define FILENAME_LOCK_TOOL_NetManageServer    "NetManageServer.exe"
+
+#define PATH_XML_SERVER      "Hytera\\PUC_Server "
+#define FILE_XML_SERVER      "ServerConfig.xml"
+#define FOLDER_XML_SERVER    "Server"
+
+#define PATH_XML_GATEWAY     "Hytera\\PUC_Gateway "
+#define FILE_XML_GATEWAY     "GatewayConfig.xml"
+#define FOLDER_XML_GATEWAY   "Gateway"
+
+#define PATH_XML_CLIENT      "Hytera\\PUC_PID"		
+#define FILE_XML_CLIENT      "ClientConfig.xml"
+
+#define IDS_PROMPT_OLDVERSION_INSTALLED    "Install the software detects an earlier version, in order to ensure the software is installed correctly uninstall that version!"
+#define IDS_PROMPT_OLDVERSION_UNINSTALL    "Uninstalling the program, please wait ..."
+#define IDS_PROMPT_OLDVERSION_UNINST_END   "Uninstalling is complete!"
+
+prototype DeleteConfigFiles(STRING);
+
+prototype DeleteOldVersionDirAndRegKey();
+
+prototype NUMBER IsLockedR10Files(STRING);
+
+// 指定ProductCode, ex: "{9346ADBE-26AE-450D-8C88-97CD9F302752}"
+prototype AppDataFilesBackup(STRING, STRING, STRING);
+prototype AppDataFilesReplace(STRING, STRING, STRING, STRING);
+
+
+function AppDataFilesBackup(szComponent, szOldVer, szOldPath) 
+    NUMBER nResult;
+    STRING szFile1, szFile2;
+begin
+    if (szOldVer >= "1.0") then 
+        if szComponent == "Server"  then
+		    szFile1 = FOLDER_COMMON_APPDATA ^ (PATH_XML_SERVER + szOldVer) ^ FILE_XML_SERVER; 
+		    szFile2 = FOLDER_TEMP           ^ (PATH_XML_SERVER + szOldVer) ^ FILE_XML_SERVER;
+		    nResult = CopyFile(szFile1, szFile2);
+		    szFile1 = szOldPath   ^ FOLDER_XML_SERVER            ^ "License.key"; 
+		    szFile2 = FOLDER_TEMP ^ (PATH_XML_SERVER + szOldVer) ^ "License.key";
+		    nResult = CopyFile(szFile1, szFile2);
+		elseif szComponent == "Gateway" then
+		    szFile1 = FOLDER_COMMON_APPDATA ^ (PATH_XML_GATEWAY + szOldVer) ^ FILE_XML_GATEWAY; 
+		    szFile2 = FOLDER_TEMP           ^ (PATH_XML_GATEWAY + szOldVer) ^ FILE_XML_GATEWAY;
+		    nResult = CopyFile(szFile1, szFile2);
+		    szFile1 = szOldPath   ^ FOLDER_XML_GATEWAY            ^ "License.key"; 
+		    szFile2 = FOLDER_TEMP ^ (PATH_XML_GATEWAY + szOldVer) ^ "License.key";
+		    nResult = CopyFile(szFile1, szFile2);
+		elseif szComponent == "DispatchClient" then
+		    szFile1 = FOLDER_APPDATA ^ PATH_XML_CLIENT ^ FILE_XML_CLIENT; 
+		    szFile2 = FOLDER_TEMP    ^ PATH_XML_CLIENT ^ FILE_XML_CLIENT;
+		    nResult = CopyFile(szFile1, szFile2);
+		    szFile1 = FOLDER_APPDATA ^ PATH_XML_CLIENT ^ "*.txt"; 
+		    szFile2 = FOLDER_TEMP    ^ PATH_XML_CLIENT ^ "*.txt";
+		    nResult = CopyFile(szFile1, szFile2);
+        endif;
+    endif;
+end;
+
+/*
+function AppDataFilesReplace(szComponent, szOldVer, szNewVer, szNewPath)
+    NUMBER nResult;
+    STRING szFile1, szFile2;
+begin
+    if szComponent == "Server"  then
+		szFile1 = FOLDER_TEMP           ^ (PATH_XML_SERVER + szOldVer) ^ FILE_XML_SERVER;
+		szFile2 = FOLDER_COMMON_APPDATA ^ (PATH_XML_SERVER + szNewVer) ^ FILE_XML_SERVER; 
+		nResult = CopyFile(szFile1, szFile2);
+		szFile1 = FOLDER_TEMP ^ (PATH_XML_SERVER + szOldVer) ^ "License.key";
+		szFile2 = szNewPath   ^ FOLDER_XML_SERVER            ^ "License.key"; 
+		nResult = CopyFile(szFile1, szFile2);
+	elseif szComponent == "Gateway" then
+		szFile1 = FOLDER_TEMP           ^ (PATH_XML_GATEWAY + szOldVer) ^ FILE_XML_GATEWAY;
+		szFile2 = FOLDER_COMMON_APPDATA ^ (PATH_XML_GATEWAY + szNewVer) ^ FILE_XML_GATEWAY; 
+		nResult = CopyFile(szFile1, szFile2);
+		szFile1 = FOLDER_TEMP ^ (PATH_XML_GATEWAY + szOldVer) ^ "License.key";
+		szFile2 = szNewPath   ^ FOLDER_XML_GATEWAY            ^ "License.key"; 
+		nResult = CopyFile(szFile1, szFile2);
+	elseif szComponent == "DispatchClient" then
+		szFile1 = FOLDER_TEMP    ^ PATH_XML_CLIENT ^ FILE_XML_CLIENT;
+		szFile2 = FOLDER_APPDATA ^ PATH_XML_CLIENT ^ FILE_XML_CLIENT; 
+		nResult = CopyFile(szFile1, szFile2);
+		szFile1 = FOLDER_APPDATA ^ PATH_XML_CLIENT ^ "*.txt";
+		szFile2 = FOLDER_TEMP    ^ PATH_XML_CLIENT ^ "*.txt"; 
+		nResult = CopyFile(szFile1, szFile2);
+	endif;
+end;
+ */
+
+// 指定ProductCode, ex: "{9346ADBE-26AE-450D-8C88-97CD9F302752}"
+export prototype UninstallProductCode(STRING, STRING);
+
+function UninstallProductCode(szProductCode, szOldVerPath)
+    STRING szPath, UninstallString;
+    STRING szNumName, szNumValue, szUninstallTxt; 
+    NUMBER nType, nSize;
+    STRING szTargetKey;
+    NUMBER nRet;
+begin      
+    nType = REGDB_STRING;
+    szNumName = "UninstallString";
+    UninstallString = "\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\InstallShield_" + szProductCode; 
+	RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+	RegDBGetKeyValueEx(UninstallString, szNumName, nType, szNumValue, nSize); // 获取卸载脚本
+
+	if (RegDBKeyExist(UninstallString) > 0) then
+		if ( AskYesNo(@ID_PROMPT_OLDVERSION_INSTALLED, NO) = YES ) then
+			StrReplace(szNumValue, "-removeonly", "/UNINSTALL", 50);
+			SdShowMsg(@ID_PROMPT_OLDVERSION_UNINSTALL, TRUE);
+			
+            IsLockedR10Files(szOldVerPath);
+
+            Delay(1);
+            LaunchAppAndWait(szNumValue, " /x /uninst", LAAW_OPTION_WAIT|LAAW_OPTION_WAIT_INCL_CHILD);
+            // 需要考虑用户取消卸载旧版本的情况
+            if (RegDBKeyExist( UninstallString ) < 0) then 
+                // 已经删除了旧版本
+                DeleteOldVersionDirAndRegKey();
+                ServiceRemoveService("PUC Gateway");
+                ServiceRemoveService("PUC Server");
+                SdShowMsg("", FALSE);
+                SdShowMsg(@ID_PROMPT_OLDVERSION_UNINST_END, TRUE);
+                Delay(1);
+            else
+                // 没有删除旧版本
+            endif;
+            SdShowMsg("", FALSE);
+        else
+			abort;
+        endif;
+    endif;
+end;
+
+
+function DeleteOldVersionDirAndRegKey()
+    STRING szTargetKey;
+begin
+	DeleteDir(FOLDER_PROGRAMS ^ "Hytera" ^ "PUC 3.5", ALLCONTENTS);
+    DeleteDir(FOLDER_PROGRAMS ^ "Hytera" ^ "PUC 3.6", ALLCONTENTS);
+    DeleteDir(FOLDER_PROGRAMS ^ "Hytera" ^ "PUC 4.0", ALLCONTENTS);
+    DeleteDir(FOLDER_PROGRAMS ^ "Hytera", ONLYDIR);
+    
+    RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+    szTargetKey = "Software\\Hytera\\HyteraPUC\\PUC35";
+    RegDBDeleteKey( szTargetKey );
+end;
+
+prototype NUMBER IsLockedR10_Server(STRING);
+prototype NUMBER IsLockedR10_Gateway(STRING);
+prototype NUMBER IsLockedR10_Client(STRING);
+prototype NUMBER IsLockedR10_Tool(STRING);
+
+function NUMBER IsLockedR10_Server(szOldInstallPath)
+    NUMBER nResult;
+begin
+    nResult = 0;
+    // Server
+    if (Is(FILE_LOCKED,szOldInstallPath ^ @ID_STRING0_Server ^  FILENAME_LOCK_SERVER )) then
+    	nResult = nResult + 1;
+    endif;
+    if (Is(FILE_LOCKED,szOldInstallPath ^ @ID_STRING0_Server ^  FILENAME_LOCK1_SERVER )) then
+    	nResult = nResult + 1;
+    endif;
+    if (Is(FILE_LOCKED, szOldInstallPath ^ @ID_STRING0_Server ^ FILENAME_LOCK2_SERVER )) then
+    	nResult = nResult + 1;
+    endif;
+    if (Is(FILE_LOCKED, szOldInstallPath ^ @ID_STRING0_Server ^ FILENAME_LOCK3_SERVER )) then
+    	nResult = nResult + 1;
+    endif;
+    return nResult;
+end;
+
+function NUMBER IsLockedR10_Gateway(szOldInstallPath)
+    NUMBER nResult;
+begin
+    nResult = 0;
+    // Gateway
+    if (Is(FILE_LOCKED, szOldInstallPath ^ @ID_STRING0_Gateway ^ FILENAME_LOCK_GATEWAY)) then
+    	nResult = nResult + 1;
+    endif;
+    if (Is(FILE_LOCKED, szOldInstallPath ^ @ID_STRING0_Gateway ^ FILENAME_LOCK1_GATEWAY)) then
+    	nResult = nResult + 1;
+    endif;
+    if (Is(FILE_LOCKED, szOldInstallPath ^ @ID_STRING0_Gateway ^ FILENAME_LOCK2_GATEWAY)) then
+    	nResult = nResult + 1;
+    endif;
+    if (Is(FILE_LOCKED, szOldInstallPath ^ @ID_STRING0_Gateway ^ FILENAME_LOCK3_GATEWAY )) then
+    	nResult = nResult + 1;
+    endif;
+    return nResult;
+end;
+
+function NUMBER IsLockedR10_Client(szOldInstallPath)
+    NUMBER nResult;
+begin
+    nResult = 0;
+    // Client
+    if (Is(FILE_LOCKED, szOldInstallPath ^ @ID_STRING0_Client ^ FILENAME_LOCK_PIDCLIENT)) then
+    	nResult = nResult + 1;
+    endif;
+    return nResult;
+end;
+
+function NUMBER IsLockedR10_Tool(szOldInstallPath)
+    NUMBER nResult;
+begin
+    nResult = 0;
+    // Tool
+    if (Is(FILE_LOCKED, szOldInstallPath ^ FILENAME_LOCK_MACTOOL)) then
+    	nResult = nResult + 1;
+    endif;
+    return nResult;
+end;
+
+
+function NUMBER IsLockedR10Files(szOldInstallPath)
+    NUMBER nRet;
+begin
+    while( IsLockedR10_Server(szOldInstallPath) > 0 )
+        nRet = SprintfBox(MB_RETRYCANCEL|MB_DEFBUTTON2, "", @ID_STRING0_PROMPTLOCKED_SERVER);
+        if (nRet = IDCANCEL) then
+            abort;
+        endif;
+    endwhile;
+    
+    while( IsLockedR10_Gateway(szOldInstallPath) > 0 )
+        nRet = SprintfBox(MB_RETRYCANCEL|MB_DEFBUTTON2, "", @ID_STRING0_PROMPTLOCKED_GATEWAY);
+        if (nRet = IDCANCEL) then
+            abort;
+        endif;
+    endwhile;
+
+    while( IsLockedR10_Client(szOldInstallPath) > 0 )
+        nRet = SprintfBox(MB_RETRYCANCEL|MB_DEFBUTTON2, "", @ID_STRING0_PROMPTLOCKED_CLIENT);
+        if (nRet = IDCANCEL) then
+            abort;
+        endif;
+    endwhile;
+    
+    while( IsLockedR10_Tool(szOldInstallPath) > 0 )
+        nRet = SprintfBox(MB_RETRYCANCEL|MB_DEFBUTTON2, "", @ID_STRING0_PROMPTLOCKED_TOOL);
+        if (nRet = IDCANCEL) then
+            abort;
+        endif;
+    endwhile;
+    return 0;
+end; 
+
+   
+// 客户端配置目录
+//[AppDataFolder]PUC\PUC_Client\
+// 服务器配置目录
+//[CommonAppDataFolder]PUC\PUC_Server
+// 网关配置目录 
+ //[CommonAppDataFolder]PUC\PUC_Gateway    
+function  DeleteConfigFiles(szFeatureType)
+begin
+	if( szFeatureType == "all" ) then
+		DeleteDir(AppDataFolder ^ "SmartEEMS", ALLCONTENTS);
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "StationClient", ALLCONTENTS);
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "StationServer", ALLCONTENTS);    
+	    DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "WebService", ALLCONTENTS);
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "TWebServer", ALLCONTENTS);
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "CloudCenter", ALLCONTENTS);   
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "Tools", ALLCONTENTS);   
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "Storage", ALLCONTENTS);  
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "ThirdApp", ALLCONTENTS); 
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "CommonPlugin", ALLCONTENTS);    
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "TConfigServer", ALLCONTENTS); 
+		
+	endif;
+	
+	if( szFeatureType == "StationClient" ) then
+		DeleteDir(AppDataFolder ^ "SmartEEMS" ^ "StationClient", ALLCONTENTS);
+	endif;
+	
+	if( szFeatureType == "StationServer" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "StationServer", ALLCONTENTS);
+	endif;
+	
+	if( szFeatureType == "CloudCenter" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "CloudCenter", ALLCONTENTS);
+	endif;    
+	  
+	if( szFeatureType == "NMServer" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "Tools" ^ "NMServer", ALLCONTENTS);
+	endif;  
+
+	if( szFeatureType == "LogView" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "Tools" ^ "LogView", ALLCONTENTS);
+	endif;  
+	
+	 if( szFeatureType == "DBService_PostgreSQL" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "Storage" ^ "DBService-PostgreSQL", ALLCONTENTS);
+	endif;  
+	
+	if( szFeatureType == "DBService_PostgreSQL_DS" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "Storage" ^ "DBService-PostgreSQL-DS", ALLCONTENTS);
+	endif;
+	
+	if( szFeatureType == "FileService_FTP" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "Storage" ^ "FileService-FTP", ALLCONTENTS);
+	endif;   
+	
+	if( szFeatureType == "FTPServer" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "ThirdApp", ALLCONTENTS);
+	endif;
+	
+	if( szFeatureType == "ServantRouter" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "CommonPlugin", ALLCONTENTS);
+	endif;  
+	
+	if( szFeatureType == "DBService_HBASE" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "Storage" ^ "DBService-HBASE", ALLCONTENTS);
+	endif;
+	
+	if( szFeatureType == "FileService_HDFS" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "Storage" ^ "FileService-HDFS", ALLCONTENTS);
+	endif;
+	
+	if( szFeatureType == "FileSyncServer" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "Storage" ^ "FileSyncServer", ALLCONTENTS);
+	endif;
+	
+	if( szFeatureType == "ConfigServer" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "TConfigServer" ^ "webapps", ALLCONTENTS);
+	endif;
+	
+	if( szFeatureType == "ConfigAgent" ) then
+		DeleteDir(CommonAppDataFolder ^ "SmartEEMS" ^ "Tools" ^ "Config", ALLCONTENTS);
+	endif;
+
+end; 
+

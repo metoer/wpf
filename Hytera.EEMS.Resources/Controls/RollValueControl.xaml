@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Hytera.EEMS.Resources.Controls.RollValueControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Loaded="UserControl_Loaded" Name="my"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Canvas ClipToBounds="True" Height="{Binding Height,ElementName=canvasMain}">
+            <StackPanel  Width="{Binding ActualWidth,ElementName=canvasMain}" Canvas.Left="0" Canvas.Top="0"   Name="unSelectPanel">
+            </StackPanel>
+        </Canvas>
+        <Canvas VerticalAlignment="Center" ClipToBounds="True" Background="{Binding SelectBorderBrush,ElementName=my}" Height="{Binding ItemHeight,ElementName=my}">
+            <StackPanel Width="{Binding ActualWidth,ElementName=canvasMain}" Canvas.Left="0" Canvas.Top="0"   Name="selectPanel">
+            </StackPanel>
+            <Grid  Width="{Binding ActualWidth,ElementName=canvasMain}" >
+                <TextBlock  VerticalAlignment="Center" x:Name="txtMark" Foreground="{Binding SelectFontBrush,ElementName=my}" Margin="{Binding TextMarkMargin,ElementName=my}" HorizontalAlignment="{Binding TextMarkHorizontalAlignment,ElementName=my}"  Text="{Binding TextMark,ElementName=my}" />
+            </Grid>
+        </Canvas>
+        <Canvas  x:Name="canvasMain" ClipToBounds="True" >
+            <StackPanel  Width="{Binding ActualWidth,ElementName=canvasMain}" Canvas.Left="0" Canvas.Top="0"  Background="Transparent" Name="stackPanelMain" 
+                         MouseLeftButtonDown="stackPanelMain_MouseLeftButtonDown"
+                         MouseLeftButtonUp="stackPanelMain_MouseLeftButtonUp"
+                         MouseMove="stackPanelMain_MouseMove"
+                         MouseLeave="stackPanelMain_MouseLeave" MouseWheel="stackPanelMain_MouseWheel" 
+                         
+                         >
+
+            </StackPanel>
+
+        </Canvas>
+    </Grid>
+</UserControl>

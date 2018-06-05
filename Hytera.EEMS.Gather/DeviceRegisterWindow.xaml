@@ -1,0 +1,40 @@
+﻿<controls:BaseWindow x:Class="Hytera.EEMS.Gather.DeviceRegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:controls="clr-namespace:Hytera.EEMS.Resources.Controls;assembly=Hytera.EEMS.Resources" 
+         xmlns:conver="clr-namespace:Hytera.EEMS.Gather.Converter" IsShowWrite="True"
+            WindowStartupLocation="CenterScreen"   Style="{StaticResource syWindow}"  IsDragMove="True" FontSize="15" ShowInTaskbar="False"
+        Title="{StaticResource GatherDeviceRegister}" Height="286" Width="530" Loaded="BaseWindow_Loaded" >
+    <Window.Resources >
+        <conver:TextVisibilityConverter x:Key="TextVisibility" />
+    </Window.Resources>
+    <DockPanel>
+        <controls:WindowHead DockPanel.Dock="Top" Margin="2,2,0,0" WindowTitle="{StaticResource GatherDeviceRegister}" HeadKeyVisibility="Visible" HeadMinVisibility="Collapsed" HeadMaxVisibility="Collapsed" />
+        <Grid DockPanel.Dock="Bottom" Margin="1,0,1,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnSure" IsDefault="True"  Grid.Column="0"  Style="{StaticResource syCommomBtn}" Content="{StaticResource appSure}" Click="btnSure_Click"  />
+            <Button x:Name="btnCanel"  Grid.Column="1" Style="{StaticResource syCommomBtn}" Content="{StaticResource appCancel}" Click="btnCanel_Click" />
+        </Grid>
+        <Grid Margin="0,20,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock HorizontalAlignment="Right" Grid.Column="0" Grid.Row="0"  Text="{StaticResource GatherDeviceType}" VerticalAlignment="Center" Foreground="{StaticResource fontColor12}" />
+            <ComboBox  Grid.Column="1" HorizontalAlignment="Left" Margin="10,17,0,7" Grid.Row="0" x:Name="cbTypes" Height="30" IsEditable="False" Style="{StaticResource syComboBox}"  Width="280"/>
+
+            <TextBlock HorizontalAlignment="Right" Grid.Column="0" Grid.Row="1" Text="{StaticResource GatherDevicePasswrod}"  VerticalAlignment="Center" Foreground="{StaticResource fontColor12}" />
+            <PasswordBox HorizontalAlignment="Left"  Margin="10,0,0,0"   Grid.Column="1" Grid.Row="1"  MaxLength="10"  Width="280" Height="30" VerticalAlignment="Center"   x:Name="tbPassword" PasswordChanged="tbPassword_PasswordChanged" />
+
+            <TextBlock Grid.Column="0" Margin="50,-5,0,0" Grid.ColumnSpan="2" Width="380" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"  Grid.Row="2" TextOptions.TextFormattingMode="Display"  VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="tbMsg"   FontSize="12" Foreground="Red"  Visibility="{Binding Text,ElementName=tbMsg,Converter={StaticResource TextVisibility}}" />
+        </Grid>
+    </DockPanel>
+</controls:BaseWindow>

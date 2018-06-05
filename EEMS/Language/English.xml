@@ -1,0 +1,536 @@
+﻿<?xml version="1.0"?>
+<PluginLanguage>
+   <Plugin Name="Language">
+    <Resourse ID="Language" Value="English"/>
+    <Resourse ID="Display" Value="English"/>
+    <Resourse ID="Charset" Value="134"/>
+    <Resourse ID="FontName" Value="Arial"/>
+    <Resourse ID="FontSize" Value="12"/>
+    <Resourse ID="TitleFontSize" Value="14"/>
+    <Resourse ID="TimeFormat" Value="yyyy-MM-dd HH:mm:ss"/>
+  </Plugin>
+	
+	<Plugin Name="CollectStationOperation">
+		<Resourse ID="CollectAppExit" Value="Shut down the docking station." />
+		<Resourse ID="CollectAddFinger" Value="Added the fingerprint." />
+		<Resourse ID="CollectDelFinger" Value="Deleted the fingerprint." />
+		<Resourse ID="CollectHandGather" Value="Manually collected evidences." />
+		<Resourse ID="CollectStopGather" Value="Stopped collecting evidences." />
+		<Resourse ID="CollectDevicePlayBack" Value="Searched for and played back evidences." />
+		<Resourse ID="CollectDeviceRegister" Value="Had the body camera registered." />
+		<Resourse ID="CollectDevicePair" Value="Bound the body camera to the officer." />
+		<Resourse ID="CollectDeviceEditor" Value="Edited the bind relation between the body camera and the officer." />
+		<Resourse ID="CollectEvidenceSearch" Value="Searched for the electronic evidence." />
+		<Resourse ID="CollectHighSearch" Value="Searched for the electronic evidence by advanced search." />
+		<Resourse ID="CollectEvidencePlay" Value="Played the electronic evidence." />
+		<Resourse ID="CollectEvidenceUpload" Value="Uploaded the electronic evidence." />
+		<Resourse ID="CollectEvidenceBulkUpload" Value="Uploaded the electronic evidence in batches." />
+		<Resourse ID="CollectEvidenceEditor" Value="Edited the electronic evidence." />
+		<Resourse ID="CollectEvidenceKeynote" Value="Tagged the file on the player." />
+		<Resourse ID="CollectCameraLogSearch" Value="Searched for the body camera log." />
+		<Resourse ID="CollectCameraLogHighSearch" Value="Searched for the body camera log by advanced search." />
+		<Resourse ID="CollectCameraLogBulkUpload" Value="Uploaded the body camera log in batches." />
+		<Resourse ID="CollectLogSearch" Value="Searched for the docking station log." />
+		<Resourse ID="CollectLogHighSearch" Value="Searched for the docking station log by advanced search." />
+		<Resourse ID="CollectLogBulkUpload" Value="Uploaded the docking station log in batches." />
+		<Resourse ID="CollectHistoryWarnSearch" Value="Searched for the historical alarm." />
+		<Resourse ID="CollectHistoryWarnHighSearch" Value="Searched for the historical alarm by advanced search." />
+		<Resourse ID="CollectFingerEditor" Value="Edited the fingerprint." />
+		<Resourse ID="CollectFingerGather" Value="Captured the fingerprint." />
+		<Resourse ID="CollectFingerPrint" Value="Fingerprint" />
+		<Resourse ID="CollectSearchFinger" Value="Searched for the fingerprint." />
+	</Plugin>
+	<Plugin Name="CameraOperation">
+		<Resourse ID="CameraPowerOn" Value="Turned on the body camera." />
+		<Resourse ID="CameraPowerOff" Value="Turned off the body camera." />
+		<Resourse ID="CameraVideoOn" Value="Started recording video." />
+		<Resourse ID="CameraRecordOn" Value="Started recording audio." />
+		<Resourse ID="CameraVideoOff" Value="Stopped recording video." />
+		<Resourse ID="CameraRecordOff" Value="Stopped recording audio." />
+		<Resourse ID="CameraPhoto" Value="Took photos." />
+		<Resourse ID="CameraOther" Value="Other" />
+	</Plugin>
+	
+	<Plugin Name="AppCommon">
+		<Resourse ID="appSure" Value="OK" />	
+		<Resourse ID="appCancel" Value="Cancel" />
+		<Resourse ID="appYes" Value="Yes" />	
+		<Resourse ID="appNo" Value="No" />	
+		<Resourse ID="appLogin" Value="Log in" />		
+		<Resourse ID="appLoginByFingerPrintOrUserInfo" Value="Scan Fingerprint or Enter User Name and Password" />	
+		<Resourse ID="appLoginCode_5" Value="Verification timed out." />	
+		<Resourse ID="appLoginCode_2" Value="The password is incorrect." />	
+		<Resourse ID="appLoginCode_4" Value="The user has no permission." />	
+		<Resourse ID="appLoginCode_3" Value="The user has been deactivated." />	
+		<Resourse ID="appLoginCode_1" Value="The user does not exist." />			
+		<Resourse ID="appLoginCode_6" Value="Synchronize data from the EEMC." />	
+		
+		<Resourse ID="appValidating" Value="Verifying..." />			
+		<Resourse ID="appUserNameNoEmpty" Value="The user name is required." />	
+		<Resourse ID="appPasswordLess" Value="The password is required." />		
+		<Resourse ID="appHint" Value="Message" />	
+		<Resourse ID="appUserName" Value="User Name" />	
+		<Resourse ID="appPassword" Value="Password" />	
+	</Plugin>
+	<Plugin Name="AppMain">
+		<Resourse ID="appMainWelcomeTitle" Value="Docking Station" />
+		<Resourse ID="appMainLoadData" Value="Loading data..." />
+		<Resourse ID="appMainLoadConfig" Value="Loading configuration information..." />
+		<Resourse ID="appMainInitModule" Value="Initializing modules..." />
+		<Resourse ID="appMainDataConnect" Value="Failed to connect to the docking station service. Check the network connection and check whether the docking station service and client configuration service are started." />
+		<Resourse ID="appMainDataBaseFailed" Value="Failed to connect to the database service. Check the database configuration of the docking station." />
+		<Resourse ID="appMainKeyFileNoFound" Value="The keyboard file is missing. Reinstall the on-screen keyboard." />
+		<Resourse ID="appMainLoadPcInfo" Value="Loading the computer information..." />
+		<Resourse ID="appMainLoadDeviceInfo" Value="Loading the body camera information..." />
+		<Resourse ID="appMainLoadPersonInfo" Value="Loading the officer information..." />
+		<Resourse ID="appMainPcHardpan" Value="Hard Disk:" />	
+		<Resourse ID="appMainPcMemory" Value="Memory:" />		
+		<Resourse ID="appMainServerIp" Value="IP Address:" />	
+		<Resourse ID="appMainLanguageSet" Value="Change Language" />	
+		<Resourse ID="appMainStationName" Value="Docking Station" />	
+		<Resourse ID="appMainSystemSet" Value="Settings" />	
+		<Resourse ID="appMainArraySet" Value="Array" />	
+		<Resourse ID="appMainFingerprintCollect" Value="Fingerprint" />	
+		<Resourse ID="appMainChangeLanguage" Value="Language" />	
+		<Resourse ID="appMainSendDataRefresh" Value="Synchronizing data between the Docking Station and the EEMC..." />	
+		<Resourse ID="appMainDataRefreshOverTime" Value="Data synchronization timed out." />	
+		<Resourse ID="appMainDataRefreshFailed" Value="Failed" />
+		<Resourse ID="appMainExitApp" Value="Are you sure you want to log out?" />		
+		<Resourse ID="appMainDataRefresh" Value="Synchronize Data" />
+		<Resourse ID="appMainStartDataRefresh" Value="Starting data synchronization..." />
+		<Resourse ID="appMainRefreshUser" Value="Synchronizing the officer list..." />
+		<Resourse ID="appMainRefreshDevice" Value="Synchronizing the body camera list..." />
+		<Resourse ID="appMainRefreshOrg" Value="Synchronizing the agency list..." />
+		<Resourse ID="appMainRefreshPower" Value="Synchronizing the permission list..." />
+		<Resourse ID="appMainRefreshRolePower" Value="Synchronizing the role permission list..." />
+		<Resourse ID="appMainRefreshUserPower" Value="Synchronizing the user permission list..." />
+		<Resourse ID="appMainRefreshRole" Value="Synchronizing the group list..." />
+		<Resourse ID="appMainRefreshUserRole" Value="Synchronizing the role list..." />
+		<Resourse ID="appMainRefreshCollectStation" Value="Synchronizing the docking station list..." />
+		<Resourse ID="appMainRefreshFingerprint" Value="Synchronizing the fingerprint list..." />
+		<Resourse ID="appMainRefreshFinish" Value="Succeeded" />
+		<Resourse ID="appMainRefreshResultCode_0" Value="Failed" />
+		<Resourse ID="appMainDeviceNumSet" Value="Set Array" />
+		<Resourse ID="appMainRowNum" Value="Row" />
+		<Resourse ID="appMainColumnNum" Value="Column" />
+		<Resourse ID="appMainNoDealWith" Value="Handle Later" />
+		<Resourse ID="appMainDay" Value="day(s)" />
+		<Resourse ID="appMainValid" Value="Valid" />
+		<Resourse ID="appMainInvalid" Value="Invalid" />
+		<Resourse ID="appMainPCInfo" Value="Docking Station" />
+		<Resourse ID="appMainLocalMachineCode" Value="Machine Code:" />
+		<Resourse ID="appMainSoftdogCode" Value="Dongle SN:" />
+		<Resourse ID="appMainLicenseInfo" Value="License" />
+		<Resourse ID="appMainIsMachineCode" Value="Bind License to Machine Code:" />
+		<Resourse ID="appMainIsSoftdogCode" Value="Bind License to Dongle SN:" />
+		<Resourse ID="appMainEmpowerStatus" Value="Status:" />
+		<Resourse ID="appMainEmpowerMachineCode" Value="Machine Code:" />
+		<Resourse ID="appMainEmpowerSoftdog" Value="Dongle SN:" />
+		<Resourse ID="appMainEmpowerFileCreateTime" Value="Created At:" />
+		<Resourse ID="appMainEmpowerFileEndTime" Value="License Expires At:" />
+		<Resourse ID="appMainEmpowerCountDays" Value="Total Valid Days:" />
+		<Resourse ID="appMainEmpowerSurplusDays" Value="License Expires After:" />
+		<Resourse ID="appMainHytera" Value="Copyright © 2017 Hytera Communications Corporation Limited. All rights reserved." />
+		<Resourse ID="appMainAbout" Value="About" />
+		<Resourse ID="appMainCopy" Value="Copy" />
+		<Resourse ID="appMainKey" Value="On-Screen Keyboard" />
+		<Resourse ID="appMainPortSet" Value="Port" />
+		<Resourse ID="appMainSetFirstPort" Value="Set Priority Port" />
+		<Resourse ID="appMainFirstPort" Value="Priority Port" />
+		<Resourse ID="appMainFirstPortMark" Value="Note: Data over the priority port will be collected first." />
+		<Resourse ID="appMainPortPair" Value="Map a Physical Port to a Virtual Port" />
+		<Resourse ID="appMainRerest" Value="Reset" />
+		<Resourse ID="appMainInventedPort" Value="Virtual Port" />
+		<Resourse ID="appMainSetFirstPorting" Value="Setting the priority port…" />
+		<Resourse ID="appMainSetPortOvertime" Value="Priority port settings timed out." />
+		<Resourse ID="appMainSetPortFailed" Value="Failed" />
+		<Resourse ID="appMainIsSaveData" Value="Are you sure you want to discard the changes?" />
+		
+		
+		<Resourse ID="DataBaseConnect_1" Value="Failed to connect to the database." />
+		<Resourse ID="DataBaseConnect_2" Value="The database service is not started." />
+		<Resourse ID="DataBaseConnect_-1" Value="Unknown error" />
+		<Resourse ID="DataBaseConnect_5" Value="Failed to connect to the database." />
+		<Resourse ID="DataBaseConnect_-101" Value="License error" />
+		<Resourse ID="DataBaseConnect_13" Value="Search failed." />
+		
+		<Resourse ID="ServerConnect_1" Value="Failed to connect to the docking station service." />
+		<Resourse ID="ServerConnect_-1" Value="The Web service of the management center or docking station is not started." />
+		<Resourse ID="ServerConnect_10" Value="The management center fails to obtain the information of the docking station." />
+		<Resourse ID="ServerConnect_12" Value="The management center fails to process the heartbeat message." />
+		<Resourse ID="ServerConnect_17" Value="Verification failed. The user name or password is incorrect." />
+		<Resourse ID="ServerConnect_23" Value="The management center encountered an exception." />
+		<Resourse ID="ServerConnect_24" Value="The license file is invalid." />	
+		<Resourse ID="ServerConnect_25" Value="Exceeded the maximum number of docking stations authorized by the license." />
+		<Resourse ID="ServerConnect_27" Value="The session ID is incorrect." />
+		
+	</Plugin>
+	<Plugin Name="AppPluginManageFinger">
+		<Resourse ID="FingerToolName" Value="Fingerprint" />
+		<Resourse ID="FingerCollectMark" Value="Capture Fingerprint" />
+		<Resourse ID="FingerAdmin" Value="Dispatcher" />
+		<Resourse ID="FingerNormal" Value="Officer" />
+		<Resourse ID="FingerCollectCode_1" Value="Failed" />
+		<Resourse ID="FingerCollectCode_2" Value="Failed" />
+		<Resourse ID="FingerNoPower" Value="No permission" />
+		<Resourse ID="FingerCollect" Value="Capture" />
+		<Resourse ID="FingerEditor" Value="Edit" />
+		<Resourse ID="FingerPoliceName" Value="Officer Name:" />
+		<Resourse ID="FingerPoliceCode" Value="Officer No.:" />
+		<Resourse ID="FingerPoliceOrgName" Value="Agency Name:" />
+		<Resourse ID="FingerPoliceType" Value="User Type:" />
+		<Resourse ID="FingerNumber" Value="Fingerprint Qty.:" />
+		<Resourse ID="FingerReRecord" Value="Capture Again" />
+		<Resourse ID="FingerSaveData" Value="Saving..." />
+		<Resourse ID="FingerSaveSuccess" Value="Succeeded" />
+		<Resourse ID="FingerSaveOverTime" Value="Timeout" />
+		<Resourse ID="FingerCloseSaveWindow" Value="Closing the window will not save the fingerprint. Are you sure you want to continue?" />
+		<Resourse ID="FingerRecordFailTip" Value="Failed. Place your finger on the fingerprint reader." />
+		<Resourse ID="FingerName" Value="Name" />
+		<Resourse ID="FingerEditorData" Value="Saving..." />
+		<Resourse ID="FingerEditorOverTime" Value="Timeout" />
+		<Resourse ID="FingerEditorSuccess" Value="Succeeded" />
+		<Resourse ID="FingerEditorFail" Value="Failed" />
+		<Resourse ID="FingerCloseEditorWindow" Value="Closing the window will not save the change made to the fingerprint. Are you sure you want to continue?" />
+		<Resourse ID="FingerInputName" Value="Enter the officer name." />
+		<Resourse ID="FingerSearchInfo" Value="Searching..." />
+		<Resourse ID="FingerSearchOverTime" Value="Timeout" />
+		<Resourse ID="FingerSearchFail" Value="Failed" />
+		<Resourse ID="FingerAddInfo" Value="Load More" />
+		<Resourse ID="FingerAddInfoOverTime" Value="Timeout" />
+		<Resourse ID="FingerAddInfoFail" Value="Failed" />	
+		<Resourse ID="FingerPressMark" Value="Place your finger on the fingerprint reader for three to five seconds and then lift it." />			
+	</Plugin>
+	
+	<Plugin Name="AppPluginGather">
+		<Resourse ID="GatherToolName" Value="Collection" />
+		<Resourse ID="GatherUser" Value="Officer:" />
+		<Resourse ID="GatherHandCollect" Value="Collect Evidence" />
+		<Resourse ID="GatherCollectInfo" Value="The officer does not exist." />
+		<Resourse ID="GatherSelectSearchInfo" Value="Select or search for the officer." />
+		<Resourse ID="GatherCollecting" Value="Collecting evidences…" />
+		<Resourse ID="GatherCollectOvertime" Value="Evidence collection timed out." />
+		<Resourse ID="GatherCollectFailed" Value="Failed to collect evidences." />
+		<Resourse ID="GatherResumeCollect" Value="Resuming evidence collection…" />
+		<Resourse ID="GatherResumeOvertime" Value="Evidence collection resuming timed out." />
+		<Resourse ID="GatherResumeFailed" Value="Failed to resume evidence collection." />
+		<Resourse ID="GatherStopCollect" Value="Evidence collection pausing…" />
+		<Resourse ID="GatherStopCollectOvertime" Value="Evidence collection pausing timed out." />
+		<Resourse ID="GatherStopCollectFailed" Value="Evidence collection pausing failed." />
+		<Resourse ID="GatherRegisterOvertime" Value="Registration timed out." />
+		<Resourse ID="GatherRegisterSuccess" Value="Succeeded" />
+		<Resourse ID="GatherRegisterFailed" Value="Failed" />
+		<Resourse ID="GatherRegistering" Value="Registering…" />
+		<Resourse ID="GatherDeviceCode" Value="Body Camera ID:" />
+		<Resourse ID="GatherPoliceName" Value="Officer Name:" />
+		<Resourse ID="GatherPoliceCode" Value="Officer ID:" />
+		<Resourse ID="GatherOrgName" Value="Agency:" />
+		<Resourse ID="GatherDeviceCollect" Value="Collect" />
+		<Resourse ID="GatherDeviceRegister" Value="Register" />
+		<Resourse ID="GatherDevicePair" Value="Bind" />
+		<Resourse ID="GatherDeviceEditorPair" Value="Edit" />
+		<Resourse ID="GatherDeviceStopCollect" Value="Pause" />
+		<Resourse ID="GatherDeviceResumeCollect" Value="Resume" />
+		<Resourse ID="GatherDeviceCollectFailed" Value="Failed" />
+		<Resourse ID="GatherDevicePlayBack" Value="Search" />
+		<Resourse ID="GatherPairPolice" Value="Officer:" />
+		<Resourse ID="GatherPairInfoError" Value="The officer information is incorrect." />
+		<Resourse ID="GatherPairing" Value="Binding…" />
+		<Resourse ID="GatherCancelPair" Value="Unbind" />
+		<Resourse ID="GatherCancelPairing" Value="Unbinding…" />
+		<Resourse ID="GatherCancelPairOverTime" Value="Unbinding timed out." />
+		<Resourse ID="GatherCancelPairSuccess" Value="Succeeded. You can bind the officer to another body camera." />
+		<Resourse ID="GatherCancelPairFail" Value="Failed. The officer information cannot be obtained." />
+		<Resourse ID="GatherCancelPairFailed" Value="Failed." />
+		<Resourse ID="GatherPairMarkStart" Value="Failed. The officer is bound to the body camera {0}. To unbind the officer from the body camera, click ." />
+		<Resourse ID="GatherPairInfoNoChange" Value="The officer bound to the body camera is not changed." />
+		<Resourse ID="GatherPairOverTime" Value="Binding timed out." />
+		<Resourse ID="GatherPairCode_-1" Value="Failed" />
+		
+		<Resourse ID="GatherPortNoPair" Value="Ports that have not been set are found. Do you want to set the ports?" />	
+		<Resourse ID="GatherPortRePair" Value="The physical port is mapped to virtual port {0}." />	
+		<Resourse ID="GatherDeviceRemove" Value="Failed. The information of body camera {0} cannot be obtained." />		
+		<Resourse ID="GatherPairNotPow" Value="You are not authorized to change the officer bound to the body camera." />
+		<Resourse ID="GatherPairSuccess" Value="Succeeded" />
+		<Resourse ID="GatherAlreadyPair" Value="You are bound to body camera {0}. Are you sure you want to unbind from body camera {0} and then bind to a new body camera?" />
+		<Resourse ID="GatherDevicePasswrod" Value="Password:" />
+		<Resourse ID="GatherDeviceType" Value="Manufacturer:" />
+		<Resourse ID="GatherInputPasswrod" Value="The password is required." />
+		<Resourse ID="GatherDeviceRegisterError_1" Value="Failed" />
+		<Resourse ID="GatherDeviceRegisterError_2" Value="The password is incorrect." />
+		<Resourse ID="GatherDeviceRegisterError_3" Value="The body camera is not provided by the manufacturer you select." />
+		<Resourse ID="GatherDeviceRegisterError_4" Value="Exceeded the maximum number of the registered body cameras." />
+		<Resourse ID="GatherDeviceRegisterError_5" Value="The body camera has been added to the management center. Synchronize the data from the management center." />
+		<Resourse ID="GatherInputDeviceType" Value="The manufacturer is required." />
+		<Resourse ID="GatherUsable" Value="Free Space:" />
+		<Resourse ID="GatherEmpty" Value="(No officer)" />
+	</Plugin>	
+	<Plugin ID="AppPluginManage">
+		<Resourse ID="SearchManagerSearch" Value="Searching…" />
+		<Resourse ID="SearchManagerSearchFail" Value="Search timed out." />
+		<Resourse ID="SearchManagerSave" Value="Saving…" />
+		<Resourse ID="SearchManagerSaveTimeOut" Value="Saving timed out." />
+		<Resourse ID="SearchManagerSaveFail" Value="Failed" />
+		<Resourse ID="SearchManagerSearchNoData" Value="No result" />
+		<Resourse ID="SearchManagerPlayNoData" Value="No data" />
+		<Resourse ID="SearchManagerPlayFileNoData" Value="The file does not exist." />
+
+		<Resourse ID="ManageUploadStateAll" Value="All" />
+		<Resourse ID="ManageUploadStateNoUpload" Value="Not Uploaded" />
+		<Resourse ID="ManageUploadStateUploading" Value="Uploading" />
+		<Resourse ID="ManageUploadStateUploaded" Value="Uploaded" />
+		<Resourse ID="ManageUploadStateUploadFail" Value="Failed" />
+		<Resourse ID="ManageUploadStateUploadWait" Value="Waiting for upload…" />
+		
+		<Resourse ID="ManageToolName" Value="Search" /> 
+		<Resourse ID="AlarmControlColumnSequenceNum" Value="No." />
+		<Resourse ID="AlarmControlColumnAlarmTime" Value="Generated At" />
+		<Resourse ID="AlarmControlColumnAlarmLevel" Value="Severity" />
+		<Resourse ID="AlarmControlColumnAlarmModule" Value="Module" />
+		<Resourse ID="AlarmControlColumnAlarmStatus" Value="Status" />
+		<Resourse ID="AlarmControlColumnAlarmCode" Value="Alarm ID" />
+		<Resourse ID="AlarmControlColumnAlarmMessage" Value="Description" />
+		<Resourse ID="AlarmControlColumnSolvedTime" Value="Cleared At" />
+		<Resourse ID="AlarmControlColumnShowMoreText" Value="Load More" />
+
+		<Resourse ID="ShowMoreControlShowMoreText" Value="Load More" />
+		<Resourse ID="SearchManagerSearchShowMoreMsg" Value="The results exclude evidences being collected. To search for the evidence being collected, perform search or advanced search again." />
+		
+		<Resourse ID="AlarmSearchControlHead" Value="Advanced" />
+		<Resourse ID="AlarmSearchControlBtnSure" Value="Search" />
+		<Resourse ID="AlarmSearchControlBtnCanel" Value="Cancel" />
+		<Resourse ID="AlarmSearchControlColumnAlarmLevel" Value="Severity Level:" />
+		<Resourse ID="AlarmSearchControlAlarmLevelOrdinary" Value="Minor Alarm" />
+		<Resourse ID="AlarmSearchControlAlarmLevelSecondary" Value="Major Alarm" />
+		<Resourse ID="AlarmSearchControlAlarmLevelSerious" Value="Critical Alarm" />
+		<Resourse ID="AlarmSearchControlColumnDeviceType" Value="Module:" />
+		<Resourse ID="AlarmSearchControlColumnAlarmCode" Value="Alarm ID:" />
+		<Resourse ID="AlarmSearchControlColumnAlarmStatus" Value="Status:" />
+		<Resourse ID="AlarmSearchControlAlarmStatusNoSolve" Value="Unhandled" />
+		<Resourse ID="AlarmSearchControlAlarmStatusSolve" Value="Cleared" />
+		<Resourse ID="AlarmSearchControlAlarmStatusLose" Value="Expired" />
+		
+		<Resourse ID="DatePickerControlHead" Value="Time" />
+		<Resourse ID="DatePickerControlBtnSure" Value="OK" />
+		<Resourse ID="DatePickerControlBtnCanel" Value="Cancel" />
+		<Resourse ID="DatePickerControlYear" Value="" />
+		<Resourse ID="DatePickerControlMonth" Value="" />
+		<Resourse ID="DatePickerControlDay" Value="" />
+		<Resourse ID="DatePickerControlHour" Value="" />
+		<Resourse ID="DatePickerControlMin" Value="" />
+		<Resourse ID="DatePickerControlSec" Value="" />
+		
+		<Resourse ID="FileButtonControlPaly" Value="Play" />
+		<Resourse ID="FileButtonControlChooseUpload" Value="Select" />
+		<Resourse ID="FileButtonControlAdd" Value="Add to Playlist" />
+		<Resourse ID="FileButtonControlUpload" Value="Upload" />
+		<Resourse ID="FileButtonControlEdit" Value="Edit" />
+		<Resourse ID="FileButtonControlAddSucceed" Value="Succeeded" />
+		<Resourse ID="FileButtonControlAddRepeat" Value="The file has already been added to the playlist." />
+		
+		<Resourse ID="LogsControlTabResourseCamera" Value="Body Camera Log" />
+		<Resourse ID="LogsControlTabResourseCollect" Value="Docking Station Log" />
+		<Resourse ID="LogsControlBtnCameraUpload" Value="Batch Upload" />
+		<Resourse ID="LogsControlBtnCollectUpload" Value="Batch Upload" />
+		<Resourse ID="LogsControlBtnCameraShowMoreText" Value="Load More" />
+		<Resourse ID="LogsControlBtnCollectShowMoreText" Value="Load More" />
+		<Resourse ID="LogsControlCameraColumnUserName" Value="Operator" />
+		<Resourse ID="LogsControlCameraColumnUserCode" Value="Operator ID" />
+		<Resourse ID="LogsControlCameraColumnOrgName" Value="Operator Agency" />
+		<Resourse ID="LogsControlCameraColumnCameraUserCode" Value="Object ID" />
+		<Resourse ID="LogsControlCameraColumnCameraOrgName" Value="Object Agency" />
+		<Resourse ID="LogsControlCameraColumnCameraUserName" Value="Object Name" />
+		<Resourse ID="LogsControlCameraColumnOpTime" Value="Operated At" />
+		<Resourse ID="LogsControlCameraColumnOpType" Value="Operation Type" />
+		<Resourse ID="LogsControlCameraColumnUpLoadState" Value="Status" />
+		<Resourse ID="LogsControlCollectColumnSequenceNum" Value="No." />
+		<Resourse ID="LogsControlCollectColumnUserName" Value="Operator"/>
+		<Resourse ID="LogsControlCollectColumnCollectIp" Value="No." />
+		<Resourse ID="LogsControlCollectColumnUserCode" Value="Operator ID" />
+		<Resourse ID="LogsControlCollectColumnOrgName" Value="Operator Agency" />
+		<Resourse ID="LogsControlCollectColumnOpTime" Value="Operated At" />
+		<Resourse ID="LogsControlCollectColumnOpType" Value="Operation Type" />
+		<Resourse ID="LogsControlCollectColumnCameraUserCode" Value="Object ID" />
+		<Resourse ID="LogsControlCollectColumnCameraOrgName" Value="Object Agency" />
+		<Resourse ID="LogsControlCollectColumnCameraUserName" Value="Object Name" />
+		<Resourse ID="LogsControlCollectColumnUpLoadState" Value="Status" />
+		<Resourse ID="LogsControlBtnCameraUploadEmpty" Value="Select the file." />
+		<Resourse ID="LogsControlBtnCollectUploadEmpty" Value="Select the file." />
+		
+		<Resourse ID="LogsSearchControlHead" Value="Advanced" />
+		<Resourse ID="LogsSearchControlBtnSure" Value="Search" />
+		<Resourse ID="LogsSearchControlBtnCanel" Value="Cancel" />
+		<Resourse ID="LogsSearchControlUserCode" Value="Operator:" />
+		<Resourse ID="LogsSearchControlOrgID" Value="Operator Agency:" />
+		<Resourse ID="LogsSearchControlDeviceID" Value="Object ID:" />
+		
+		<Resourse ID="MediaControlCheckAll" Value="Select All" />
+		<Resourse ID="MediaControlUpload" Value="Batch Upload" />
+		<Resourse ID="MediaControlFileTypeAll" Value="All" />
+		<Resourse ID="MediaControlFileTypeVideo" Value="Video" />
+		<Resourse ID="MediaControlFileTypeVoice" Value="Audio" />
+		<Resourse ID="MediaControlFileTypePic" Value="Photo" />
+		<Resourse ID="MediaControlClassifyGrid" Value="List" />
+		<Resourse ID="MediaControlClassifyPic" Value="Thumbnail" />
+		<Resourse ID="MediaControlColumnSequenceNum" Value="No." />
+		<Resourse ID="MediaControlColumnFileType" Value="File Type" />
+		<Resourse ID="MediaControlColumnImp" Value="Tag" />
+		<Resourse ID="MediaControlColumnUserName" Value="Officer Name" />
+		<Resourse ID="MediaControlColumnUserCode" Value="Officer ID" />
+		<Resourse ID="MediaControlColumnOrgName" Value="Agency" />
+		<Resourse ID="MediaControlColumnDeviceID" Value="Body Camera ID" />
+		<Resourse ID="MediaControlColumnRecordtime" Value="Recorded At" />
+		<Resourse ID="MediaControlColumnCollecttime" Value="Collected At" />
+		<Resourse ID="MediaControlColumnTimeLength" Value="Duration" />
+		<Resourse ID="MediaControlColumnUpLoadState" Value="Status" />
+		<Resourse ID="MediaControlColumnUpUserTag" Value="Description" />
+		<Resourse ID="MediaControlColumnOp" Value="Operation" />
+		<Resourse ID="MediaControlShowMoreText" Value="Load More" />
+		<Resourse ID="MediaControlUploadEmpty" Value="Select the file." />
+		
+		<Resourse ID="MediaSearchControlHead" Value="Advanced" />
+		<Resourse ID="MediaSearchControlBtnSure" Value="Search" />
+		<Resourse ID="MediaSearchControlBtnCanel" Value="Cancel" />
+		<Resourse ID="MediaSearchControlUserCode" Value="Officer:" />
+		<Resourse ID="MediaSearchControlOrgID" Value="Agency:" />
+		<Resourse ID="MediaSearchControlDeviceID" Value="Body Camera ID:" />
+		<Resourse ID="MediaSearchControlUserImp" Value="Tag:" />
+		<Resourse ID="MediaSearchControlUserTag" Value="Description:" />
+		<Resourse ID="MediaSearchControlUpLoadState" Value="Status:" />
+		<Resourse ID="MediaSearchControlFileAll" Value="All" />
+		<Resourse ID="MediaSearchControlFileImp" Value="Key" />
+		<Resourse ID="MediaSearchControlFileOrdinary" Value="Normal" />
+		<Resourse ID="MediaSearchControlError" Value="The agency information is incorrect." />
+		
+		
+		<Resourse ID="PlayHisListControlHisList" Value="Playlist" />
+		<Resourse ID="PlayHisListControlClearList" Value="Clear" />
+		<Resourse ID="PlayHisListControlPlay" Value="Play" />
+		<Resourse ID="PlayHisListControlDel" Value="Delete" />
+		
+		<Resourse ID="PlayControlBtnLast" Value="Previous" />
+		<Resourse ID="PlayControlBtnPlay" Value="Play" />
+		<Resourse ID="PlayControlBtnNext" Value="Next" />
+		<Resourse ID="PlayControlBtnBig" Value="Zoom in" />
+		<Resourse ID="PlayControlBtnSmall" Value="Zoom out" />
+		<Resourse ID="PlayControlBtnLeft" Value="Rotate Left 90°" />
+		<Resourse ID="PlayControlBtnRight" Value="Rotate Right 90°" />
+		<Resourse ID="PlayControlBtnFit" Value="Original" />
+		<Resourse ID="PlayControlBtnDel" Value="Zoom out" />
+		<Resourse ID="PlayControlBtnFull" Value="Full Screen" />
+		<Resourse ID="PlayControlBtnStop" Value="Stop" />
+		<Resourse ID="PlayControlBtnPause" Value="Pause" />
+		<Resourse ID="PlayControlBtnMode" Value="Play One" />
+		<Resourse ID="PlayControlBtnSingle" Value="Repeat One" />
+		<Resourse ID="PlayControlBtnSequence" Value="Repeat All" />
+		<Resourse ID="PlayControlBtnNextFrame" Value="Frame by Frame" />
+		<Resourse ID="PlayControlBtnRate" Value="Speed" />
+		<Resourse ID="PlayControlBtnVolume" Value="Volume" />
+		<Resourse ID="PlayControlBtnNormal" Value="Normal" />
+		<Resourse ID="PlayControlBtnMute" Value="Mute" />
+		<Resourse ID="PlayControlBtnTakeSnapshot" Value="Screenshot" />
+		<Resourse ID="PlayControlBtnTakeSnapshotSet" Value="Set Path to Store Screenshots" />
+		<Resourse ID="PlayControlBtnTakeSnapshotDescription" Value="Screenshot Storage Path" />
+		<Resourse ID="PlayControlBtnTakeSnapshotSetPath" Value="Set the path to store screenshots." />
+		<Resourse ID="PlayControlCmbNormal" Value="1X" />
+		<Resourse ID="PlayControlCmbNegative2" Value="1/4X" />
+		<Resourse ID="PlayControlCmbNegative1" Value="1/2X" />
+		<Resourse ID="PlayControlCmbMultiple2" Value="4X" />
+		<Resourse ID="PlayControlCmbMultiple1" Value="2X" />
+		
+		<Resourse ID="SearchBarControlBtnAdvanced" Value="Advanced" />
+		<Resourse ID="SearchBarControlCheckEndTime" Value="The end time cannot be earlier than the start time." />
+		<Resourse ID="SearchBarControlCheckStartTime" Value="The start time cannot be later than the end time." />
+		
+		<Resourse ID="EditFileWindowHead" Value="Edit" />
+		<Resourse ID="EditFileWindowBtnSure" Value="OK" />
+		<Resourse ID="EditFileWindowBtnCanel" Value="Cancel" />
+		<Resourse ID="EditFileWindowUserName" Value="Officer Name:" />
+		<Resourse ID="EditFileWindowUserCode" Value="Officer ID:" />
+		<Resourse ID="EditFileWindowOrgName" Value="Agency:" />
+		<Resourse ID="EditFileWindowRecordTime" Value="Recorded At:" />
+		<Resourse ID="EditFileWindowUserImp" Value="Tag:" />
+		<Resourse ID="EditFileWindowUserTag" Value="Description:" />
+		<Resourse ID="EditFileWindowEditImp" Value="Key" />
+		<Resourse ID="EditFileWindowEditOrdinary" Value="Normal" />
+		
+		<Resourse ID="FullScreenWindowToolTip" Value="Exit" />
+		
+		
+		<Resourse ID="PlayWindowTabResourseVideo" Value="Video" />
+		<Resourse ID="PlayWindowTabResourseVoice" Value="Audio" />
+		<Resourse ID="PlayWindowTabResoursePic" Value="Photo" />
+		<Resourse ID="PlayWindowFileImp" Value="Key" />
+		<Resourse ID="PlayWindowFileOrdinary" Value="Normal" />
+		
+		<Resourse ID="UCManageMainTabItemEvidence" Value="Evidence" />
+		<Resourse ID="LogsControlTabItemCamera" Value="Camera Log" />
+		<Resourse ID="LogsControlTabItemCollect" Value="Station Log" />
+		<Resourse ID="UCManageMainTabItemHisWarn" Value="Alarm" />
+	</Plugin>		
+	<Plugin Name="AlarmInfo">
+			<Resourse ID="Alarm_9911" Value="Error in accessing the network management service." />
+			<Resourse ID="Alarm_9912" Value="Error in accessing the network management agency." />
+			<Resourse ID="Alarm_9913" Value="Error in accessing the electronic evidence query management service." />
+			<Resourse ID="Alarm_9914" Value="Error in accessing the streaming media service." />
+			<Resourse ID="Alarm_9916" Value="Error in accessing the docking station service." />
+			<Resourse ID="Alarm_9917" Value="Error in accessing the FTP service." />
+			<Resourse ID="Alarm_9918" Value="Error in accessing the management center." />
+			<Resourse ID="Alarm_9919" Value="Error in accessing the log service." />
+			<Resourse ID="Alarm_9920" Value="Error in accessing the route service." />
+			<Resourse ID="Alarm_9921" Value="Error in accessing the docking station Web service." />
+			<Resourse ID="Alarm_9922" Value="Error in accessing the management center Web service." />
+			<Resourse ID="Alarm_9923" Value="Error in accessing the HDFS service." />
+			<Resourse ID="Alarm_9924" Value="Error in accessing the PostgreSQL service of the management center." />
+			<Resourse ID="Alarm_9925" Value="Error in accessing the PostgreSQL service of the docking station." />
+			<Resourse ID="Alarm_9926" Value="Error in accessing the HBase service of the management center." />
+			<Resourse ID="Alarm_9927" Value="Error in accessing the file synchronization service." />
+			<Resourse ID="Alarm_9928" Value="Error in accessing the configuration agency." />
+			<Resourse ID="Alarm_9929" Value="Error in accessing the configuration service." />
+			<Resourse ID="Alarm_9996" Value="Error in accessing the database service." />
+			<Resourse ID="Alarm_9997" Value="Error in accessing the database service." />
+			<Resourse ID="Alarm_9998" Value="Error in accessing the database service." />
+			<Resourse ID="Alarm_9999" Value="Error in accessing the file service." />
+			
+			<Resourse ID="Alarm_9501" Value="Failed to obtain the license file." />
+			<Resourse ID="Alarm_9502" Value="The active and standby license files do not match." />
+			
+			<Resourse ID="Alarm_1101" Value="The active server disconnects from the standby server." />
+			
+			<Resourse ID="Alarm_1201" Value="The CPU usage is high." />
+			<Resourse ID="Alarm_1202" Value="The memory usage is high." />
+			<Resourse ID="Alarm_1203" Value="The hard disk space is insufficient." />
+			
+			<Resourse ID="Alarm_1603" Value="The storage disk space is lower than the specified value." />
+			
+			<Resourse ID="Alarm_1803" Value="The disk space of the storage server is lower than the specified value." />
+			
+			<Resourse ID="Alarm_2701" Value="Configuration conflict" />
+			<Resourse ID="Alarm_2702" Value="The active server disconnects from the standby server." />
+			<Resourse ID="Alarm_2703" Value="FTP server error" />
+			
+			<Resourse ID="Alarm_2601" Value="The HBase service is unavailable." />
+			<Resourse ID="Alarm_2602" Value="The active license service is unavailable." />
+			<Resourse ID="Alarm_2603" Value="The standby license service is unavailable." />
+			
+			<Resourse ID="Alarm_2301" Value="The HDFS service is unavailable." />
+			<Resourse ID="Alarm_2302" Value="The active license service is unavailable." />
+			<Resourse ID="Alarm_2303" Value="The standby license service is unavailable." />
+			
+			<Resourse ID="Alarm_2401" Value="Configuration conflict" />
+			<Resourse ID="Alarm_2403" Value="The active server disconnects from the standby server." />
+			<Resourse ID="Alarm_2404" Value="The database service is not started." />
+			
+			<Resourse ID="Alarm_00" Value="All" />
+			<Resourse ID="Alarm_14" Value="Streaming Media Service" />
+			<Resourse ID="Alarm_16" Value="Docking Station Service" />
+			<Resourse ID="Alarm_17" Value="FTP Service" />
+			<Resourse ID="Alarm_18" Value="Management Center Service" />
+			<Resourse ID="Alarm_19" Value="Log Service" />
+			<Resourse ID="Alarm_21" Value="Web Service of the Docking Station" />
+			<Resourse ID="Alarm_23" Value="HDFS Service" />
+			<Resourse ID="Alarm_25" Value="PostgreSQL Service of the Docking Station" />
+			<Resourse ID="Alarm_28" Value="Configuration Agency" />
+	</Plugin>		
+	
+</PluginLanguage>

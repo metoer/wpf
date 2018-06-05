@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Hytera.EEMS.Manage.UserControls.ShowMoreControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hytera.EEMS.Manage.UserControls"
+             mc:Ignorable="d" Name="my"
+             d:DesignHeight="56" d:DesignWidth="1145">
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Line Width="446"  Stroke="#0c4bc4" StrokeThickness="1" X1="0" Y1="10" X2="446" Y2="10" VerticalAlignment="Center" HorizontalAlignment="Left" Opacity="{Binding Opacity,ElementName=my,Mode=TwoWay}" ></Line>
+                <TextBlock Text="{Binding ShowMoreText,ElementName=my}" Width="80" Margin="17,0,0,0" Opacity="{Binding Opacity,ElementName=my,Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Right" Name="tb" TextAlignment="Right"  Style="{DynamicResource syShowMoreFont}"></TextBlock>
+                <TextBlock Text="{DynamicResource ShowMoreControlShowMoreText}" Width="139" Opacity="{Binding Opacity,ElementName=my,Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left"  Style="{DynamicResource syShowMoreFont}"></TextBlock>
+                <Line Width="446" Stroke="#0c4bc4" StrokeThickness="1" X1="0" Y1="10" X2="446" Y2="10"  VerticalAlignment="Center" HorizontalAlignment="Right" Opacity="{Binding Opacity,ElementName=my,Mode=TwoWay}" ></Line>
+            </StackPanel>
+            <TextBlock Text="{DynamicResource SearchManagerSearchShowMoreMsg}" Margin="0,5,0,0"  VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"  FontSize="16" Foreground="Red"></TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

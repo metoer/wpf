@@ -1,0 +1,540 @@
+﻿<?xml version="1.0"?>
+<PluginLanguage>
+   <Plugin Name="Language">
+    <Resourse ID="Language" Value="Chinese"/>
+    <Resourse ID="Display" Value="简体中文"/>
+    <Resourse ID="Charset" Value="134"/>
+    <Resourse ID="FontName" Value="幼圆"/>
+    <Resourse ID="FontSize" Value="12"/>
+    <Resourse ID="TitleFontSize" Value="14"/>
+    <Resourse ID="TimeFormat" Value="yyyy-MM-dd HH:mm:ss"/>
+  </Plugin>
+	
+	<Plugin Name="CollectStationOperation">
+		<Resourse ID="CollectAppExit" Value="采集工作站关闭" />
+		<Resourse ID="CollectAddFinger" Value="指纹添加" />
+		<Resourse ID="CollectDelFinger" Value="指纹删除" />
+		<Resourse ID="CollectHandGather" Value="手动采集" />
+		<Resourse ID="CollectStopGather" Value="停止采集" />
+		<Resourse ID="CollectDevicePlayBack" Value="查询回放" />
+		<Resourse ID="CollectDeviceRegister" Value="执法记录仪注册" />
+		<Resourse ID="CollectDevicePair" Value="执法记录仪配对" />
+		<Resourse ID="CollectDeviceEditor" Value="执法记录仪编辑配对" />
+		<Resourse ID="CollectEvidenceSearch" Value="电子证据搜索" />
+		<Resourse ID="CollectHighSearch" Value="电子证据高级搜索" />
+		<Resourse ID="CollectEvidencePlay" Value="电子证据播放" />
+		<Resourse ID="CollectEvidenceUpload" Value="电子证据上传" />
+		<Resourse ID="CollectEvidenceBulkUpload" Value="电子证据批量上传" />
+		<Resourse ID="CollectEvidenceEditor" Value="电子证据编辑" />
+		<Resourse ID="CollectEvidenceKeynote" Value="播放器文件标记" />
+		<Resourse ID="CollectCameraLogSearch" Value="执法记录仪日志搜索" />
+		<Resourse ID="CollectCameraLogHighSearch" Value="执法记录仪日志高级搜索" />
+		<Resourse ID="CollectCameraLogBulkUpload" Value="执法记录仪日志批量上传" />
+		<Resourse ID="CollectLogSearch" Value="采集工作站日志搜索" />
+		<Resourse ID="CollectLogHighSearch" Value="采集工作站日志高级搜索" />
+		<Resourse ID="CollectLogBulkUpload" Value="采集工作站日志批量上传" />
+		<Resourse ID="CollectHistoryWarnSearch" Value="历史告警搜索" />
+		<Resourse ID="CollectHistoryWarnHighSearch" Value="历史告警高级搜索" />		
+		<Resourse ID="CollectFingerEditor" Value="指纹编辑" />
+		<Resourse ID="CollectFingerGather" Value="采集指纹" />
+		<Resourse ID="CollectFingerPrint" Value="指纹" />
+		<Resourse ID="CollectSearchFinger" Value="指纹搜索" />
+		
+	</Plugin>
+	<Plugin Name="CameraOperation">
+		<Resourse ID="CameraPowerOn" Value="开机" />
+		<Resourse ID="CameraPowerOff" Value="关机" />
+		<Resourse ID="CameraVideoOn" Value="开始录像" />
+		<Resourse ID="CameraRecordOn" Value="开始录音" />
+		<Resourse ID="CameraVideoOff" Value="结束录像" />
+		<Resourse ID="CameraRecordOff" Value="结束录音" />
+		<Resourse ID="CameraPhoto" Value="拍照" />
+		<Resourse ID="CameraOther" Value="其他" />
+	</Plugin>
+	
+	
+	<Plugin Name="AppCommon">
+		<Resourse ID="appSure" Value="确定" />	
+		<Resourse ID="appCancel" Value="取消" />
+		<Resourse ID="appYes" Value="是" />	
+		<Resourse ID="appNo" Value="否" />	
+		<Resourse ID="appLogin" Value="登录" />		
+		<Resourse ID="appLoginByFingerPrintOrUserInfo" Value="使用指纹登录或用户名和密码登录" />	
+		<Resourse ID="appLoginCode_5" Value="验证超时" />	
+		<Resourse ID="appLoginCode_2" Value="密码错误" />	
+		<Resourse ID="appLoginCode_4" Value="当前用户无该功能权限" />	
+		<Resourse ID="appLoginCode_3" Value="当前用户已禁用" />	
+		<Resourse ID="appLoginCode_1" Value="当前用户不存在" />			
+		<Resourse ID="appLoginCode_6" Value="请先同步数据" />	
+		
+		<Resourse ID="appValidating" Value="正在验证..." />			
+		<Resourse ID="appUserNameNoEmpty" Value="用户名不能为空" />	
+		<Resourse ID="appPasswordLess" Value="密码不能为空" />		
+		<Resourse ID="appHint" Value="提示" />	
+		<Resourse ID="appUserName" Value="用户名" />	
+		<Resourse ID="appPassword" Value="密码" />	
+	</Plugin>
+	<Plugin Name="AppMain">
+		<Resourse ID="appMainWelcomeTitle" Value="欢迎使用采集工作站系统" />
+		<Resourse ID="appMainLoadData" Value="正在加载数据..." />
+		<Resourse ID="appMainLoadConfig" Value="正在加载配置信息..." />
+		<Resourse ID="appMainInitModule" Value="正在初始化功能模块..." />
+		<Resourse ID="appMainDataConnect" Value="连接采集工作站服务失败，请检查网络连接、采集工作站客户端配置和采集工作站服务是否启动" />
+		<Resourse ID="appMainDataBaseFailed" Value="连接数据库服务失败，请检查采集工作站数据库服务配置" />
+		<Resourse ID="appMainKeyFileNoFound" Value="键盘文件缺失，请重新安装" />
+		<Resourse ID="appMainLoadPcInfo" Value="正在加载本机信息..." />
+		<Resourse ID="appMainLoadDeviceInfo" Value="正在加载执法记录仪信息..." />
+		<Resourse ID="appMainLoadPersonInfo" Value="正在加载人员信息..." />
+		<Resourse ID="appMainPcHardpan" Value="硬盘:" />	
+		<Resourse ID="appMainPcMemory" Value="内存:" />		
+		<Resourse ID="appMainServerIp" Value="服务器IP:" />	
+		<Resourse ID="appMainLanguageSet" Value="语言设置" />	
+		<Resourse ID="appMainStationName" Value="采集工作站系统" />	
+		<Resourse ID="appMainSystemSet" Value="设置" />	
+		<Resourse ID="appMainArraySet" Value="矩阵设置" />	
+		<Resourse ID="appMainFingerprintCollect" Value="指纹采集" />	
+		<Resourse ID="appMainChangeLanguage" Value="切换语言" />	
+		<Resourse ID="appMainSendDataRefresh" Value="正在发送数据同步命令..." />	
+		<Resourse ID="appMainDataRefreshOverTime" Value="数据同步超时" />	
+		<Resourse ID="appMainDataRefreshFailed" Value="数据同步失败" />
+		<Resourse ID="appMainExitApp" Value="确认退出采集工作站系统？" />		
+		<Resourse ID="appMainDataRefresh" Value="数据同步" />
+		<Resourse ID="appMainStartDataRefresh" Value="开始同步数据..." />
+		<Resourse ID="appMainRefreshUser" Value="正在同步用户列表..." />
+		<Resourse ID="appMainRefreshDevice" Value="正在同步执法记录仪列表..." />
+		<Resourse ID="appMainRefreshOrg" Value="正在同步单位列表..." />
+		<Resourse ID="appMainRefreshPower" Value="正在同步权限列表..." />
+		<Resourse ID="appMainRefreshRolePower" Value="正在同步用户组权限列表..." />
+		<Resourse ID="appMainRefreshUserPower" Value="正在同步用户权限列表..." />
+		<Resourse ID="appMainRefreshRole" Value="正在同步组列表..." />
+		<Resourse ID="appMainRefreshUserRole" Value="正在同步用户组列表..." />
+		<Resourse ID="appMainRefreshCollectStation" Value="正在同步采集工作站列表..." />
+		<Resourse ID="appMainRefreshFingerprint" Value="正在同步指纹列表..." />
+		<Resourse ID="appMainRefreshFinish" Value="数据同步成功" />
+		<Resourse ID="appMainRefreshResultCode_0" Value="数据同步失败" />
+		<Resourse ID="appMainDeviceNumSet" Value="执法记录仪面板显示矩阵" />
+		<Resourse ID="appMainRowNum" Value="行数" />
+		<Resourse ID="appMainColumnNum" Value="列数" />
+		<Resourse ID="appMainNoDealWith" Value="暂不处理稍后提示" />
+		<Resourse ID="appMainResourse" Value="条" />	
+		<Resourse ID="appMainDay" Value="天" />
+		<Resourse ID="appMainValid" Value="有效" />
+		<Resourse ID="appMainInvalid" Value="无效" />
+		<Resourse ID="appMainPCInfo" Value="采集工作站信息" />
+		<Resourse ID="appMainLocalMachineCode" Value="机器码：" />
+		<Resourse ID="appMainSoftdogCode" Value="加密狗序列号：" />
+		<Resourse ID="appMainLicenseInfo" Value="License 信息" />
+		<Resourse ID="appMainIsMachineCode" Value="是否启用机器码控制：" />
+		<Resourse ID="appMainIsSoftdogCode" Value="是否启用加密狗控制：" />
+		<Resourse ID="appMainEmpowerStatus" Value="授权状态：" />
+		<Resourse ID="appMainEmpowerMachineCode" Value="授权机器码：" />
+		<Resourse ID="appMainEmpowerSoftdog" Value="授权加密狗序列号：" />
+		<Resourse ID="appMainEmpowerFileCreateTime" Value="License文件生成时间：" />
+		<Resourse ID="appMainEmpowerFileEndTime" Value="授权截止时间：" />
+		<Resourse ID="appMainEmpowerCountDays" Value="授权总天数：" />
+		<Resourse ID="appMainEmpowerSurplusDays" Value="授权剩余天数：" />
+		<Resourse ID="appMainHytera" Value="版权所有 ©2017海能达通信股份有限公司" />
+		<Resourse ID="appMainAbout" Value="关于" />
+		<Resourse ID="appMainCopy" Value="复制" />
+		<Resourse ID="appMainKey" Value="软键盘" />
+		<Resourse ID="appMainPortSet" Value="端口设置" />
+		<Resourse ID="appMainSetFirstPort" Value="设置优先端口" />
+		<Resourse ID="appMainFirstPort" Value="优先端口：" />
+		<Resourse ID="appMainFirstPortMark" Value="注：优先端口会优先采集" />
+		<Resourse ID="appMainPortPair" Value="调整物理端口对应系统虚拟端口" />
+		<Resourse ID="appMainRerest" Value="重置" />
+		<Resourse ID="appMainInventedPort" Value="虚拟端口" />
+		<Resourse ID="appMainSetFirstPorting" Value="正在设置优先端口..." />
+		<Resourse ID="appMainSetPortOvertime" Value="设置优先端口超时" />
+		<Resourse ID="appMainSetPortFailed" Value="设置优先端口失败" />
+		<Resourse ID="appMainIsSaveData" Value="确定放弃保存修改数据？" />
+		
+		
+		<Resourse ID="DataBaseConnect_1" Value="采集工作站数据库连接失败" />
+		<Resourse ID="DataBaseConnect_2" Value="采集工作站数据库服务未启动" />
+		<Resourse ID="DataBaseConnect_-1" Value="未知错误" />
+		<Resourse ID="DataBaseConnect_5" Value="获取数据库连接失败" />
+		<Resourse ID="DataBaseConnect_-101" Value="License错误" />
+		<Resourse ID="DataBaseConnect_13" Value="执行查询过程失败" />
+		
+		<Resourse ID="ServerConnect_1" Value="采集工作站服务连接失败" />
+		<Resourse ID="ServerConnect_-1" Value="管理中心服务或者采集工作站WebService未启动" />
+		<Resourse ID="ServerConnect_10" Value="管理中心未发现该采集工作站信息" />
+		<Resourse ID="ServerConnect_12" Value="管理中心处理心跳失败" />
+		<Resourse ID="ServerConnect_17" Value="认证失败，采集工作站用户名或密码错误" />
+		<Resourse ID="ServerConnect_23" Value="管理中心出现异常" />
+		<Resourse ID="ServerConnect_24" Value="管理中心License文件无效" />	
+		<Resourse ID="ServerConnect_25" Value="采集工作站数量超过License授权限制" />
+		<Resourse ID="ServerConnect_27" Value="会话ID错误" />
+		
+	</Plugin>
+	<Plugin Name="AppPluginGather">
+		<Resourse ID="GatherToolName" Value="采集" />
+		<Resourse ID="GatherUser" Value="采集人员:" />
+		<Resourse ID="GatherHandCollect" Value="手动采集" />
+		<Resourse ID="GatherCollectInfo" Value="请填写正确的人员信息进行采集" />
+		<Resourse ID="GatherSelectSearchInfo" Value="请选择或搜索人员信息" />
+		<Resourse ID="GatherCollecting" Value="正在进行采集操作..." />
+		<Resourse ID="GatherCollectOvertime" Value="采集操作超时" />
+		<Resourse ID="GatherCollectFailed" Value="采集操作失败" />
+		<Resourse ID="GatherResumeCollect" Value="正在进行恢复采集操作..." />
+		<Resourse ID="GatherResumeOvertime" Value="恢复采集操作超时" />
+		<Resourse ID="GatherResumeFailed" Value="恢复采集操作失败" />
+		<Resourse ID="GatherStopCollect" Value="正在进行暂停采集操作..." />
+		<Resourse ID="GatherStopCollectOvertime" Value="暂停采集操作超时" />
+		<Resourse ID="GatherStopCollectFailed" Value="暂停采集操作失败" />
+		<Resourse ID="GatherRegisterOvertime" Value="注册超时" />
+		<Resourse ID="GatherRegisterSuccess" Value="注册成功" />
+		<Resourse ID="GatherRegisterFailed" Value="注册失败" />
+		<Resourse ID="GatherRegistering" Value="正在注册..." />
+		<Resourse ID="GatherDeviceCode" Value="执法记录仪编号:" />
+		<Resourse ID="GatherPoliceName" Value="人员姓名:" />
+		<Resourse ID="GatherPoliceCode" Value="人员编号:" />
+		<Resourse ID="GatherOrgName" Value="部门名称:" />
+		<Resourse ID="GatherDeviceCollect" Value="采集" />
+		<Resourse ID="GatherDeviceRegister" Value="注册" />
+		<Resourse ID="GatherDevicePair" Value="配对" />
+		<Resourse ID="GatherDeviceEditorPair" Value="编辑配对" />
+		<Resourse ID="GatherDeviceStopCollect" Value="暂停采集" />
+		<Resourse ID="GatherDeviceResumeCollect" Value="恢复采集" />
+		<Resourse ID="GatherDeviceCollectFailed" Value="采集失败" />
+		<Resourse ID="GatherDevicePlayBack" Value="查询回放" />
+		<Resourse ID="GatherPairPolice" Value="配对人员:" />
+		<Resourse ID="GatherPairInfoError" Value="请填写正确的人员信息进行配对" />
+		<Resourse ID="GatherPairing" Value="正在配对..." />
+		<Resourse ID="GatherCancelPair" Value="取消配对" />
+		<Resourse ID="GatherCancelPairing" Value="正在取消配对..." />
+		<Resourse ID="GatherCancelPairOverTime" Value="取消配对超时" />
+		<Resourse ID="GatherCancelPairSuccess" Value="取消配对成功，可以为当前人员继续配对" />
+		<Resourse ID="GatherCancelPairFail" Value="取消配对失败，找不到该人员信息" />
+		<Resourse ID="GatherCancelPairFailed" Value="取消配对失败" />
+		<Resourse ID="GatherPairMarkStart" Value="配对失败，该人员已经和执法记录仪：{0}配对,如需取消该配对请点击" />	
+		<Resourse ID="GatherPairInfoNoChange" Value="配对用户信息没有变化，配对结束" />
+		<Resourse ID="GatherPairOverTime" Value="配对超时" />
+		<Resourse ID="GatherPairCode_-1" Value="配对失败" />
+		
+		<Resourse ID="GatherPortNoPair" Value="发现有未设置的采集端口，是否需要进行设置？" />	
+		<Resourse ID="GatherPortRePair" Value="与虚拟端口{0}的值冲突，请重新选择" />	
+		<Resourse ID="GatherDeviceRemove" Value="没有找到对应的执法记录仪:{0}，无法进行操作" />		
+		<Resourse ID="GatherPairNotPow" Value="不能编辑配对其他人员执法记录仪" />
+		<Resourse ID="GatherPairSuccess" Value="配对成功" />
+		<Resourse ID="GatherAlreadyPair" Value="您已和执法记录仪：{0}配对，是否取消和该执法记录仪配对后继续和当前执法记录仪配对？" />
+		<Resourse ID="GatherDevicePasswrod" Value="执法记录仪密码：" />
+		<Resourse ID="GatherDeviceType" Value="执法记录仪品牌：" />
+		<Resourse ID="GatherInputPasswrod" Value="请输入执法记录仪密码" />
+		<Resourse ID="GatherDeviceRegisterError_1" Value="注册失败" />
+		<Resourse ID="GatherDeviceRegisterError_2" Value="执法记录仪密码错误" />
+		<Resourse ID="GatherDeviceRegisterError_3" Value="执法记录仪品牌与实际不一致" />
+		<Resourse ID="GatherDeviceRegisterError_4" Value="注册数量达到上限" />
+		<Resourse ID="GatherDeviceRegisterError_5" Value="管理中心已存在该执法记录仪，请同步数据" />
+		<Resourse ID="GatherInputDeviceType" Value="请选择执法记录仪品牌" />
+		<Resourse ID="GatherUsable" Value="可用:" />
+		<Resourse ID="GatherEmpty" Value="(空)" />
+	</Plugin>	
+	<Plugin ID="AppPluginManage">
+		<Resourse ID="SearchManagerSearch" Value="正在查询..." />
+		<Resourse ID="SearchManagerSearchFail" Value="查询超时" />
+		<Resourse ID="SearchManagerSave" Value="正在保存..." />
+		<Resourse ID="SearchManagerSaveTimeOut" Value="保存超时" />
+		<Resourse ID="SearchManagerSaveFail" Value="保存失败" />
+		<Resourse ID="SearchManagerSearchNoData" Value="无查询结果" />
+		<Resourse ID="SearchManagerPlayNoData" Value="无数据" />
+		<Resourse ID="SearchManagerPlayFileNoData" Value="播放文件不存在" />
+
+		<Resourse ID="ManageUploadStateAll" Value="全部" />
+		<Resourse ID="ManageUploadStateNoUpload" Value="未上传" />
+		<Resourse ID="ManageUploadStateUploading" Value="上传中" />
+		<Resourse ID="ManageUploadStateUploaded" Value="已上传" />
+		<Resourse ID="ManageUploadStateUploadFail" Value="上传失败" />
+		<Resourse ID="ManageUploadStateUploadWait" Value="等待上传" />
+		
+		<Resourse ID="ManageToolName" Value="查询回放" /> 
+		<Resourse ID="AlarmControlColumnSequenceNum" Value="序号" />
+		<Resourse ID="AlarmControlColumnAlarmTime" Value="告警时间" />
+		<Resourse ID="AlarmControlColumnAlarmLevel" Value="告警级别" />
+		<Resourse ID="AlarmControlColumnAlarmModule" Value="告警模块" />
+		<Resourse ID="AlarmControlColumnAlarmStatus" Value="告警状态" />
+		<Resourse ID="AlarmControlColumnAlarmCode" Value="告警代码" />
+		<Resourse ID="AlarmControlColumnAlarmMessage" Value="告警描述" />
+		<Resourse ID="AlarmControlColumnSolvedTime" Value="解决（失效）时间" />
+		<Resourse ID="AlarmControlColumnShowMoreText" Value="点击加载更多" />
+
+		<Resourse ID="ShowMoreControlShowMoreText" Value="点击加载更多" />
+		<Resourse ID="SearchManagerSearchShowMoreMsg" Value="点击加载更多的结果不包括正在采集的数据，如需查询正在采集的数据，请点击搜索按钮或高级搜索按钮" />
+		
+		<Resourse ID="AlarmSearchControlHead" Value="高级搜索" />
+		<Resourse ID="AlarmSearchControlBtnSure" Value="搜索" />
+		<Resourse ID="AlarmSearchControlBtnCanel" Value="取消" />
+		<Resourse ID="AlarmSearchControlColumnAlarmLevel" Value="告警级别:" />
+		<Resourse ID="AlarmSearchControlAlarmLevelOrdinary" Value="提示告警" />
+		<Resourse ID="AlarmSearchControlAlarmLevelSecondary" Value="次要告警" />
+		<Resourse ID="AlarmSearchControlAlarmLevelSerious" Value="重要告警" />
+		<Resourse ID="AlarmSearchControlColumnDeviceType" Value="告警模块:" />
+		<Resourse ID="AlarmSearchControlColumnAlarmCode" Value="告警代码:" />
+		<Resourse ID="AlarmSearchControlColumnAlarmStatus" Value="告警状态:" />
+		<Resourse ID="AlarmSearchControlAlarmStatusNoSolve" Value="未解决" />
+		<Resourse ID="AlarmSearchControlAlarmStatusSolve" Value="已解决" />
+		<Resourse ID="AlarmSearchControlAlarmStatusLose" Value="已失效" />
+		
+		<Resourse ID="DatePickerControlHead" Value="时间" />
+		<Resourse ID="DatePickerControlBtnSure" Value="确定" />
+		<Resourse ID="DatePickerControlBtnCanel" Value="取消" />
+		<Resourse ID="DatePickerControlYear" Value="年" />
+		<Resourse ID="DatePickerControlMonth" Value="月" />
+		<Resourse ID="DatePickerControlDay" Value="日" />
+		<Resourse ID="DatePickerControlHour" Value="时" />
+		<Resourse ID="DatePickerControlMin" Value="分" />
+		<Resourse ID="DatePickerControlSec" Value="秒" />
+		
+		<Resourse ID="FileButtonControlPaly" Value="播放" />
+		<Resourse ID="FileButtonControlChooseUpload" Value="勾选" />
+		<Resourse ID="FileButtonControlAdd" Value="添加到播放列表" />
+		<Resourse ID="FileButtonControlUpload" Value="上传" />
+		<Resourse ID="FileButtonControlEdit" Value="编辑" />
+		<Resourse ID="FileButtonControlAddSucceed" Value="添加成功" />
+		<Resourse ID="FileButtonControlAddRepeat" Value="该文件已添加至播放列表，请勿重复添加" />
+		
+		<Resourse ID="LogsControlTabResourseCamera" Value="执法记录仪日志" />
+		<Resourse ID="LogsControlTabResourseCollect" Value="采集工作站日志" />
+		<Resourse ID="LogsControlBtnCameraUpload" Value="批量上传" />
+		<Resourse ID="LogsControlBtnCollectUpload" Value="批量上传" />
+		<Resourse ID="LogsControlBtnCameraShowMoreText" Value="点击加载更多" />
+		<Resourse ID="LogsControlBtnCollectShowMoreText" Value="点击加载更多" />
+		<Resourse ID="LogsControlCameraColumnUserName" Value="操作者名称" />
+		<Resourse ID="LogsControlCameraColumnUserCode" Value="操作者编号" />
+		<Resourse ID="LogsControlCameraColumnOrgName" Value="操作者部门名称" />
+		<Resourse ID="LogsControlCameraColumnCameraUserCode" Value="被操作者编号" />
+		<Resourse ID="LogsControlCameraColumnCameraOrgName" Value="被操作者部门名称" />
+		<Resourse ID="LogsControlCameraColumnCameraUserName" Value="被操作者名称" />
+		<Resourse ID="LogsControlCameraColumnOpTime" Value="操作时间" />
+		<Resourse ID="LogsControlCameraColumnOpType" Value="操作类型" />
+		<Resourse ID="LogsControlCameraColumnUpLoadState" Value="上传状态" />
+		<Resourse ID="LogsControlCollectColumnSequenceNum" Value="序号" />
+		<Resourse ID="LogsControlCollectColumnUserName" Value="操作者名称" />
+		<Resourse ID="LogsControlCollectColumnCollectIp" Value="序号" />
+		<Resourse ID="LogsControlCollectColumnUserCode" Value="操作者编号" />
+		<Resourse ID="LogsControlCollectColumnOrgName" Value="操作者部门名称" />
+		<Resourse ID="LogsControlCollectColumnOpTime" Value="操作时间" />
+		<Resourse ID="LogsControlCollectColumnOpType" Value="操作类型" />
+		<Resourse ID="LogsControlCollectColumnOpDescription" Value="备注" />
+		<Resourse ID="LogsControlCollectColumnCameraUserCode" Value="被操作者编号" />
+		<Resourse ID="LogsControlCollectColumnCameraOrgName" Value="被操作者部门名称" />
+		<Resourse ID="LogsControlCollectColumnCameraUserName" Value="被操作者名称" />
+		<Resourse ID="LogsControlCollectColumnUpLoadState" Value="上传状态" />
+		<Resourse ID="LogsControlBtnCameraUploadEmpty" Value="请勾选未上传的文件" />
+		<Resourse ID="LogsControlBtnCollectUploadEmpty" Value="请勾选未上传的文件" />
+		
+		<Resourse ID="LogsSearchControlHead" Value="高级搜索" />
+		<Resourse ID="LogsSearchControlBtnSure" Value="搜索" />
+		<Resourse ID="LogsSearchControlBtnCanel" Value="取消" />
+		<Resourse ID="LogsSearchControlUserCode" Value="操作者信息:" />
+		<Resourse ID="LogsSearchControlOrgID" Value="操作者部门信息:" />
+		<Resourse ID="LogsSearchControlDeviceID" Value="被操作者编号:" />
+		
+		<Resourse ID="MediaControlCheckAll" Value="全部选择" />
+		<Resourse ID="MediaControlUpload" Value="批量上传" />
+		<Resourse ID="MediaControlFileTypeAll" Value="全部" />
+		<Resourse ID="MediaControlFileTypeVideo" Value="视频" />
+		<Resourse ID="MediaControlFileTypeVoice" Value="音频" />
+		<Resourse ID="MediaControlFileTypePic" Value="图片" />
+		<Resourse ID="MediaControlClassifyGrid" Value="列表" />
+		<Resourse ID="MediaControlClassifyPic" Value="卡片" />
+		<Resourse ID="MediaControlColumnSequenceNum" Value="序号" />
+		<Resourse ID="MediaControlColumnFileType" Value="文件类型" />
+		<Resourse ID="MediaControlColumnImp" Value="文件标记" />
+		<Resourse ID="MediaControlColumnUserName" Value="人员姓名" />
+		<Resourse ID="MediaControlColumnUserCode" Value="人员编号" />
+		<Resourse ID="MediaControlColumnOrgName" Value="单位名称" />
+		<Resourse ID="MediaControlColumnDeviceID" Value="执法记录仪编号" />
+		<Resourse ID="MediaControlColumnRecordtime" Value="录制时间" />
+		<Resourse ID="MediaControlColumnCollecttime" Value="采集时间" />
+		<Resourse ID="MediaControlColumnTimeLength" Value="时长" />
+		<Resourse ID="MediaControlColumnUpLoadState" Value="上传状态" />
+		<Resourse ID="MediaControlColumnUpUserTag" Value="用户标记" />
+		<Resourse ID="MediaControlColumnOp" Value="操作" />
+		<Resourse ID="MediaControlShowMoreText" Value="点击加载更多" />
+		<Resourse ID="MediaControlUploadEmpty" Value="请勾选未上传的文件" />
+		
+		<Resourse ID="MediaSearchControlHead" Value="高级搜索" />
+		<Resourse ID="MediaSearchControlBtnSure" Value="搜索" />
+		<Resourse ID="MediaSearchControlBtnCanel" Value="取消" />
+		<Resourse ID="MediaSearchControlUserCode" Value="人员信息:" />
+		<Resourse ID="MediaSearchControlOrgID" Value="单位信息:" />
+		<Resourse ID="MediaSearchControlDeviceID" Value="执法记录仪编号:" />
+		<Resourse ID="MediaSearchControlUserImp" Value="文件标记:" />
+		<Resourse ID="MediaSearchControlUserTag" Value="用户标记:" />
+		<Resourse ID="MediaSearchControlUpLoadState" Value="上传状态:" />
+		<Resourse ID="MediaSearchControlFileAll" Value="全部" />
+		<Resourse ID="MediaSearchControlFileImp" Value="重要" />
+		<Resourse ID="MediaSearchControlFileOrdinary" Value="普通" />
+		<Resourse ID="MediaSearchControlError" Value="请输入或选择正确的单位信息进行查询" />
+		
+		
+		<Resourse ID="PlayHisListControlHisList" Value="播放列表" />
+		<Resourse ID="PlayHisListControlClearList" Value="清空列表" />
+		<Resourse ID="PlayHisListControlPlay" Value="播放" />
+		<Resourse ID="PlayHisListControlDel" Value="删除" />
+		
+		<Resourse ID="PlayControlBtnLast" Value="上一个" />
+		<Resourse ID="PlayControlBtnPlay" Value="播放" />
+		<Resourse ID="PlayControlBtnNext" Value="下一个" />
+		<Resourse ID="PlayControlBtnBig" Value="放大" />
+		<Resourse ID="PlayControlBtnSmall" Value="缩小" />
+		<Resourse ID="PlayControlBtnLeft" Value="左旋转90°" />
+		<Resourse ID="PlayControlBtnRight" Value="右旋转90°" />
+		<Resourse ID="PlayControlBtnFit" Value="实际大小" />
+		<Resourse ID="PlayControlBtnDel" Value="缩小" />
+		<Resourse ID="PlayControlBtnFull" Value="全屏" />
+		<Resourse ID="PlayControlBtnStop" Value="停止" />
+		<Resourse ID="PlayControlBtnPause" Value="暂停" />
+		<Resourse ID="PlayControlBtnMode" Value="单个播放" />
+		<Resourse ID="PlayControlBtnSingle" Value="单个循环" />
+		<Resourse ID="PlayControlBtnSequence" Value="循环播放" />
+		<Resourse ID="PlayControlBtnNextFrame" Value="逐帧播放" />
+		<Resourse ID="PlayControlBtnRate" Value="播放速度" />
+		<Resourse ID="PlayControlBtnVolume" Value="音量" />
+		<Resourse ID="PlayControlBtnNormal" Value="正常" />
+		<Resourse ID="PlayControlBtnMute" Value="静音" />
+		<Resourse ID="PlayControlBtnTakeSnapshot" Value="截屏" />
+		<Resourse ID="PlayControlBtnTakeSnapshotSet" Value="截屏文件保存路径设置" />
+		<Resourse ID="PlayControlBtnTakeSnapshotDescription" Value="截屏文件保存路径" />
+		<Resourse ID="PlayControlBtnTakeSnapshotSetPath" Value="请先设置截屏文件保存路径" />
+		<Resourse ID="PlayControlCmbNormal" Value="X1" />
+		<Resourse ID="PlayControlCmbNegative2" Value="X1/4" />
+		<Resourse ID="PlayControlCmbNegative1" Value="X1/2" />
+		<Resourse ID="PlayControlCmbMultiple2" Value="X4" />
+		<Resourse ID="PlayControlCmbMultiple1" Value="X2" />
+		
+		<Resourse ID="SearchBarControlBtnAdvanced" Value="高级搜索" />
+		<Resourse ID="SearchBarControlCheckEndTime" Value="结束时间不能小于开始时间" />
+		<Resourse ID="SearchBarControlCheckStartTime" Value="开始时间不能大于结束时间" />
+		
+		<Resourse ID="EditFileWindowHead" Value="编辑" />
+		<Resourse ID="EditFileWindowBtnSure" Value="确认" />
+		<Resourse ID="EditFileWindowBtnCanel" Value="取消" />
+		<Resourse ID="EditFileWindowUserName" Value="人员姓名:" />
+		<Resourse ID="EditFileWindowUserCode" Value="人员编号:" />
+		<Resourse ID="EditFileWindowOrgName" Value="单位名称:" />
+		<Resourse ID="EditFileWindowRecordTime" Value="录制时间:" />
+		<Resourse ID="EditFileWindowUserImp" Value="文件标记:" />
+		<Resourse ID="EditFileWindowUserTag" Value="用户标记:" />
+		<Resourse ID="EditFileWindowEditImp" Value="重要" />
+		<Resourse ID="EditFileWindowEditOrdinary" Value="普通" />
+		
+		<Resourse ID="FullScreenWindowToolTip" Value="退出全屏" />
+		
+		
+		<Resourse ID="PlayWindowTabResourseVideo" Value="视频" />
+		<Resourse ID="PlayWindowTabResourseVoice" Value="音频" />
+		<Resourse ID="PlayWindowTabResoursePic" Value="图片" />
+		<Resourse ID="PlayWindowFileImp" Value="重要" />
+		<Resourse ID="PlayWindowFileOrdinary" Value="普通" />
+		
+		<Resourse ID="UCManageMainTabItemEvidence" Value="电子证据" />
+		<Resourse ID="LogsControlTabItemCamera" Value="记录仪日志" />
+		<Resourse ID="LogsControlTabItemCollect" Value="采集站日志" />
+		<Resourse ID="UCManageMainTabItemHisWarn" Value="历史告警" />
+	</Plugin>		
+	
+	<Plugin Name="AppPluginManageFinger">
+		<Resourse ID="FingerToolName" Value="指纹" />
+		<Resourse ID="FingerCollectMark" Value="指纹采集" />
+		<Resourse ID="FingerAdmin" Value="调度员" />
+		<Resourse ID="FingerNormal" Value="普通警员" />
+		<Resourse ID="FingerCollectCode_1" Value="设置指纹扫描模式失败" />
+		<Resourse ID="FingerCollectCode_2" Value="获取指纹数据失败" />
+		<Resourse ID="FingerNoPower" Value="无操作指纹权限" />
+		<Resourse ID="FingerCollect" Value="采集指纹" />
+		<Resourse ID="FingerEditor" Value="编辑指纹" />
+		<Resourse ID="FingerPoliceName" Value="警员姓名:" />
+		<Resourse ID="FingerPoliceCode" Value="警员编号:" />
+		<Resourse ID="FingerPoliceOrgName" Value="单位名称:" />
+		<Resourse ID="FingerPoliceType" Value="用户类型:" />
+		<Resourse ID="FingerNumber" Value="指纹数量:" />
+		<Resourse ID="FingerReRecord" Value="重新录入" />
+		<Resourse ID="FingerSaveData" Value="正在保存指纹..." />
+		<Resourse ID="FingerSaveSuccess" Value="指纹保存成功" />
+		<Resourse ID="FingerSaveOverTime" Value="指纹保存超时" />
+		<Resourse ID="FingerCloseSaveWindow" Value="关闭窗口，将取消保存采集的指纹，请问是否继续操作？" />
+		<Resourse ID="FingerRecordFailTip" Value="指纹录入失败请继续长按" />
+		<Resourse ID="FingerName" Value="指纹名" />
+		<Resourse ID="FingerEditorData" Value="正在保存指纹编辑..." />
+		<Resourse ID="FingerEditorOverTime" Value="指纹编辑保存超时" />
+		<Resourse ID="FingerEditorSuccess" Value="指纹编辑保存成功" />
+		<Resourse ID="FingerEditorFail" Value="指纹编辑保存失败" />
+		<Resourse ID="FingerCloseEditorWindow" Value="关闭窗口，将取消保存修改指纹数据，请问是否继续操作？" />
+		<Resourse ID="FingerInputName" Value="请输入警员姓名" />
+		<Resourse ID="FingerSearchInfo" Value="正在查询人员信息..." />
+		<Resourse ID="FingerSearchOverTime" Value="信息查询超时" />
+		<Resourse ID="FingerSearchFail" Value="信息查询失败" />
+		<Resourse ID="FingerAddInfo" Value="正在加载更多人员信息..." />
+		<Resourse ID="FingerAddInfoOverTime" Value="加载更多信息超时" />
+		<Resourse ID="FingerAddInfoFail" Value="加载更多信息失败" />		
+		<Resourse ID="FingerPressMark" Value="请将手指放在指纹采集器上,长按3～5秒再移开" />	
+	</Plugin>
+	<Plugin Name="AlarmInfo">
+			<Resourse ID="Alarm_9911" Value="连接网管服务异常" />
+			<Resourse ID="Alarm_9912" Value="连接网管代理异常" />
+			<Resourse ID="Alarm_9913" Value="连接查询管理服务异常" />
+			<Resourse ID="Alarm_9914" Value="连接流媒体服务异常" />
+			<Resourse ID="Alarm_9916" Value="连接采集工作站服务异常" />
+			<Resourse ID="Alarm_9917" Value="连接FTP文件服务异常" />
+			<Resourse ID="Alarm_9918" Value="连接管理中心服务异常" />
+			<Resourse ID="Alarm_9919" Value="连接日志服务异常" />
+			<Resourse ID="Alarm_9920" Value="连接集群路由服务异常" />
+			<Resourse ID="Alarm_9921" Value="连接采集工作站WebService异常" />
+			<Resourse ID="Alarm_9922" Value="连接云中心WebService异常" />
+			<Resourse ID="Alarm_9923" Value="连接HDFS文件服务异常" />
+			<Resourse ID="Alarm_9924" Value="连接管理中心PostgreSQL数据库服务异常" />
+			<Resourse ID="Alarm_9925" Value="连接采集工作站PostgreSQL数据库服务异常" />
+			<Resourse ID="Alarm_9926" Value="连接HBASE数据库服务异常" />
+			<Resourse ID="Alarm_9927" Value="连接FTP文件同步服务异常" />
+			<Resourse ID="Alarm_9928" Value="连接配置代理异常" />
+			<Resourse ID="Alarm_9929" Value="连接配置服务异常" />
+			<Resourse ID="Alarm_9996" Value="连接数据库服务异常" />
+			<Resourse ID="Alarm_9997" Value="连接数据库服务异常" />
+			<Resourse ID="Alarm_9998" Value="连接数据库服务异常" />
+			<Resourse ID="Alarm_9999" Value="连接文件服务异常" />
+			
+			<Resourse ID="Alarm_9501" Value="License获取失败" />
+			<Resourse ID="Alarm_9502" Value="主备License信息不一致" />
+			
+			<Resourse ID="Alarm_1101" Value="主备双心跳通信失败" />
+			
+			<Resourse ID="Alarm_1201" Value="CPU使用率过高" />
+			<Resourse ID="Alarm_1202" Value="内存使用率过高" />
+			<Resourse ID="Alarm_1203" Value="硬盘空间不足" />
+			
+			<Resourse ID="Alarm_1603" Value="存储磁盘空间小于指定值" />
+			
+			<Resourse ID="Alarm_1803" Value="存储服务器磁盘空间小于指定值" />
+			
+			<Resourse ID="Alarm_2701" Value="配置状态冲突" />
+			<Resourse ID="Alarm_2702" Value="双心跳失败" />
+			<Resourse ID="Alarm_2703" Value="FTP服务器状态异常" />
+			
+			<Resourse ID="Alarm_2601" Value="HBASE数据库服务不可用" />
+			<Resourse ID="Alarm_2602" Value="主License服务不可用" />
+			<Resourse ID="Alarm_2603" Value="备License服务不可用" />
+			
+			<Resourse ID="Alarm_2301" Value="HDFS文件服务不可用" />
+			<Resourse ID="Alarm_2302" Value="主License服务不可用" />
+			<Resourse ID="Alarm_2303" Value="备License服务不可用" />
+			
+			<Resourse ID="Alarm_2401" Value="配置状态冲突" />
+			<Resourse ID="Alarm_2403" Value="双心跳失败" />
+			<Resourse ID="Alarm_2404" Value="数据库服务未启动" />
+			
+			<Resourse ID="Alarm_00" Value="全部" />
+			<Resourse ID="Alarm_14" Value="流媒体服务" />
+			<Resourse ID="Alarm_16" Value="采集工作站服务" />
+			<Resourse ID="Alarm_17" Value="FTP文件服务" />
+			<Resourse ID="Alarm_18" Value="管理中心服务" />
+			<Resourse ID="Alarm_19" Value="日志服务" />
+			<Resourse ID="Alarm_21" Value="采集工作站WebService" />
+			<Resourse ID="Alarm_23" Value="HDFS文件服务" />
+			<Resourse ID="Alarm_25" Value="采集工作站PostgreSQL数据库服务" />
+			<Resourse ID="Alarm_28" Value="配置代理" />
+	</Plugin>		
+	
+</PluginLanguage>

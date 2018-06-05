@@ -1,0 +1,16 @@
+﻿<local:BaseWindow x:Class="Hytera.EEMS.Resources.Windows.ResultWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Loaded="Window_Loaded"
+        xmlns:local="clr-namespace:Hytera.EEMS.Resources.Controls" Closed="Window_Closed" 
+                  Style="{StaticResource BaseWindow}"   WindowStartupLocation="CenterScreen"      IsDragMove="True" ShowInTaskbar="False"
+        Title="LoginWindow" Height="163" Width="488">
+    <Window.Background>
+        <ImageBrush ImageSource="/Hytera.EEMS.Resources;Component/Images/Main/DataRefresh/refreshBg.png" />
+    </Window.Background>
+    <Grid>      
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,-10,0,0">
+            <local:LoadingWait Margin="40,0,0,0"  x:Name="loading"></local:LoadingWait>
+            <TextBlock x:Name="tbMsg" Margin="20,0,0,0" FontSize="20"  Foreground="White" VerticalAlignment="Center" />
+        </StackPanel>
+    </Grid>
+</local:BaseWindow>

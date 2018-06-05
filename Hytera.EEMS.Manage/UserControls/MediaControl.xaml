@@ -1,0 +1,412 @@
+﻿<UserControl x:Class="Hytera.EEMS.Manage.UserControls.MediaControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:res="clr-namespace:Hytera.EEMS.Resources.Controls;assembly=Hytera.EEMS.Resources"
+             xmlns:local="clr-namespace:Hytera.EEMS.Manage.UserControls"
+             xmlns:converter="clr-namespace:Hytera.EEMS.Manage.Converter"
+             mc:Ignorable="d" Name="my" 
+             d:DesignHeight="300" d:DesignWidth="1924" Initialized="UserControl_Initialized">
+    <UserControl.Resources>
+        <Style x:Key="DefaultDataGridRow" TargetType="{x:Type DataGridRow}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridRow}">
+                        <Border x:Name="DGR_Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <Grid>
+                                <SelectiveScrollingGrid Name="ssg">
+                                    <SelectiveScrollingGrid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </SelectiveScrollingGrid.ColumnDefinitions>
+                                    <SelectiveScrollingGrid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </SelectiveScrollingGrid.RowDefinitions>
+
+                                    <Grid Name="dcp" Height="44"  Grid.Column="1"  VerticalAlignment="Center"  HorizontalAlignment="Left"  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                        <DataGridCellsPresenter Grid.Column="1" ItemsPanel="{TemplateBinding ItemsPanel}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    </Grid>
+                                    <DataGridDetailsPresenter Grid.Column="1" Grid.Row="1" SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding AreRowDetailsFrozen, ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical}, Converter={x:Static DataGrid.RowDetailsScrollingConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Visibility="{TemplateBinding DetailsVisibility}"/>
+                                    <DataGridRowHeader Grid.RowSpan="2" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Row}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+
+                                </SelectiveScrollingGrid>
+
+                                <local:ShowMoreControl x:Name="btnCameraView" Margin="0,0,0,-5" Width="1145" VerticalAlignment="Bottom" HorizontalAlignment="Center" ShowMoreText="{Binding ShowMoreText,ElementName=my}"  Visibility="{Binding Vis}" MouseLeftButtonDown="btnPicView_MouseLeftButtonDown"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Vis}" Value="Visible">
+                                <Setter Property="Height" Value="106"></Setter>
+                                <Setter TargetName="dcp" Property="VerticalAlignment" Value="Top"></Setter>
+                            </DataTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition SourceName="btnCameraView" Property="IsMouseOver"   Value="False" />
+                                    <Condition SourceName="dcp"  Property="IsMouseOver"   Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="dcp"  Property="Background" Value="#072f69" />
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid ClipToBounds="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45" ></RowDefinition>
+            <RowDefinition Height="*" ></RowDefinition>
+        </Grid.RowDefinitions>
+        <DockPanel ClipToBounds="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="169"/>
+                    <ColumnDefinition Width="169"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="388"/>
+                    <ColumnDefinition Width="17"/>
+                    <ColumnDefinition Width="78"/>
+                    <ColumnDefinition Width="46"/>
+                </Grid.ColumnDefinitions>
+                <res:SelectButton Style="{DynamicResource syMediaCheckBtn}"  Name="chkAll" Grid.Column="0" Height="32" Margin="19,13,0,0" Content="{DynamicResource MediaControlCheckAll}" VerticalAlignment="Center" Click="CheckBox_Checked" IsSelect="{Binding CheckAll,ElementName=my}"
+                                  SelectImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaCheckAllSelect.png"
+                                  DefaultSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaCheckAllDefault.png"></res:SelectButton>
+
+                <res:ImageButton Style="{DynamicResource syUploadBtn}" Width="150" Height="32" Margin="19,13,0,0" Name="btnUp" Grid.Column="1" 
+                                 Content="{DynamicResource MediaControlUpload}"  Click="btnUp_Click"></res:ImageButton>
+                <DockPanel Grid.Column="3" Margin="0,7,0,0" Height="34">
+                    <Grid>
+                        <Grid.Background>
+                            <ImageBrush  ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaType.png"></ImageBrush>
+                        </Grid.Background>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <res:SelectButton Style="{DynamicResource syMediaTypeSBtn}"  Grid.Column="0" Content="{DynamicResource MediaControlFileTypeAll}" Name="btnAll" Click="btnAll_Click" IsSelect="true"
+                                         MouseOverSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaTypeOver.png"
+                                     SelectImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaTypeSelect.png"></res:SelectButton>
+                        <res:SelectButton Style="{DynamicResource syMediaTypeSBtn}"  Grid.Column="1" Content="{DynamicResource MediaControlFileTypeVideo}" Name="btnVideoC" Click="btnVideoC_Click"
+                                          MouseOverSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaTypeOver.png"
+                                     SelectImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaTypeSelect.png"></res:SelectButton>
+                        <res:SelectButton Style="{DynamicResource syMediaTypeSBtn}"  Grid.Column="2" Content="{DynamicResource MediaControlFileTypeVoice}" Name="btnVoiceC" Click="btnVoiceC_Click"
+                                          MouseOverSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaTypeOver.png"
+                                     SelectImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaTypeSelect.png"></res:SelectButton>
+                        <res:SelectButton Style="{DynamicResource syMediaTypeSBtn}"  Grid.Column="3" Content="{DynamicResource MediaControlFileTypePic}" Name="btnPicC" Click="btnPicC_Click"
+                                          MouseOverSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaTypeOver.png"
+                                     SelectImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaTypeSelect.png"></res:SelectButton>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Grid.Column="5" Margin="0,7,0,0" Height="34">
+                    <Grid>
+                        <Grid.Background>
+                            <ImageBrush  ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaClassify.png"></ImageBrush>
+                        </Grid.Background>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <res:SelectButton Style="{DynamicResource syMediaClassifyBtn}"  Grid.Column="1" Name="btnGrid"  Click="btnGrid_Click" ToolTip="{DynamicResource MediaControlClassifyGrid}"
+                                         MouseOverSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaClassifyROver.png"
+                                     SelectImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaClassifyRSelect.png"
+                                     DefaultSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaClassifyRDefault.png"></res:SelectButton>
+                        <res:SelectButton Style="{DynamicResource syMediaClassifyBtn}"  Grid.Column="0" Name="btnPic" Click="btnPic_Click" IsSelect="True" ToolTip="{DynamicResource MediaControlClassifyPic}"
+                                         MouseOverSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaClassifyLOver.png"
+                                     SelectImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaClassifyLSelect.png"
+                                     DefaultSource="/Hytera.EEMS.Resources;Component/Images/Manage/Media/MediaClassifyLDefault.png"></res:SelectButton>
+                    </Grid>
+                </DockPanel>
+
+            </Grid>
+        </DockPanel>
+
+        <ListView Name="lvPicData" Grid.Row="1" ClipToBounds="True" SelectionChanged="lvPicData_SelectionChanged" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border Name="bd">
+                                    <local:FileControl x:Name="fc" Width="244" Height="319" ></local:FileControl>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bd" Property="Background"  >
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Card/BackgroundSelect.png"></ImageBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter TargetName="fc" Property="Background"  >
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Card/CardSelect.png"></ImageBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                    <!--<Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="bd" Property="Background"  >
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Card/BackgroundSelect.png"></ImageBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter TargetName="fc" Property="Background"  >
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Card/CardSelect.png"></ImageBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>-->
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel VerticalAlignment="Top" ></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <!--模板-->
+            <ListView.Template>
+                <ControlTemplate>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Style="{DynamicResource styleScrollViewerManage}">
+                        <DockPanel >
+                            <local:ShowMoreControl x:Name="btnPicView" DockPanel.Dock="Bottom" Width="1145" ShowMoreText="{Binding ShowMoreText,ElementName=my}"  Visibility="{Binding PicVisible,ElementName=my}" MouseLeftButtonDown="btnPicView_MouseLeftButtonDown"/>
+                            <ItemsPresenter />
+                        </DockPanel>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ListView.Template>
+        </ListView>
+
+        <DataGrid Name="dataGrid" Grid.Row="1" CanUserAddRows="False" Visibility="Collapsed"  Style="{DynamicResource syDataGridM}">
+            <DataGrid.Columns >
+                <DataGridTemplateColumn  Width="60" CanUserSort="True" MinWidth="45">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <res:SelectButton Style="{DynamicResource syLogCheckBtn}"  x:Name="chkAllGrid" Grid.Column="0"  VerticalAlignment="Center" Click="CheckBox_Checked" IsSelect="{Binding CheckAll,ElementName=my}"
+                                                      SelectImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/CheckBtnSelect.png"
+                                                      DefaultSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/CheckBtnDefault.png"
+                                                      MouseOverSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/CheckBtnOver.png"></res:SelectButton>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <res:SelectButton Style="{DynamicResource syLogCheckBtn}" Grid.Column="0"  VerticalAlignment="Center" IsSelect="{Binding IsChecked}" 
+                                                                          SelectImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/CheckBtnSelect.png"
+                                                                          DefaultSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/CheckBtnDefault.png"
+                                                                          MouseOverSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/CheckBtnOver.png" Click="SelectButton_Click"></res:SelectButton>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="90" CanUserSort="True" MinWidth="60">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" Text="{DynamicResource MediaControlColumnSequenceNum}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center" Text="{Binding SequenceNum}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="125">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource MediaControlColumnUserName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Text="{Binding UserName}"  ToolTip="{Binding UserName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="75">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource MediaControlColumnUserCode}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center" Text="{Binding UserCode}"  ToolTip="{Binding UserCode}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="75">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource MediaControlColumnImp}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <Button>
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Border Name="tbc" Width="18" Height="18" Visibility="Collapsed">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/CameraImpPic.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <Border Name="tbu" Width="18" Height="18" Visibility="Collapsed">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/UserImpPic.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                        </StackPanel>
+                                        <ControlTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding CameraImp}" Value="1">
+                                                <Setter TargetName="tbc" Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding CameraImp}" Value="0">
+                                                <Setter TargetName="tbc" Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding UserImp}" Value="1">
+                                                <Setter TargetName="tbu" Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding UserImp}" Value="0">
+                                                <Setter TargetName="tbu" Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="75">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource MediaControlColumnOrgName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center" Text="{Binding OrgName}"  ToolTip="{Binding OrgName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="145">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource MediaControlColumnDeviceID}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center" Text="{Binding DeviceID}"  ToolTip="{Binding DeviceID}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="200">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource MediaControlColumnRecordtime}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Text="{Binding RecordTime}"  ToolTip="{Binding RecordTime}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="200">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource MediaControlColumnCollecttime}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Text="{Binding CollectTime}"  ToolTip="{Binding CollectTime}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="75">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource MediaControlColumnFileType}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <Button>
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border>
+                                            <TextBlock Name="tb" Style="{DynamicResource syGridCellTBFont}" Grid.Column="2" ></TextBlock>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding MediaType}" Value="1">
+                                                <Setter TargetName="tb"  Property="Text"  Value="{DynamicResource MediaControlFileTypeVideo}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding MediaType}" Value="2">
+                                                <Setter TargetName="tb" Property="Text" Value="{DynamicResource MediaControlFileTypeVoice}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding MediaType}" Value="3">
+                                                <Setter TargetName="tb" Property="Text" Value="{DynamicResource MediaControlFileTypePic}"/>
+                                            </DataTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </DataTemplate>
+
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="85">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource MediaControlColumnTimeLength}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Text="{Binding ShowDuration}"   ToolTip="{Binding ShowDuration}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="100">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource MediaControlColumnUpUserTag}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Text="{Binding UserTag}"  ToolTip="{Binding UserTag}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="190">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource MediaControlColumnOp}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <local:FileButtonGridControl BorderThickness="0,0,1,0" BorderBrush="#355076"></local:FileButtonGridControl>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+                                            
+        
+        <StackPanel Name="spNodata" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+            <Image Source="/Hytera.EEMS.Resources;Component/Images/Manage/SearchNoDate.png" Width="111" Height="111"></Image>
+            <TextBlock Text="{DynamicResource SearchManagerSearchNoData}" FontSize="25" Foreground="#5f80bc" Margin="0,5,0,0"></TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

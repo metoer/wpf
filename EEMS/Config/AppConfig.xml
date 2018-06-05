@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<AppConfig>
+  <Language Checked="Chinese" />
+  <SetInfo>
+    <Item ID="FaceplateRow" Value="5" />
+    <Item ID="FaceplateColumn" Value="4" />
+  </SetInfo>
+  <BasicInfo>
+    <Item ID="TakeSnapshotPath" Value="" />
+    <!--查询分页数量-->
+    <Item ID="SearchPageCount" Value="20" />
+    <!--查询超时（单位:秒）-->
+    <Item ID="SearchTimeOut" Value="300" />
+    <!--定时提示未取消的告警时间（单位:秒）-->
+    <Item ID="WarnCanelTime" Value="180" />
+  </BasicInfo>
+</AppConfig>

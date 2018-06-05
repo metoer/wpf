@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{559BCBE6-4859-40C2-83DD-FD17684B2918}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hytera.EEMS.Media</RootNamespace>
+    <AssemblyName>Hytera.EEMS.Media</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\EEMS\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\EEMS\</OutputPath>
+    <DefineConstants>TRACE;CLR4;NET45;X86</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\EEMS\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\EEMS\</OutputPath>
+    <DefineConstants>TRACE;CLR4;NET45;X86</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VlcControl\TypeEditors\DirectoryEditor.cs" />
+    <Compile Include="VlcControl\VlcControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="VlcControl\VlcControl.Events.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="VlcControl\VlcLibDirectoryNeededEventArgs.cs" />
+    <Compile Include="VlcControl\VlcPlayer.xaml.cs">
+      <DependentUpon>VlcPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VlcControl\VlcWpfPanelControl.cs" />
+    <Compile Include="VlcCore.Interops\Extensions\IntPtrExtensions.cs" />
+    <Compile Include="VlcCore.Interops\Extensions\StringExtensions.cs" />
+    <Compile Include="VlcCore.Interops\Extensions\VlcMediaInstanceExtensions.cs" />
+    <Compile Include="VlcCore.Interops\LibVlcFunctionAttribute.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\InteropObjectInstance.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\InteropsHelpers.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_audio_filter_list_get.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_callback_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_clearerr.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_errmsg.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_event_attach.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_event_detach.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_event_type_name.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_free.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_get_changeset.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_get_compiler.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_get_version.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_module_description_list_release.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_module_description_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_new.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_release.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc.h\libvlc_video_filter_list_get.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_events.h\libvlc_event_e.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_events.h\libvlc_event_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_add_option.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_add_option_flag.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_duplicate.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_event_manager.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_get_duration.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_get_meta.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_get_mrl.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_get_state.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_get_stats.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_get_tracks_info.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_is_parsed.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_new_location.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_new_path.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_parse.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_parse_async.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_release.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_save_meta.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_set_meta.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_stats_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_media_track_info_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_meta_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_state_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media.h\libvlc_track_type_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_get_channel.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_get_delay.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_get_mute.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_get_track.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_get_track_count.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_get_track_description.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_get_volume.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_output_channel_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_output_device_count.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_output_device_id.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_output_device_longname.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_output_device_set.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_output_device_types_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_output_list_get.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_output_list_release.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_output_set.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_output_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_set_channel.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_set_delay.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_set_mute.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_set_track.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_set_volume.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_audio_toggle_mute.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_can_pause.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_event_manager.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_get_chapter.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_get_chapter_count.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_get_fps.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_get_hwnd.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_get_length.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_get_media.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_get_position.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_get_rate.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_get_state.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_get_time.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_is_playing.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_is_seekable.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_navigate.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_new.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_new_from_media.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_next_chapter.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_next_frame.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_pause.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_play.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_previous_chapter.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_release.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_set_chapter.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_set_hwnd.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_set_media.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_set_position.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_set_rate.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_set_time.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_stop.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_media_player_will_play.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_navigate_mode_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_rectangle_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_set_fullscreen.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_track_description_list_release.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_track_description_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_adjust_option_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_adjust_float.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_adjust_int.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_aspect_ratio.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_crop_geometry.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_logo_int.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_marquee_int.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_marquee_string.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_spu.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_spu_count.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_spu_delay.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_spu_description.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_teletext.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_track.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_track_count.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_get_track_description.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_logo_option_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_marquee_option_t.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_set_adjust_float.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_set_adjust_int.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_set_aspect_ratio.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_set_crop_geometry.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_set_deinterlace.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_set_logo_int.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_set_logo_string.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_set_marquee_int.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_set_marquee_string.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_set_spu.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_set_spu_delay.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_set_teletext.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_set_track.cs" />
+    <Compile Include="VlcCore.Interops\Signatures\libvlc_media_player.h\libvlc_video_take_snapshot.cs" />
+    <Compile Include="VlcCore.Interops\VlcEventManagerInstance.cs" />
+    <Compile Include="VlcCore.Interops\VlcInstance.cs" />
+    <Compile Include="VlcCore.Interops\VlcInteropsManager.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.AddOptionFlagToMedia.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.AddOptionToMedia.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.AttachEvent.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.ClearLastErrorMessage.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.CloneMedia.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.CouldPlay.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.CreateMediaPlayer.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.CreateMediaPlayerFromMedia.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.CreateNewInstance.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.CreateNewMediaFromLocation.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.CreateNewMediaFromPath.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.DetachEvent.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.Free.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetAudioChannel.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetAudioDelay.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetAudioFilterList.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetAudioOutputDeviceCount.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetAudioOutputDeviceLongName.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetAudioOutputDeviceName.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetAudioOutputsDescriptions.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetAudioTrack.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetAudioTracksCount.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetAudioTracksDescriptions.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetChangeset.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetCompiler.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetEventTypeName.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetFramesPerSecond.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetLastErrorMessage.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetLength.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaChapter.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaChapterCount.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaDuration.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaEventManager.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaFromMediaPlayer.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaMeta.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaMrl.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaPlayerEventManager.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaPlayerState.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaPlayerVideoHostHandle.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaPosition.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaState.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaStats.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetMediaTracksInformations.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetRate.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetTime.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoAdjust.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoAspectRatio.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoCropGeometry.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoFilterList.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoLogo.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoMarquee.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoSpu.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoSpuCount.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoSpuDelay.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoSpuDescription.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoTeletext.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoTrack.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoTracksCount.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVideoTracksDescriptions.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.GetVolume.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.IsMute.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.IsParsedMedia.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.IsPausable.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.IsPlaying.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.IsSeekable.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.Navigate.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.NextFrame.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.ParseMedia.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.ParseMediaAsync.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.Pause.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.Play.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.ReleaseAudioOutputDescription.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.ReleaseInstance.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.ReleaseMedia.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.ReleaseMediaPlayer.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.ReleaseModuleDescriptionInstance.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.ReleaseTrackDescription.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SaveMediaMetas.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetAudioChannel.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetAudioDelay.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetAudioOutput.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetAudioOutputDevice.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetAudioTrack.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetMediaChapter.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetMediaFullScreen.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetMediaMeta.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetMediaPlayerVideoHostHandle.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetMediaPosition.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetMediaToMediaPlayer.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetMute.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetNextMediaChapter.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetPreviousMediaChapter.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetRate.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetTime.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetVideoAdjust.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetVideoAspectRatio.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetVideoCropGeometry.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetVideoDeinterlace.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetVideoLogo.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetVideoMarquee.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetVideoSpu.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetVideoSpuDelay.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetVideoTeletext.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetVideoTrack.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.SetVolume.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.Stop.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.TakeSnapshot.cs" />
+    <Compile Include="VlcCore.Interops\VlcManager.ToggleMute.cs" />
+    <Compile Include="VlcCore.Interops\VlcMediaEventManagerInstance.cs" />
+    <Compile Include="VlcCore.Interops\VlcMediaInstance.cs" />
+    <Compile Include="VlcCore.Interops\VlcMediaPlayerEventManagerInstance.cs" />
+    <Compile Include="VlcCore.Interops\VlcMediaPlayerInstance.cs" />
+    <Compile Include="VlcCore.Interops\Win32Interops.cs" />
+    <Compile Include="VlcCore\AdjustmentsManagement.cs" />
+    <Compile Include="VlcCore\AudioManagement.cs" />
+    <Compile Include="VlcCore\AudioOutputDescription.cs" />
+    <Compile Include="VlcCore\AudioOutputDevice.cs" />
+    <Compile Include="VlcCore\AudioOutputDevices.cs" />
+    <Compile Include="VlcCore\AudioOutputsManagement.cs" />
+    <Compile Include="VlcCore\AudioTracksManagement.cs" />
+    <Compile Include="VlcCore\ChapterManagement.cs" />
+    <Compile Include="VlcCore\FilterModuleDescription.cs" />
+    <Compile Include="VlcCore\IAdjustmentsManagement.cs" />
+    <Compile Include="VlcCore\IAudioManagement.cs" />
+    <Compile Include="VlcCore\IAudioOutputsManagement.cs" />
+    <Compile Include="VlcCore\IChapterManagement.cs" />
+    <Compile Include="VlcCore\IEnumerableManagement.cs" />
+    <Compile Include="VlcCore\ILogoManagement.cs" />
+    <Compile Include="VlcCore\IMarqueeManagement.cs" />
+    <Compile Include="VlcCore\ISubTitlesManagement.cs" />
+    <Compile Include="VlcCore\ITracksManagement.cs" />
+    <Compile Include="VlcCore\IVideoManagement.cs" />
+    <Compile Include="VlcCore\LogoManagement.cs" />
+    <Compile Include="VlcCore\MarqueeManagement.cs" />
+    <Compile Include="VlcCore\SubTitlesManagement.cs" />
+    <Compile Include="VlcCore\TrackDescription.cs" />
+    <Compile Include="VlcCore\VideoManagement.cs" />
+    <Compile Include="VlcCore\VideoTracksManagement.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.Bacward.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.Buffering.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.EncounteredError.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.EndReached.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.Forward.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.LengthChanged.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.MediaChanged.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.Opening.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.PausableChanged.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.Paused.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.Playing.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.PositionChanged.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.ScrambledChanged.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.SeekableChanged.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.SnapshotTaken.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.Stopped.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.TimeChanged.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.TitleChanged.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayer.Events.VideoOutChanged.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerBackwardEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerBufferingEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerEncounteredErrorEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerEndReachedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerForwardEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerLengthChangedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerMediaChangedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerOpeningEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerPausableChangedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerPausedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerPlayingEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerPositionChangedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerScrambledChangedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerSeekableChangedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerSnapshotTakenEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerStoppedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerTimeChangedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerTitleChangedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMediaPlayer\VlcMediaPlayerVideoOutChangedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMedia.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMedia.Events.DurationChanged.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMedia.Events.Freed.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMedia.Events.MetaChanged.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMedia.Events.ParsedChanged.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMedia.Events.StateChanged.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMedia.Events.SubItemAdded.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMedia.Events.SubItemTreeAdded.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMedia.Metadatas.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMediaDurationChangedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMediaFreedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMediaMetaChangedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMediaParsedChangedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMediaStateChangedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMediaSubItemAddedEventArgs.cs" />
+    <Compile Include="VlcCore\VlcMedia\VlcMediaSubItemTreeAddedEventArgs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="VlcControl\VlcPlayer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

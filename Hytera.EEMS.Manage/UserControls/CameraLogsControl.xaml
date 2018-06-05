@@ -1,0 +1,262 @@
+﻿<UserControl x:Class="Hytera.EEMS.Manage.UserControls.CameraLogsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:res="clr-namespace:Hytera.EEMS.Resources.Controls;assembly=Hytera.EEMS.Resources"
+             xmlns:local="clr-namespace:Hytera.EEMS.Manage.UserControls"
+             xmlns:converter="clr-namespace:Hytera.EEMS.Manage.Converter"
+             mc:Ignorable="d" Name="my" 
+             d:DesignHeight="300" d:DesignWidth="1000" Initialized="UserControl_Initialized">
+    <UserControl.Resources>
+        <Style x:Key="DefaultDataGridRow" TargetType="{x:Type DataGridRow}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridRow}">
+                        <Border x:Name="DGR_Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <Grid>
+                                <SelectiveScrollingGrid Name="ssg">
+                                    <SelectiveScrollingGrid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </SelectiveScrollingGrid.ColumnDefinitions>
+                                    <SelectiveScrollingGrid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </SelectiveScrollingGrid.RowDefinitions>
+
+                                    <Grid Name="dcp" Height="44"  Grid.Column="1" VerticalAlignment="Top"  HorizontalAlignment="Stretch"  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                        <DataGridCellsPresenter Grid.Column="1" ItemsPanel="{TemplateBinding ItemsPanel}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    </Grid>
+                                    <DataGridDetailsPresenter Grid.Column="1" Grid.Row="1" SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding AreRowDetailsFrozen, ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical}, Converter={x:Static DataGrid.RowDetailsScrollingConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Visibility="{TemplateBinding DetailsVisibility}"/>
+                                    <DataGridRowHeader Grid.RowSpan="2" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Row}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+
+                                </SelectiveScrollingGrid>
+
+                                <local:ShowMoreControl x:Name="btnCameraView" Margin="0,0,0,-5" Width="1145" VerticalAlignment="Bottom" HorizontalAlignment="Center" ShowMoreText="{Binding CameraShowMoreText,ElementName=my}"  Visibility="{Binding Vis}" MouseLeftButtonDown="btnCameraView_MouseLeftButtonDown"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Vis}" Value="Visible">
+                                <Setter Property="Height" Value="106"></Setter>
+                            </DataTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition SourceName="btnCameraView" Property="IsMouseOver"   Value="False" />
+                                    <Condition SourceName="dcp"  Property="IsMouseOver"   Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="dcp"  Property="Background" Value="#072f69" />
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <res:ImageButton Style="{DynamicResource syUploadBtn}" Grid.Row="0" HorizontalAlignment="Left" Width="150" Height="32" Margin="19,13,0,0" Name="btnCameraUp"  Content="{DynamicResource LogsControlBtnCameraUpload}" Click="btnCameraUp_Click" ></res:ImageButton>
+
+        <DataGrid Name="dataGrid" Grid.Row="1" CanUserAddRows="False"  Style="{DynamicResource syDataGridM}">
+            <DataGrid.Columns >
+                <DataGridTemplateColumn  Width="60" CanUserSort="True" MinWidth="45">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <res:SelectButton Style="{DynamicResource syLogCheckBtn}"  Name="cameraChk" Grid.Column="0"  VerticalAlignment="Center" Click="cameraChk_Click" IsSelect="{Binding CameraCheck,ElementName=my}"
+                                                                  SelectImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/CheckBtnSelect.png"
+                                                                  DefaultSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/CheckBtnDefault.png"
+                                                                  MouseOverSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/CheckBtnOver.png"></res:SelectButton>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <res:SelectButton Style="{DynamicResource syLogCheckBtn}" Grid.Column="0"  VerticalAlignment="Center" IsSelect="{Binding IsChecked}" x:Name="chkCollect"
+                                                                          SelectImageSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/CheckBtnSelect.png"
+                                                                          DefaultSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/CheckBtnDefault.png"
+                                                                          MouseOverSource="/Hytera.EEMS.Resources;Component/Images/Manage/Grid/CheckBtnOver.png" Click="chkCamera_Click"></res:SelectButton>
+
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="90" CanUserSort="True" MinWidth="60">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource LogsControlCollectColumnSequenceNum}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center" Text="{Binding SequenceNum}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="125">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource LogsControlCameraColumnUserName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Text="{Binding OperatorName}"  ToolTip="{Binding OperatorName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="125">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource LogsControlCameraColumnUserCode}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center" Text="{Binding OperatorCode}"  ToolTip="{Binding OperatorCode}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="150">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource LogsControlCameraColumnOrgName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center" Text="{Binding OperatorOrgName}"  ToolTip="{Binding OperatorOrgName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="200">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource LogsControlCameraColumnOpTime}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Text="{Binding OpTime}"  ToolTip="{Binding OpTime}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="120">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource LogsControlCameraColumnOpType}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock Name="tbOpType" Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding OpType}" Value="CameraOther" >
+                                    <Setter TargetName="tbOpType" Property="Text" Value="{DynamicResource CameraOther}" />
+                                    <Setter TargetName="tbOpType" Property="ToolTip" Value="{DynamicResource CameraOther}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding OpType}" Value="CameraPowerOn" >
+                                    <Setter TargetName="tbOpType" Property="Text" Value="{DynamicResource CameraPowerOn}" />
+                                    <Setter TargetName="tbOpType" Property="ToolTip" Value="{DynamicResource CameraPowerOn}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding OpType}" Value="CameraPowerOff" >
+                                    <Setter TargetName="tbOpType" Property="Text" Value="{DynamicResource CameraPowerOff}" />
+                                    <Setter TargetName="tbOpType" Property="ToolTip" Value="{DynamicResource CameraPowerOff}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding OpType}" Value="CameraVideoOn" >
+                                    <Setter TargetName="tbOpType" Property="Text" Value="{DynamicResource CameraVideoOn}" />
+                                    <Setter TargetName="tbOpType" Property="ToolTip" Value="{DynamicResource CameraVideoOn}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding OpType}" Value="CameraVideoOff" >
+                                    <Setter TargetName="tbOpType" Property="Text" Value="{DynamicResource CameraVideoOff}" />
+                                    <Setter TargetName="tbOpType" Property="ToolTip" Value="{DynamicResource CameraVideoOff}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding OpType}" Value="CameraRecordOn" >
+                                    <Setter TargetName="tbOpType" Property="Text" Value="{DynamicResource CameraRecordOn}" />
+                                    <Setter TargetName="tbOpType" Property="ToolTip" Value="{DynamicResource CameraRecordOn}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding OpType}" Value="CameraRecordOff" >
+                                    <Setter TargetName="tbOpType" Property="Text" Value="{DynamicResource CameraRecordOff}" />
+                                    <Setter TargetName="tbOpType" Property="ToolTip" Value="{DynamicResource CameraRecordOff}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding OpType}" Value="CameraPhoto" >
+                                    <Setter TargetName="tbOpType" Property="Text" Value="{DynamicResource CameraPhoto}" />
+                                    <Setter TargetName="tbOpType" Property="ToolTip" Value="{DynamicResource CameraPhoto}" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="215">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource LogsControlCollectColumnCameraUserCode}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Text="{Binding OperatedCode}"   ToolTip="{Binding OperatedCode}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="215">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource LogsControlCollectColumnCameraOrgName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center"  Text="{Binding OperatedOrgName}"   ToolTip="{Binding OperatedOrgName}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="*" CanUserSort="True" MinWidth="125">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{DynamicResource syGridHeadTBFont}" VerticalAlignment="Center" Text="{DynamicResource LogsControlCameraColumnUpLoadState}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <Border  BorderThickness="0,0,1,0" BorderBrush="#355076">
+                                <TextBlock Name="tbState"  Style="{DynamicResource syGridCellTBFont}" VerticalAlignment="Center" />
+                            </Border>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding UpLoadState}" Value="0" >
+                                    <Setter TargetName="tbState" Property="Text" Value="{DynamicResource ManageUploadStateNoUpload}" />
+                                    <Setter TargetName="tbState" Property="ToolTip" Value="{DynamicResource ManageUploadStateNoUpload}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding UpLoadState}" Value="1" >
+                                    <Setter TargetName="tbState" Property="Text" Value="{DynamicResource ManageUploadStateUploading}" />
+                                    <Setter TargetName="tbState" Property="ToolTip" Value="{DynamicResource ManageUploadStateUploading}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding UpLoadState}" Value="2" >
+                                    <Setter TargetName="tbState" Property="Text" Value="{DynamicResource ManageUploadStateUploaded}" />
+                                    <Setter TargetName="tbState" Property="ToolTip" Value="{DynamicResource ManageUploadStateUploaded}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding UpLoadState}" Value="3" >
+                                    <Setter TargetName="tbState" Property="Text" Value="{DynamicResource ManageUploadStateUploadFail}" />
+                                    <Setter TargetName="tbState" Property="ToolTip" Value="{DynamicResource ManageUploadStateUploadFail}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding UpLoadState}" Value="4" >
+                                    <Setter TargetName="tbState" Property="Text" Value="{DynamicResource ManageUploadStateUploadWait}" />
+                                    <Setter TargetName="tbState" Property="ToolTip" Value="{DynamicResource ManageUploadStateUploadWait}" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <StackPanel Name="spNodata" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+            <Image Source="/Hytera.EEMS.Resources;Component/Images/Manage/SearchNoDate.png" Width="111" Height="111"></Image>
+            <TextBlock Text="{DynamicResource SearchManagerSearchNoData}" FontSize="25" Foreground="#5f80bc"  Margin="0,5,0,0"></TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

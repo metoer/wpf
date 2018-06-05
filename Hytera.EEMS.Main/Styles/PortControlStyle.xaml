@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:local="clr-namespace:Hytera.EEMS.Main.Controls"
+                                xmlns:conver="clr-namespace:Hytera.EEMS.Main.Converter"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <conver:PortTextConverter x:Key="portTextConverter" />
+    <Style  x:Key="syPort" TargetType="{x:Type local:PortControl}">
+        <Setter Property="Width" Value="173" />
+        <Setter Property="Height" Value="81" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PortControl}">
+                    <Grid >
+                        <Border x:Name="b" BorderThickness="1" BorderBrush="#00a0e9" Opacity="0.5" />
+                        <Grid x:Name="bg" Background="#173f70" Opacity="0.5" />
+                        <TextBlock Margin="0,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{TemplateBinding InventedIndex,Converter={StaticResource portTextConverter}}" FontSize="16" Foreground="#61ccff" />
+                        <Image x:Name="imgbg" Visibility="Hidden" Width="173" Height="81" Source="/Hytera.EEMS.Resources;Component/Images/Main/PortSet/portOver.png" />
+                        <Line X1="10" X2="160" Y1="35" Y2="35" StrokeThickness="1" StrokeDashArray="6" Stroke="#00a0e9" Opacity="0.5" />
+                        <ComboBox DisplayMemberPath="PortName" SelectedValuePath="PortName" ItemsSource="{TemplateBinding Source}" x:Name="cbPort" Margin="2,0,0,8" Style="{StaticResource syPortComboBox}"  VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Row="1"  Width="150" Height="30" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition  Property="IsMouseOver" Value="True" />
+                                <Condition  Property="IsSelected" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="b" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="imgbg" Property="Visibility" Value="Visible" />
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <Trigger Property="IsSelected" Value="True" >
+                            <Setter TargetName="bg" Property="Background" Value="#183e6d" />
+                            <Setter TargetName="bg" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

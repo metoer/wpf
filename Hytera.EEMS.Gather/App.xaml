@@ -1,0 +1,17 @@
+﻿<Application x:Class="Hytera.EEMS.Gather.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Hytera.EEMS.Resources;Component/Styles/Commom/Default.xaml" />
+                <ResourceDictionary Source="/Hytera.EEMS.Resources;Component/Styles/Commom/ScrollBarStyle.xaml" />
+                <ResourceDictionary Source="/Hytera.EEMS.Resources;Component/Styles/Commom/CollectStyles.xaml" />
+                <ResourceDictionary Source="/Hytera.EEMS.Resources;Component/Styles/Commom/MainStyles.xaml" />
+                <ResourceDictionary Source="/Hytera.EEMS.Resources;Component/Styles/Commom/ComboBoxStyle.xaml" />
+                <ResourceDictionary Source="/Hytera.EEMS.Resources;Component/Styles/Commom/Chinese.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
